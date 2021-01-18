@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hexo+github个人博客CDN加速</title>
+    <url>/undefined/16d8a98a/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><blockquote>
+<p>使用hexo+github搭建博客完成后，可以看到访问速度非常慢，体验很差，别人的博客都是秒开，你的还在慢慢的加载转圈圈呢，咔一下就给你X了</p>
+<p>而且，我们在写博客的时候不免往里面加一些图片之类的，如果使用本地存储方式，那你发布到网上以后，路径就找不到了，图片就挂了。</p>
+<p>当然，你可以把图片放到博客某个目录下然后一块儿部署到github，我最初就是用的这种方式，哎，别傻了，本来部署在github上你的博客打开就非常慢</p>
+<p>现在你又往里面塞一堆图片，啧啧啧，后果可想而知，所以，为了解决这个问题，有以下2种方式供选择（当然还有别的方法，~~~只是俺不会~~~）</p>
+</blockquote>
+<blockquote>
+<p><strong>本篇文章着重介绍第二种方式，也是我现在所使用的</strong></p>
+</blockquote>
+<hr>
+<h3 id="1、使用网络上各种已有的图床"><a href="#1、使用网络上各种已有的图床" class="headerlink" title="1、使用网络上各种已有的图床"></a>1、使用网络上各种已有的图床</h3><blockquote>
+<ol>
+<li>什么是图床？请参考百度</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>图床的选择？请参考<a href="https://blog.cyfan.top/p/eb490c73.html#%E5%85%AC%E7%9B%8A%E5%9B%BE%E5%BA%8A">这里</a></li>
+</ol>
+</blockquote>
+<p>使用图床，我们将我们的图片上传到图床之后，通过生成的链接来引用图片，至于这个链接访问的快不快，就看是什么图床了。</p>
+<hr>
+<h3 id="2、GitHub-jsDelivr-PicGo-自己搭建图床"><a href="#2、GitHub-jsDelivr-PicGo-自己搭建图床" class="headerlink" title="2、GitHub+jsDelivr+PicGo  自己搭建图床"></a>2、GitHub+jsDelivr+PicGo  自己搭建图床</h3><blockquote>
+<p><strong>需准备:</strong></p>
+<ol>
+<li>一个GitHub账号（废话）</li>
+<li>PicGo软件————软件下载地址：<a href="https://github.com/Molunerfinn/picgo/releases">https://github.com/Molunerfinn/picgo/releases</a></li>
+</ol>
+</blockquote>
+<hr>
+<blockquote>
+<h2 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h2><ol>
+<li><h3 id="新建一个仓库"><a href="#新建一个仓库" class="headerlink" title="新建一个仓库"></a>新建一个仓库</h3><p><img src="https://7.dusays.com/2021/01/19/a6b725704d834.png" alt="新建仓库"></p>
+<p><img src="https://7.dusays.com/2021/01/19/a89deca0e4387.png" alt="新建仓库"></p>
+</li>
+<li><h3 id="生成Access-token（这个token要记下来，一会儿要用到，如果丢了，重新生成一个即可）"><a href="#生成Access-token（这个token要记下来，一会儿要用到，如果丢了，重新生成一个即可）" class="headerlink" title="生成Access token（这个token要记下来，一会儿要用到，如果丢了，重新生成一个即可）"></a>生成Access token（<strong>这个token要记下来，一会儿要用到</strong>，如果丢了，重新生成一个即可）</h3><p><img src="https://7.dusays.com/2021/01/19/9672b5dfabea9.png" alt="token"></p>
+<p><img src="https://7.dusays.com/2021/01/19/a5d10ec13f3d9.png" alt="token"></p>
+</li>
+<li><h3 id="配置PicGo，使用jsDelivr的CDN"><a href="#配置PicGo，使用jsDelivr的CDN" class="headerlink" title="配置PicGo，使用jsDelivr的CDN"></a>配置PicGo，使用jsDelivr的CDN</h3><p>PicGo软件安装完成后我们打开进行以下配置</p>
+<p><img src="https://7.dusays.com/2021/01/19/15bf415ff94d8.png" alt="配置picgo"></p>
+<h4 id="【https-cdn-jsdelivr-net-gh-用户名-图床仓库名-】"><a href="#【https-cdn-jsdelivr-net-gh-用户名-图床仓库名-】" class="headerlink" title="【https://cdn.jsdelivr.net/gh/用户名/图床仓库名 】"></a>【<a href="https://link.zhihu.com/?target=https://cdn.jsdelivr.net/gh/">https://cdn.jsdelivr.net/gh/</a>用户名/图床仓库名 】</h4></li>
+<li><h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3><p>现在你已经可以使用PicGo软件进行上传图片了，上传完成后软件可以自动复制图片链接，你只需要到你要使用的地方粘贴即可</p>
+</li>
+</ol>
+<hr>
+<h2 id="jsDelivr的使用"><a href="#jsDelivr的使用" class="headerlink" title="jsDelivr的使用"></a>jsDelivr的使用</h2><p>语法：<a href="https://cdn.jsdelivr.net/gh/%E4%BD%A0%E7%9A%84Github%E7%94%A8%E6%88%B7%E5%90%8D/%E4%BD%A0%E7%9A%84CDN%E4%BB%93%E5%BA%93/%E6%96%87%E4%BB%B6%E6%96%87%E4%BB%B6%E5%A4%B9/%E6%96%87%E4%BB%B6%E5%90%8D.%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F">https://cdn.jsdelivr.net/gh/你的Github用户名/你的CDN仓库/文件文件夹/文件名.文件格式</a></p>
+<p>比如：<a href="https://cdn.jsdelivr.net/gh/Ayato233/CDN/img/index.jpeg">https://cdn.jsdelivr.net/gh/Ayato233/CDN/img/index.jpeg</a></p>
+</blockquote>
+<h3 id="最后："><a href="#最后：" class="headerlink" title="最后："></a>最后：</h3><p>​    如果你觉得PicGo这个软件不好用，那么你可以尝试一下这个（本人未测试）：</p>
+<p>​    PicX，也是基于GitHub+jsDelivr搭建的图床神器，无需下载安装，打开网站就能用。</p>
+<p>​    网址：<a href="https://picx.xpoet.cn/#/upload">picx.xpoet.cn</a></p>
+<hr>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>M y B l o g</title>
     <url>/undefined/b161f95c/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="我的个人博客"><a href="#我的个人博客" class="headerlink" title="我的个人博客~"></a>我的个人博客~</h1><p>​        今天网上冲浪的时候看到好多其他人的个人博客，我也心血来潮想搞一个玩玩，于是…..</p>
@@ -67,9 +131,9 @@
     <url>/undefined/b0712c91/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
 <h3 id="今天我也给我的小博客弄上了域名"><a href="#今天我也给我的小博客弄上了域名" class="headerlink" title="今天我也给我的小博客弄上了域名~"></a>今天我也给我的小博客弄上了域名~</h3><p>​        看着其他大佬的博客网址都是什么什么.com、.net、.top、.cn等等一系列有逼格又好记的网址，再看看我的网址，，，惨不忍睹，所以我决定也弄一个域名</p>
-<p>​        目标明确，开始实行，我查了很多资料，包括网站的一些相关资料，域名的一些相关资料，什么备案啊乱七八糟的都给我整懵逼了，我在阿里云花了1块钱买了一年域名，都准备好备案了，后来才发现github绑定域名不需要备案，也无法备案，因为是国外的服务器，哇，太棒了，于是乎，，跟着百度一顿操作，，</p>
+<p>​        目标明确，开始实行，我查了很多资料，包括网站的一些相关资料，域名的一些相关资料，什么备案啊乱七八糟的，我在阿里云花了1块钱买了一年域名，都准备好备案了，后来才发现GitHub绑定域名不需要备案，也无法备案，因为是国外的服务器，，于是乎，，跟着百度一顿操作，，</p>
 <h4 id="终于！！"><a href="#终于！！" class="headerlink" title="终于！！"></a>终于！！</h4><p>我的博客网址变成了你现在看到的样子~~~</p>
-<p>妙哉.</p>
+<p>妙哉啊.</p>
 <hr>
 ]]></content>
       <categories>
@@ -77,6 +141,7 @@
       </categories>
       <tags>
         <tag>随笔</tag>
+        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
@@ -99,7 +164,6 @@
       </categories>
       <tags>
         <tag>hexo</tag>
-        <tag>可爱</tag>
       </tags>
   </entry>
   <entry>
