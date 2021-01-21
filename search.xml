@@ -3,7 +3,7 @@
   <entry>
     <title>hexo+github个人博客CDN加速</title>
     <url>/undefined/16d8a98a/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
 <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><blockquote>
 <p>使用hexo+github搭建博客完成后，可以看到访问速度非常慢，体验很差，别人的博客都是秒开，你的还在慢慢的加载转圈圈呢，咔一下就给你X了</p>
 <p>而且，我们在写博客的时候不免往里面加一些图片之类的，如果使用本地存储方式，那你发布到网上以后，路径就找不到了，图片就挂了。</p>
@@ -67,7 +67,7 @@
   <entry>
     <title>java中全局变量与局部变量的特点</title>
     <url>/undefined/f6a33bb8/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
 <h1 id="全局变量-也称成员变量-与局部变量的特点"><a href="#全局变量-也称成员变量-与局部变量的特点" class="headerlink" title="全局变量(也称成员变量)与局部变量的特点"></a>全局变量(也称成员变量)与局部变量的特点</h1><h3 id="1-作用域不同"><a href="#1-作用域不同" class="headerlink" title="1. 作用域不同"></a>1. 作用域不同</h3><blockquote>
 <p>局部变量的作用域仅限于定义它的方法<br>成员变量的作用域在整个类内部都是可见的</p>
 </blockquote>
@@ -92,7 +92,7 @@
   <entry>
     <title>java基本数据类型的默认值</title>
     <url>/undefined/f4649d2/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
 <table>
 <thead>
 <tr>
@@ -153,7 +153,7 @@
   <entry>
     <title>M y B l o g</title>
     <url>/undefined/b161f95c/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="我的个人博客"><a href="#我的个人博客" class="headerlink" title="我的个人博客~"></a>我的个人博客~</h1><p>​        今天网上冲浪的时候看到好多其他人的个人博客，我也心血来潮想搞一个玩玩，于是…..</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><h1 id="我的个人博客"><a href="#我的个人博客" class="headerlink" title="我的个人博客~"></a>我的个人博客~</h1><p>​        今天网上冲浪的时候看到好多其他人的个人博客，我也心血来潮想搞一个玩玩，于是…..</p>
 <p>我从昨天下午6点，折腾到今天早上6点，过程步步出错，弄好一个又错一个，面向百度查了很久…</p>
 <p>现在终于把它完成了 ~ </p>
 <p>2021年1月12日06:02:41</p>
@@ -163,9 +163,31 @@
       </tags>
   </entry>
   <entry>
+    <title>winform日期控件使用注意事项</title>
+    <url>/undefined/af40fea0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
+<blockquote>
+<p>在使用日期控件DateTimePicker的时候，若想取值传到数据库(SQL Server)的DateTime类型列的时候</p>
+<p>不能使用字段名.Text的方式，因为这样获取的是这样的</p>
+<p><img src="https://7.dusays.com/2021/01/20/0a02daa2b40d7.png" alt="带中文的日期..."></p>
+<p>很显然，这种带中文的值传到数据库DateTime类型的列肯定会报错，传不进去的，所以要改成：</p>
+<p>字段名.Value</p>
+<p>的方式获取<strong>值</strong>，此时获取的值是这样的：</p>
+<p><img src="https://7.dusays.com/2021/01/20/a14627c8917dc.png" alt="日期格式值"></p>
+<p>这样就ok了.</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>winform</category>
+      </categories>
+      <tags>
+        <tag>winform</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>个人博客优化</title>
     <url>/undefined/baea5b8c/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
 <h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><blockquote>
 <p>以下是我在博客搭建完成后做的一系列优化，因为我也是个小白，什么也不懂，全都是跟着教程一步一步做的.</p>
 <p>这里我就先不写具体教程了，等我飞高腾达，不对，腾飞高达，不对，哔————等我牛批了，再写成具体的教程吧</p>
@@ -207,7 +229,7 @@
   <entry>
     <title>1.初识Windows程序</title>
     <url>/undefined/69452c10/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
 <h2 id="1-在vs中创建Windows窗体应用程序"><a href="#1-在vs中创建Windows窗体应用程序" class="headerlink" title="1.在vs中创建Windows窗体应用程序"></a>1.在vs中创建Windows窗体应用程序</h2><p><img src="https://cdn.jsdelivr.net/gh/Ayato233/winform/%E5%9C%A8vs%E4%B8%AD%E5%88%9B%E5%BB%BAWindows%E7%AA%97%E4%BD%93.png" alt="目录结构"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Ayato233/winform/%E7%A8%8B%E5%BA%8F%E4%B8%BB%E5%85%A5%E5%8F%A3.png" alt="main方法"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/Ayato233/winform/%E7%BC%96%E8%BE%91%E5%99%A8.png" alt="编辑器"></p>
@@ -310,7 +332,7 @@
   <entry>
     <title>我的博客域名</title>
     <url>/undefined/b0712c91/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
 <h3 id="今天我也给我的小博客弄上了域名"><a href="#今天我也给我的小博客弄上了域名" class="headerlink" title="今天我也给我的小博客弄上了域名~"></a>今天我也给我的小博客弄上了域名~</h3><p>​        看着其他大佬的博客网址都是什么什么.com、.net、.top、.cn等等一系列有逼格又好记的网址，再看看我的网址，，，惨不忍睹，所以我决定也弄一个域名</p>
 <p>​        目标明确，开始实行，我查了很多资料，包括网站的一些相关资料，域名的一些相关资料，什么备案啊乱七八糟的，我在阿里云花了1块钱买了一年域名，都准备好备案了，后来才发现GitHub绑定域名不需要备案，也无法备案，因为是国外的服务器，，于是乎，，跟着百度一顿操作，，</p>
 <h4 id="终于！！"><a href="#终于！！" class="headerlink" title="终于！！"></a>终于！！</h4><p>我的博客网址变成了你现在看到的样子~~~</p>
@@ -328,7 +350,7 @@
   <entry>
     <title>给博客添加可爱的Live 2D模型</title>
     <url>/undefined/1cb0b032/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
 <h3 id="前言：此方法较适合初学者，大神请止步。"><a href="#前言：此方法较适合初学者，大神请止步。" class="headerlink" title="前言：此方法较适合初学者，大神请止步。"></a><strong>前言</strong>：此方法较适合初学者，大神请止步。</h3><blockquote>
 <h3 id="看看本博客右下角的黑猫猫，是不是非常可爱呢？现在教你怎么抓获一只这样的小黑猫（还有其他的）"><a href="#看看本博客右下角的黑猫猫，是不是非常可爱呢？现在教你怎么抓获一只这样的小黑猫（还有其他的）" class="headerlink" title="看看本博客右下角的黑猫猫，是不是非常可爱呢？现在教你怎么抓获一只这样的小黑猫（还有其他的）"></a>看看本博客右下角的黑猫猫，是不是非常可爱呢？现在教你怎么抓获一只这样的小黑猫（还有其他的）</h3></blockquote>
 <hr>
@@ -348,9 +370,46 @@
       </tags>
   </entry>
   <entry>
+    <title>给博客添加Aplayer和“音乐”页面</title>
+    <url>/undefined/6165e010/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
+<blockquote>
+<p>本教程适用于Butterfly主题<br>教程参考：<a href="https://blog.csdn.net/qq_46435629/article/details/106295515?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&spm=1001.2101.3001.4242">如何在Hexo博客Butterfly主题开启Aplayer和“音乐”页面</a></p>
+</blockquote>
+<h2 id="1-在博客根目录执行以下命令"><a href="#1-在博客根目录执行以下命令" class="headerlink" title="1.在博客根目录执行以下命令"></a>1.在博客根目录执行以下命令</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page music</span><br><span class="line">npm install aplayer</span><br><span class="line">npm install --save hexo-tag-aplayer</span><br></pre></td></tr></table></figure>
+<h2 id="2-在主题目录-layout-includes下找到layout-pug文件并打开"><a href="#2-在主题目录-layout-includes下找到layout-pug文件并打开" class="headerlink" title="2.在主题目录\layout\includes下找到layout.pug文件并打开"></a>2.在主题目录\layout\includes下找到layout.pug文件并打开</h2><blockquote>
+<p>应该可以看到以下字段</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">head</span><br><span class="line">   include .&#x2F;head.pug</span><br><span class="line">   link(rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;APlayer.min.css&quot;)</span><br><span class="line">   div(id&#x3D;&quot;aplayer&quot;)</span><br><span class="line">   script(src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;meting@2&#x2F;dist&#x2F;Meting.min.js&quot; async)</span><br><span class="line"> body</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果你的没有，请手动加上，注意缩进</p>
+</blockquote>
+<h2 id="3-在主题目录-layout-includes下找到aplayer-pug文件"><a href="#3-在主题目录-layout-includes下找到aplayer-pug文件" class="headerlink" title="3.在主题目录\layout\includes下找到aplayer.pug文件"></a>3.在主题目录\layout\includes下找到aplayer.pug文件</h2><blockquote>
+<p>如果你没有这个文件，请手动创建并加上以下内容</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">link(rel&#x3D;&quot;stylesheet&quot; type&#x3D;&#39;text&#x2F;css&#39;, href&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;aplayer@1.10&#x2F;dist&#x2F;APlayer.min.css&quot;)</span><br><span class="line">script(type&#x3D;&#39;text&#x2F;javascript&#39;, src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;aplayer@1.10&#x2F;dist&#x2F;APlayer.min.js&quot;)</span><br><span class="line">script(type&#x3D;&#39;text&#x2F;javascript&#39;, src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;meting@1.2&#x2F;dist&#x2F;Meting.min.js&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="4-到博客根目录下打开站点配置文件-config-yml，在最后添加以下代码"><a href="#4-到博客根目录下打开站点配置文件-config-yml，在最后添加以下代码" class="headerlink" title="4.到博客根目录下打开站点配置文件_config.yml，在最后添加以下代码"></a>4.到博客根目录下打开站点配置文件_config.yml，在最后添加以下代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#aplayer</span><br><span class="line">aplayer: </span><br><span class="line">  script_dir: js                      # Public 目录下脚本目录路径，默认: &#39;assets&#x2F;js&#39;</span><br><span class="line">  style_dir: css                         # Public 目录下样式目录路径，默认: &#39;assets&#x2F;css&#39;</span><br><span class="line">  #cdn: http:&#x2F;&#x2F;xxx&#x2F;aplayer.min.js                # 引用 APlayer.js 外部 CDN 地址 (默认不开启)</span><br><span class="line">  #style_cdn: http:&#x2F;&#x2F;xxx&#x2F;aplayer.min.css         # 引用 APlayer.css 外部 CDN 地址 (默认不开启)</span><br><span class="line">  meting: true                                  # MetingJS 支持</span><br><span class="line">  #meting_api: http:&#x2F;&#x2F;xxx&#x2F;api.php                # 自定义 Meting API 地址</span><br><span class="line">  #meting_cdn: http:&#x2F;&#x2F;xxx&#x2F;Meing.min.js           # 引用 Meting.js 外部 CDN 地址 (默认不开启)</span><br><span class="line">  asset_inject: true                            # 自动插入 Aplayer.js 与 Meting.js 资源脚本, 默认开启</span><br><span class="line">  #externalLink: http:&#x2F;&#x2F;xxx&#x2F;aplayer.min.js       # 老版本参数，功能与参数 cdn 相同meting: true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>并找到post_asset_folder: false，将false改为true</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
+<h2 id="5-设置音乐页面"><a href="#5-设置音乐页面" class="headerlink" title="5.设置音乐页面"></a>5.设置音乐页面</h2><blockquote>
+<p>在博客根目录\source\music\index.md使用以下格式来设置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 我的歌单</span><br><span class="line">date: 2021-1-21 10:23:07</span><br><span class="line">type: &quot;music&quot;</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&lt;font color&#x3D;#0c74d6 size&#x3D;3 face&#x3D;&quot;黑体&quot;&gt;**这是歌单介绍，如果不需要刻意留空**&lt;&#x2F;font&gt;</span><br><span class="line"></span><br><span class="line">&#123;% meting &quot;162605041&quot; &quot;netease&quot; &quot;playlist&quot; %&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最后重新成功静态网页-完成"><a href="#最后重新成功静态网页-完成" class="headerlink" title="最后重新成功静态网页.完成."></a>最后重新成功静态网页.完成.</h2>]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>音乐</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LogicJava理解程序逻辑综合</title>
     <url>/undefined/9c45da99/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-初识Java"><a href="#1-初识Java" class="headerlink" title="1. 初识Java"></a>1. 初识Java</h1><h2 id="1-1-程序和指令"><a href="#1-1-程序和指令" class="headerlink" title="1.1 程序和指令"></a>1.1 程序和指令</h2><h3 id="1-1-1-程序"><a href="#1-1-1-程序" class="headerlink" title="1.1.1  程序"></a>1.1.1  程序</h3><blockquote>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><h1 id="1-初识Java"><a href="#1-初识Java" class="headerlink" title="1. 初识Java"></a>1. 初识Java</h1><h2 id="1-1-程序和指令"><a href="#1-1-程序和指令" class="headerlink" title="1.1 程序和指令"></a>1.1 程序和指令</h2><h3 id="1-1-1-程序"><a href="#1-1-1-程序" class="headerlink" title="1.1.1  程序"></a>1.1.1  程序</h3><blockquote>
 <p>计算机程序：为了完成某件事或执行某些操作而编写的一系列有序指令的集合。</p>
 </blockquote>
 <h3 id="1-1-2-指令"><a href="#1-1-2-指令" class="headerlink" title="1.1.2  指令"></a>1.1.2  指令</h3><blockquote>
@@ -1326,11 +1385,11 @@
 
 ]]></content>
       <categories>
-        <category>java笔记</category>
+        <category>java基础</category>
       </categories>
       <tags>
+        <tag>java</tag>
         <tag>学习笔记</tag>
-        <tag>Java</tag>
       </tags>
   </entry>
 </search>
