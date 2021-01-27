@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C#操作数据库常用的SqlDBhelper</title>
+    <url>/undefined/d9173e02/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
+<h2 id="C-操作数据库常用的SqlDBhelper"><a href="#C-操作数据库常用的SqlDBhelper" class="headerlink" title="C#操作数据库常用的SqlDBhelper"></a>C#操作数据库常用的SqlDBhelper</h2><ol>
+<li><p>什么是SQL？</p>
+<blockquote>
+<p>SQL 是用于访问和处理数据库的标准的计算机语言。</p>
+<p>这类数据库包括：Oracle, Sybase, SQL Server, DB2, Access 等等</p>
+</blockquote>
+</li>
+<li><p>什么是DBhelper？</p>
+<blockquote>
+<p>全称：DataBaseHelper（数据库助手、数据库帮手）</p>
+<p>DBHelper是一个帮助类，所有关于对数据库的操作都由它负责完成，我们只需专心编写业务代码即可</p>
+</blockquote>
+<p>所以SqlDBhelper就是适用于Oracle, Sybase, SQL Server, DB2, Access 等数据库的一个帮助类</p>
+</li>
+</ol>
+<hr>
+<blockquote>
+<p>这里只给出一些常用方法，日常使用足以（按我目前的水准来说…）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.Linq;</span><br><span class="line">using System.Text;</span><br><span class="line">using System.Threading.Tasks;</span><br><span class="line">using System.Data;</span><br><span class="line">using System.Data.SqlClient;</span><br><span class="line"></span><br><span class="line">namespace _2002Class</span><br><span class="line">&#123;</span><br><span class="line">    class DBHelper</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F;定义连接字符串</span><br><span class="line">        private const string str &#x3D; @&quot;Data Source&#x3D;.;Initial Catalog&#x3D;2002Class;User Id&#x3D;sa;Pwd&#x3D;sa&quot;;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;定义私有sqlConnection字段</span><br><span class="line">        private static SqlConnection _conn;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;定义公开sqlConnection属性</span><br><span class="line">        public static SqlConnection Conn</span><br><span class="line">        &#123;</span><br><span class="line">            get</span><br><span class="line">            &#123;</span><br><span class="line">                if (_conn&#x3D;&#x3D;null)</span><br><span class="line">                &#123;</span><br><span class="line">                    _conn &#x3D; new SqlConnection(str);</span><br><span class="line">                    _conn.Open();</span><br><span class="line">                &#125;else if (_conn.State &#x3D;&#x3D; ConnectionState.Broken)</span><br><span class="line">                &#123;</span><br><span class="line">                    _conn.Close();</span><br><span class="line">                    _conn.Open();</span><br><span class="line">                &#125;else if (_conn.State &#x3D;&#x3D; ConnectionState.Closed)</span><br><span class="line">                &#123;</span><br><span class="line">                    _conn.Open();</span><br><span class="line">                &#125;</span><br><span class="line">                return _conn;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; 获取单个值（单行单列）</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;returns&gt;返回单行单列的值&lt;&#x2F;returns&gt;</span><br><span class="line">        public static object GetOne(string sql)</span><br><span class="line">        &#123;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                SqlCommand command &#x3D; new SqlCommand(sql);</span><br><span class="line">                return command.ExecuteScalar();</span><br><span class="line">            &#125;</span><br><span class="line">            catch (Exception)</span><br><span class="line">            &#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">            finally</span><br><span class="line">            &#123;</span><br><span class="line">                _conn.Close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; 增删改</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;returns&gt;返回受影响的行数&lt;&#x2F;returns&gt;</span><br><span class="line">        public static int UpData(string sql)</span><br><span class="line">        &#123;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                SqlCommand command &#x3D; new SqlCommand(sql);</span><br><span class="line">                return command.ExecuteNonQuery();</span><br><span class="line">            &#125;</span><br><span class="line">            catch (Exception)</span><br><span class="line">            &#123;</span><br><span class="line">                return 0;</span><br><span class="line">            &#125;</span><br><span class="line">            finally</span><br><span class="line">            &#123;</span><br><span class="line">                _conn.Close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; 获取多个值</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;returns&gt;返回SqlDataReader对象（数据读取器）&lt;&#x2F;returns&gt;</span><br><span class="line">        public static SqlDataReader getOne(string sql)</span><br><span class="line">        &#123;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                SqlCommand command &#x3D; new SqlCommand(sql);</span><br><span class="line">                return command.ExecuteReader(CommandBehavior.CloseConnection);</span><br><span class="line">            &#125;</span><br><span class="line">            catch (Exception)</span><br><span class="line">            &#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; 以表格的形式获取数据</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">        &#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;sql&quot;&gt;&lt;&#x2F;param&gt;</span><br><span class="line">        public static DataTable GetDataTable(string sql)</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;&#x2F;1.创建DataSet“临时数据库”</span><br><span class="line">            DataSet ds &#x3D; new DataSet();</span><br><span class="line">            &#x2F;&#x2F;2.创建一个&quot;货车&quot;用来&quot;拉货&quot;,sql是语句，new SqlConnection是新建一个连接</span><br><span class="line">            SqlDataAdapter sda &#x3D; new SqlDataAdapter(sql,new SqlConnection(str));</span><br><span class="line">            &#x2F;&#x2F;3.拉完“货”就可以“卸货”了</span><br><span class="line">            sda.Fill(ds);</span><br><span class="line">            &#x2F;&#x2F;4.返回一个表格结果</span><br><span class="line">            return ds.Tables[0];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>winform</category>
+      </categories>
+      <tags>
+        <tag>DBHelper</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo+github个人博客CDN加速</title>
     <url>/undefined/16d8a98a/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
@@ -269,7 +303,7 @@
 <blockquote>
 <p>代码中的<strong>SqlDataReader r = db.getMore(sql);//调用查询多个值的方法，接收结果</strong></p>
 <p>其中，db是DBhelper帮助类的实例对象，调用的是获取多个值的方法</p>
-<p>关于DBhelper类可以参考**<a href="">这篇文章</a>**（还没更新）</p>
+<p>关于DBhelper类可以参考<a href="https://sy233.xyz/undefined/d9173e02/">这篇文章</a></p>
 </blockquote>
 <blockquote>
 <p>到这里，新建用户界面算是写完了</p>
