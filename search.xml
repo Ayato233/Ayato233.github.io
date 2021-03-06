@@ -535,6 +535,25 @@
       </tags>
   </entry>
   <entry>
+    <title>取消Git右键菜单</title>
+    <url>/undefined/3f6b99d1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
+<p>Git安装后有右键菜单项，又时候用不到或者不想用，每次右键看到还会烦，并且影响右键菜单响应速度，所以我们可以把它关闭</p>
+<ol>
+<li><code>Win+R</code>打开命令工具，输入<code>regedit</code>打开注册表</li>
+<li><code>HKEY_CLASSES_ROOT\Directory\Background\shell</code>，进入此路径</li>
+<li>删除<code>git_gui</code>和<code>git_shell</code>即可，完成</li>
+</ol>
+<hr>
+]]></content>
+      <categories>
+        <category>其它</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>我的博客域名</title>
     <url>/undefined/b0712c91/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
