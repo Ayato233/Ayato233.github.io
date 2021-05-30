@@ -295,146 +295,6 @@
       </tags>
   </entry>
   <entry>
-    <title>1.初识Windows程序</title>
-    <url>/undefined/69452c10/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
-<h2 id="1-在vs中创建Windows窗体应用程序"><a href="#1-在vs中创建Windows窗体应用程序" class="headerlink" title="1.在vs中创建Windows窗体应用程序"></a>1.在vs中创建Windows窗体应用程序</h2><p><img src="https://cdn.jsdelivr.net/gh/Ayato233/winform/%E5%9C%A8vs%E4%B8%AD%E5%88%9B%E5%BB%BAWindows%E7%AA%97%E4%BD%93.png" alt="目录结构"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Ayato233/winform/%E7%A8%8B%E5%BA%8F%E4%B8%BB%E5%85%A5%E5%8F%A3.png" alt="main方法"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Ayato233/winform/%E7%BC%96%E8%BE%91%E5%99%A8.png" alt="编辑器"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/Ayato233/winform/%E7%AA%97%E5%8F%A3%E7%BB%A7%E6%89%BF.png" alt="窗口继承"></p>
-<hr>
-<h2 id="2-命名规范-前缀"><a href="#2-命名规范-前缀" class="headerlink" title="2.命名规范-前缀"></a>2.命名规范-前缀</h2><table>
-<thead>
-<tr>
-<th>控件名称</th>
-<th>控件类名</th>
-<th>命名前缀</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>标签</td>
-<td>Label</td>
-<td>lbl</td>
-</tr>
-<tr>
-<td>文本框</td>
-<td>TextBox</td>
-<td>txt</td>
-</tr>
-<tr>
-<td>组合框</td>
-<td>ComboBox</td>
-<td>cbo</td>
-</tr>
-<tr>
-<td>按钮</td>
-<td>Button</td>
-<td>btn</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>规范化命名可以提高程序的可读性和维护性</p>
-</blockquote>
-<h2 id="3-常用的窗体属性"><a href="#3-常用的窗体属性" class="headerlink" title="3.常用的窗体属性"></a>3.常用的窗体属性</h2><ol>
-<li>窗体标题：Name</li>
-<li>窗体图标：lcon</li>
-<li>背景图片：BackgroundImage</li>
-<li>背景颜色：BackColor</li>
-<li>最大化按钮：MaximinBox</li>
-<li>最小化按钮：minimun</li>
-<li>窗体边框样式：FormBorderStyle</li>
-<li>窗体初始位置：StartPosition</li>
-<li>窗体状态：WindowsState</li>
-</ol>
-<h2 id="4-事件处理"><a href="#4-事件处理" class="headerlink" title="4.事件处理"></a>4.事件处理</h2><blockquote>
-<p>Windows系统通过事件处理来响应用户的请求</p>
-</blockquote>
-<ol>
-<li>窗体form<ol>
-<li>load事件：窗体加载时触发</li>
-</ol>
-</li>
-<li>文本框textbox<ol>
-<li>TextChanged事件：文字改变时触发</li>
-</ol>
-</li>
-<li>组合框ComboBox<ol>
-<li>SelectedIndexChanged事件：下标选择改变时触发</li>
-</ol>
-</li>
-<li>按钮Button<ol>
-<li>Click事件：单击组件时触发</li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<p>事件：加载事件、单击事件、双击事件</p>
-</blockquote>
-<hr>
-<h2 id="5-其它知识点"><a href="#5-其它知识点" class="headerlink" title="5.其它知识点"></a>5.其它知识点</h2><ol>
-<li>MessageBoxButton.OkCancel(确定和取消)</li>
-<li>MessageBoxButton.YesNo(是和否)<ol>
-<li>MessageBox.Show(“确认取消吗”,”输入提示”,MessageBoxButtons.YesNo,MessageBoxIcon.Information);</li>
-</ol>
-</li>
-<li>MessageBoxIcon.Information(Question)</li>
-</ol>
-<blockquote>
-<p>三种message窗口，可以选择是或否，确定或取消</p>
-</blockquote>
-<ol start="4">
-<li>获取焦点，Focus()获得输入焦点</li>
-<li>去掉空格，Trim() </li>
-<li>下拉框自动选中某个值（索引）：this.cboType.SelectedIndex=0;</li>
-<li>改变下拉框的显示方式：DropDownStyle（下拉框属性）</li>
-<li>TabIndex属性可以改变光标焦点的顺序</li>
-</ol>
-]]></content>
-      <categories>
-        <category>winform</category>
-      </categories>
-      <tags>
-        <tag>winform</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>取消Git右键菜单</title>
-    <url>/undefined/3f6b99d1/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
-<p>Git安装后有右键菜单项，又时候用不到或者不想用，每次右键看到还会烦，并且影响右键菜单响应速度，所以我们可以把它关闭</p>
-<ol>
-<li><code>Win+R</code>打开命令工具，输入<code>regedit</code>打开注册表</li>
-<li><code>HKEY_CLASSES_ROOT\Directory\Background\shell</code>，进入此路径</li>
-<li>删除<code>git_gui</code>和<code>git_shell</code>即可，完成</li>
-</ol>
-<hr>
-]]></content>
-      <categories>
-        <category>其它</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的博客域名</title>
-    <url>/undefined/b0712c91/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
-<h3 id="今天我也给我的小博客弄上了域名"><a href="#今天我也给我的小博客弄上了域名" class="headerlink" title="今天我也给我的小博客弄上了域名~"></a>今天我也给我的小博客弄上了域名~</h3><p>​        看着其他大佬的博客网址都是什么什么.com、.net、.top、.cn等等一系列有逼格又好记的网址，再看看我的网址，，，惨不忍睹，所以我决定也弄一个域名</p>
-<p>​        目标明确，开始实行，我查了很多资料，包括网站的一些相关资料，域名的一些相关资料，什么备案啊乱七八糟的，我在阿里云花了1块钱买了一年域名，都准备好备案了，后来才发现GitHub绑定域名不需要备案，也无法备案，因为是国外的服务器，，于是乎，，跟着百度一顿操作，，</p>
-<h4 id="终于！！"><a href="#终于！！" class="headerlink" title="终于！！"></a>终于！！</h4><p>我的博客网址变成了你现在看到的样子~~~</p>
-<p>妙哉啊.</p>
-<hr>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-        <tag>域名</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>文章版权链接的小坑</title>
     <url>/undefined/cbb653d0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><hr>
@@ -443,7 +303,7 @@
 </blockquote>
 <p><img src="https://7.dusays.com/2021/01/22/7f83e9cb2aa54.png" alt="文章链接"></p>
 <blockquote>
-<p>这个链接，，，明显不对啊！点进去根本不能连接到你的文章页面</p>
+<p>这个链接，，，明显不对啊！点进去根本不能连接到我的文章页面</p>
 <p>于是乎，我百度了一下，也没百度出来什么，最后是跑到站点配置文件里才弄好的</p>
 </blockquote>
 <hr>
@@ -527,7 +387,7 @@
       </tags>
   </entry>
   <entry>
-    <title>LogicJava理解程序逻辑综合</title>
+    <title>Java基础、理解程序逻辑综合</title>
     <url>/undefined/9c45da99/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/css/APlayer.min.css"><script src="/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="/js/Meting.min.js"></script><h1 id="1-初识Java"><a href="#1-初识Java" class="headerlink" title="1. 初识Java"></a>1. 初识Java</h1><h2 id="1-1-程序和指令"><a href="#1-1-程序和指令" class="headerlink" title="1.1 程序和指令"></a>1.1 程序和指令</h2><h3 id="1-1-1-程序"><a href="#1-1-1-程序" class="headerlink" title="1.1.1  程序"></a>1.1.1  程序</h3><blockquote>
 <p>计算机程序：为了完成某件事或执行某些操作而编写的一系列有序指令的集合。</p>
