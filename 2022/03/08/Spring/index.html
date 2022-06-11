@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="牛大壮"><meta name="copyright" content="牛大壮"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>Spring | 牛大壮</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://fastly.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"miku0831.top","root":"/","title":"牛大壮的小站","version":"1.10.4","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="什么是Spring？ spring是一个轻量级框架，它大大简化了Java企业级开发，提供强大，稳定功能的同时并没有带来额外的负担，spring有两个主要目标：1、让现有技术更易用。2、养成良好的编程习惯。（或者称为最佳实践）。 作为一个全面的解决方案，spring坚持一个原则，不重新发明轮子，已经有较好的解决方案的领域，spring绝不做重复性的实现。例如，对象持久化和ORM，spring只是对现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring">
+<meta property="og:url" content="http://miku0831.top/2022/03/08/Spring/index.html">
+<meta property="og:site_name" content="牛大壮">
+<meta property="og:description" content="什么是Spring？ spring是一个轻量级框架，它大大简化了Java企业级开发，提供强大，稳定功能的同时并没有带来额外的负担，spring有两个主要目标：1、让现有技术更易用。2、养成良好的编程习惯。（或者称为最佳实践）。 作为一个全面的解决方案，spring坚持一个原则，不重新发明轮子，已经有较好的解决方案的领域，spring绝不做重复性的实现。例如，对象持久化和ORM，spring只是对现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdn.net/2018071517421347?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NzAwOTQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1663752/201905/1663752-20190504125122814-1898652434.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1663752/201905/1663752-20190504130335172-498657305.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/758949/201905/758949-20190529225344641-152289598.png">
+<meta property="article:published_time" content="2022-03-08T01:39:15.000Z">
+<meta property="article:modified_time" content="2022-03-10T13:56:09.170Z">
+<meta property="article:author" content="牛大壮">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/2018071517421347?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NzAwOTQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="牛大壮"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="牛大壮"><span class="site-author-status" title="我什么都做不到">😭</span></a><div class="site-author-name"><a href="/about/">牛大壮</a></div><a class="site-name" href="/about/site.html">牛大壮</a><sub class="site-subtitle"></sub><div class="site-description"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">26</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">14</span></a></div><a class="site-state-item hty-icon-button" href="https://miku0831.top" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="2783885223" title="QQ" target="_blank" style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Ayato233" title="GitHub" target="_blank" style="color:#6e5494"><span class="icon iconify" data-icon="ri:github-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=129610231" title="网易云音乐" target="_blank" style="color:#C20C0C"><span class="icon iconify" data-icon="ri:netease-cloud-music-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/24769766" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><span class="icon iconify" data-icon="ri:bilibili-line"></span></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSpring%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是Spring？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">2.</span> <span class="toc-text">Spring快速入门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bean%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">Bean实例化的三种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%85%B6%E5%AE%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">引入其它配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-IOC"><span class="toc-number">5.</span> <span class="toc-text">Spring IOC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-AOP"><span class="toc-number">6.</span> <span class="toc-text">Spring-AOP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E7%9A%84%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91"><span class="toc-number">7.</span> <span class="toc-text">Spring的注解开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0AOP%EF%BC%88%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">注解实现AOP（面向切面编程）</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://miku0831.top/2022/03/08/Spring/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="牛大壮"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="牛大壮"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Spring</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2022-03-08 09:39:15" itemprop="dateCreated datePublished" datetime="2022-03-08T09:39:15+08:00">2022-03-08</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2022-03-10 21:56:09" itemprop="dateModified" datetime="2022-03-10T21:56:09+08:00">2022-03-10</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E6%8A%80%E6%9C%AF/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">技术</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/Spring/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">Spring</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h3 id="什么是Spring？"><a href="#什么是Spring？" class="headerlink" title="什么是Spring？"></a>什么是Spring？</h3><blockquote>
+<p>spring是一个轻量级框架，它大大简化了Java企业级开发，提供强大，稳定功能的同时并没有带来额外的负担，spring有两个主要目标：1、让现有技术更易用。2、养成良好的编程习惯。（或者称为最佳实践）。</p>
+<p>作为一个全面的解决方案，spring坚持一个原则，不重新发明轮子，已经有较好的解决方案的领域，spring绝不做重复性的实现。例如，对象持久化和ORM，spring只是对现有的jdbc，mybatis，hibernate等技术提供支持，使之更易用，而不是重新实现。</p>
+<p>spring框架大概由20个功能模块组成， 这些模块被分成6个部分。分别是</p>
+<ol>
+<li><code>Core Container</code></li>
+<li><code>data access/integration</code></li>
+<li><code>web</code></li>
+<li><code>aop</code></li>
+<li><code>instrumentation</code></li>
+<li><code>test</code></li>
+</ol>
+<p>如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/2018071517421347?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM4NzAwOTQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" loading="lazy"></p>
+</blockquote>
+<hr>
+<p>Spring Core 是框架的最基础部分，提供了IOC特性</p>
+<p>Spring Context 为企业级开发提供了便利的集成工具</p>
+<p>SpringAOP 是基于Spring Core的符合规范的面向切面编程的实现。</p>
+<p>Spring JDBC 提供了JDBC的抽象层，简化了JDBC编码</p>
+<p>Spring ORM 对市面上流行的ORM框架提供了支持</p>
+<p>Spring Web 为spring在web应用程序中的使用提供了支持</p>
+<hr>
+<h3 id="Spring快速入门"><a href="#Spring快速入门" class="headerlink" title="Spring快速入门"></a>Spring快速入门</h3><ul>
+<li><p>在pom文件中导入坐标</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;5.3.16&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写接口和实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">StudentDao</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">sava</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StudentDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">StudentDao</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sava</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;sava running...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建xml配置文件并且配置实现类到xml配置文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xsi:schemaLocation=&quot;</span><br><span class="line">        http://www.springframework.org/schema/beans</span><br><span class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">        http://www.springframework.org/schema/context</span><br><span class="line">        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</span><br><span class="line">        </span><br><span class="line">	&lt;bean id=&quot;studentDao&quot; class=&quot;org.demo.dao.impl.StudentDaoImpl&quot;&gt;&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用app对象调用getBean()方法获取对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StudentTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">app</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">        <span class="type">StudentDao</span> <span class="variable">studentService</span> <span class="operator">=</span> (StudentDao) app.getBean(<span class="string">&quot;studentDao&quot;</span>);</span><br><span class="line">        studentService.sava();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="Bean实例化的三种方式"><a href="#Bean实例化的三种方式" class="headerlink" title="Bean实例化的三种方式"></a>Bean实例化的三种方式</h3><ol>
+<li>无参构造方法实例化（最常用）</li>
+<li>工厂静态方法实例化</li>
+<li>工厂示例方法实例化</li>
+</ol>
+<hr>
+<h3 id="引入其它配置文件"><a href="#引入其它配置文件" class="headerlink" title="引入其它配置文件"></a>引入其它配置文件</h3><blockquote>
+<p>实际开发中，spring的配置非常多，这就导致spring配置很繁杂且体积很大，所以，可以将部分配置拆解到其它配置文件中，而在spring主配置文件通过import标签加载。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;import resource=&quot;applicationContext-xxx.xml&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h3><p>IOC（Inversion of Control），即“<code>控制反转</code>”，也称为依赖注入（dependency injection），是面向对象编程中的一种设计理念，用来降低程序代码之间的耦合度，依赖一般指的通过局部变量，方法参数，返回值等建立的对于其他对象的调用关系，</p>
+<p>例如：在A类的方法中实例化了B类的对象并调用其方法完成特定的功能，我们就说A类依赖于B类。</p>
+<p><strong>所谓的控制反转就是将代码的调用权（控制权）从调用放转移给被调用方（服务提供方）</strong></p>
+<p>例子：</p>
+<ol>
+<li><p>强耦合方式</p>
+<p>将 A 调用 B 的对象修改为 C 类的对象，修改的是调用方的代码，所以我们认为代码的调用权在调用方。</p>
+<p><img src="https://img2018.cnblogs.com/blog/1663752/201905/1663752-20190504125122814-1898652434.png" loading="lazy"></p>
+</li>
+<li><p>基于 IoC（控制反转）的调用方式</p>
+<p>将代码的控制权从调用方修改为被调用方，意味着，代码的调用权转移给被调用方（我们也称为服务方），不用修改调用方的代码，只要修改配置文件就实现对象的切换。</p>
+<p>　　如下图：将 A 类调用 B 类的对象修改为 C 类的对象，修改的是被调用方的配置文件的代码，所以代码的调用权转移到了被调用方。通过控制反转，我们可以实现增加模块或者移除模块统一由配置文件关联，所以增加或者移除模块配置 XML 配置文件即可。</p>
+<p>　　我们将代码的调用权（控制权）从调用方转移给被调用方（服务提供方）的设计模式称为控制反转（IoC）。</p>
+<p><img src="https://img2018.cnblogs.com/blog/1663752/201905/1663752-20190504130335172-498657305.png" loading="lazy"></p>
+</li>
+</ol>
+<blockquote>
+<p>在编写程序时，通过控制反转把对象创建交给spring，但是代码中不可能出现没有依赖的情况，IOC只是降低他们的依赖关系，但不会消除，例如：业务层仍会调用持久层的方法。</p>
+</blockquote>
+<blockquote>
+<p>这种关系在使用spring之后就由spring来维护。我们只需要从spring容器中获取业务层对象，让spring自动的把持久层对象注入给业务层。这样就不用我们自己去获取了。</p>
+</blockquote>
+<hr>
+<h3 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring-AOP"></a>Spring-AOP</h3><blockquote>
+<p>AOP （Aspect Orient Programming）,直译过来就是 面向切面编程。AOP 是一种编程思想，是面向对象编程（OOP）的一种补充。面向对象编程将程序抽象成各个层次的对象，而面向切面编程是将程序抽象成各个切面。</p>
+</blockquote>
+<p><img src="https://img2018.cnblogs.com/blog/758949/201905/758949-20190529225344641-152289598.png" loading="lazy"></p>
+<blockquote>
+<p>从该图可以很形象地看出，所谓切面，相当于应用对象间的横切点，我们可以将其单独抽象为单独的模块。</p>
+</blockquote>
+<hr>
+<p><strong>AOP的几个概念</strong></p>
+<ol>
+<li><code>切面(Aspect)</code>：切面就是一个关注点的模块化，如事务管理、日志管理、权限管理等； </li>
+<li><code>连接点(Joinpoint)</code>：程序执行时的某个特定的点，在Spring中就是一个方法的执行； </li>
+<li><code>通知(Advice)</code>：通知就是在切面的某个连接点上执行的操作，也就是事务管理、日志管理等； </li>
+<li><code>切入点(Pointcut)</code>：切入点就是描述某一类选定的连接点，也就是指定某一类要织入通知的方法； </li>
+<li><code>目标对象(Target)</code>：就是被AOP动态代理的目标对象；</li>
+</ol>
+<hr>
+<p><strong>AOP的5种增强模式</strong></p>
+<p>​	</p>
+<table>
+<thead>
+<tr>
+<th>增强处理类型</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Before</td>
+<td>前置增强处理，在目标方法前织入增强处理</td>
+</tr>
+<tr>
+<td>AfterReturning</td>
+<td>后置增强处理，在目标方法正常执行（不出现异常）后织入增强处理</td>
+</tr>
+<tr>
+<td>AfterThrowing</td>
+<td>异常增强处理，在目标方法抛出异常后织入增强处理</td>
+</tr>
+<tr>
+<td>After</td>
+<td>最终增强处理，不论方法是否抛出异常，都会在目标方法最后织入增强处理</td>
+</tr>
+<tr>
+<td>Around</td>
+<td>环绕增强处理，在目标方法的前后都可以织入增强处理</td>
+</tr>
+</tbody></table>
+<p><strong>织入</strong>(Weaving)，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/AOP">AOP</a>术语。把切面（aspect）连接到其它的应用程序类型或者对象上，并创建一个被通知（advised）的对象，这样的行为叫做织入。 （将增强处理添加到目标对象中，并创建一个被增强的对象，这个过程就是织入）</p>
+<ol>
+<li><p><code>前置增强</code></p>
+</li>
+<li><p><code>后置增强</code></p>
+</li>
+<li><p><code>异常抛出增强</code></p>
+</li>
+<li><p><code>环绕增强</code></p>
+</li>
+<li><p><code>最终增强</code></p>
+</li>
+</ol>
+<hr>
+<h3 id="Spring的注解开发"><a href="#Spring的注解开发" class="headerlink" title="Spring的注解开发"></a>Spring的注解开发</h3><ul>
+<li>原始注解</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Component</td>
+<td>使用在Bean上用于实例化Bean</td>
+</tr>
+<tr>
+<td>@Controller</td>
+<td>使用在web层上实例化bean</td>
+</tr>
+<tr>
+<td>@Service</td>
+<td>使用在service层上实例化Bean</td>
+</tr>
+<tr>
+<td>@Repositroy</td>
+<td>使用在dao层上实例化bean</td>
+</tr>
+<tr>
+<td>@Autowired</td>
+<td>使用在字段上用于根据类型依赖注入</td>
+</tr>
+<tr>
+<td>@Qualifier</td>
+<td>结合@Autowired一起使用用于根据名称依赖注入</td>
+</tr>
+<tr>
+<td>@Resource</td>
+<td>相当于@Autowired+@Qualifier的结合体 按照名称注入</td>
+</tr>
+<tr>
+<td>@Value</td>
+<td>注入普通属性</td>
+</tr>
+<tr>
+<td>@Scope</td>
+<td>标注bean的作用范围</td>
+</tr>
+<tr>
+<td>@PostConstruct</td>
+<td>使用在方法上标注该方法是初始化方法</td>
+</tr>
+<tr>
+<td>@PreDestroy</td>
+<td>使用在方法上标注该方法是销毁方法</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>新注解</p>
+<blockquote>
+<p>原始注解不能完全替代Spring配置文件中的内容,所以出现了Spring新注解</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Configuration</td>
+<td>用于指定当前类是一个 Spring 配置类，当创建容器时会从该类上加载注解</td>
+</tr>
+<tr>
+<td>@ComponentScan</td>
+<td>用于指定 Spring 在初始化容器时要扫描的包。</td>
+</tr>
+<tr>
+<td>@Bean</td>
+<td>使用在方法上，标注将该方法的返回值存储到 Spring 容器中</td>
+</tr>
+<tr>
+<td>@PropertySource</td>
+<td>用于加载.properties 文件中的配置</td>
+</tr>
+<tr>
+<td>@Import</td>
+<td>用于导入其他配置类</td>
+</tr>
+</tbody></table>
+<h3 id="注解实现AOP（面向切面编程）"><a href="#注解实现AOP（面向切面编程）" class="headerlink" title="注解实现AOP（面向切面编程）"></a>注解实现AOP（面向切面编程）</h3><p>Aop(aspect object programming)面向切面编程，名词解释:</p>
+<ol>
+<li><p>功能：让关注点代码与业务逻辑代码分离</p>
+<p>关注点：重复代码就叫做关注点</p>
+</li>
+<li><p>切面：关注点形成的类，就叫做切面(类)，面向切面编程，就是指对很多功能都有的重复代码抽取，再在运行的时候往业务方法上动态植入”切面类代码”</p>
+<p>切入点：执行目标对象方法，动态植入切面代码，可以通过切入点表达式，指定拦截那些类的那些方法，给指定的类在运行的时候植入切面类代码</p>
+</li>
+</ol>
+<p><strong>开发步骤：</strong></p>
+<ol>
+<li><p>使用aop功能的maven依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-aspects&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.3.14&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引入aop名称空间</p>
+</li>
+<li><p>开启aop注解扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--  开启基于注解的AOP功能；aop名称空间--&gt;</span><br><span class="line">&lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始写一个切面类</p>
+<p>使用@Aspect注解将一个类定义为切面类</p>
+<p>使用@Before注解将before()方法定义为前置增强</p>
+<p>使用@AfterReturning注解将afterReturning()方法定义为后置增强</p>
+<p>为了获取当前连接点的信息，在增强方法中添加JoinPoint类型的参数，spring会自动注入该实例，对于后置增强，还可以定义一个参数用于接收目标方法的返回值，需要注意必须在@AfterReturning注解中通过returning属性指定该参数的名称，spring会将目标方法的返回值赋值给指定名称的参数。</p>
+</li>
+<li><p>执行目标对象方法</p>
+</li>
+<li><p>进行测试</p>
+</li>
+</ol>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">我很可爱，请给我钱</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/zhifubao.jpg"><img loading="lazy" src="/images/zhifubao.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><span class="icon iconify" data-icon="ri:alipay-line"></span></span></div></div><div style="display:inline-block"><a href="/images/qq.png"><img loading="lazy" src="/images/qq.png" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></span></div></div><div style="display:inline-block"><a href="/images/weixin.png"><img loading="lazy" src="/images/weixin.png" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><span class="icon iconify" data-icon="ri:wechat-pay-line"></span></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>牛大壮</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://miku0831.top/2022/03/08/Spring/" title="Spring">http://miku0831.top/2022/03/08/Spring/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2022/03/07/ThreadLocal/" rel="next" title="ThreadLocal"><span class="post-nav-text">ThreadLocal</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>如果您有任何关于博客内容的相关讨论，欢迎前往 <a href="https://github.com/YunYouJun/yunyoujun.github.io/discussions" target="_blank">GitHub Discussions</a> 与我交流。</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2022 </span><a class="with-love" id="animate" href="https://miku0831.top" title="牛大壮的赞助者们"><span class="icon iconify" data-icon="ri:cloud-line"></span></a><span class="author"> 牛大壮</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.4</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2019-04-12T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><script>function initMourn() {
+  const date = new Date();
+  const today = (date.getMonth() + 1) + "-" + date.getDate()
+  const mourn_days = ["4-4","9-18"]
+  if (mourn_days.includes(today)) {
+    document.documentElement.style.filter = "grayscale(1)";
+  }
+}
+initMourn();</script><div class="aplayer no-destroy" id="aplayer" data-id="308168565" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listmaxheight="340px" data-storagename="metingjs"></div></body></html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="牛大壮"><meta name="copyright" content="牛大壮"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>Java多线程 | 牛大壮</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://fastly.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"miku0831.top","root":"/","title":"牛大壮的小站","version":"1.10.4","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="多线程 进程：进程是程序的一次动态执行过程，它对应了从代码的加载，执行到执行完毕的一个完整过程。  线程：线程是进程中执行运算的最小单位，可完成一个独立的顺序控制流程，每个进程中，必须至少建立一个线程（这个线程被称为主线程）来作为这个程序的运行的入口点，如果在一个进程中同时运行了多个线程，用来完成不同的工作，则成为 “多线程”。 任何线程一般都具有五种状态：创建、就绪、运行、阻塞、死亡  多线程的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程">
+<meta property="og:url" content="http://miku0831.top/2021/11/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="牛大壮">
+<meta property="og:description" content="多线程 进程：进程是程序的一次动态执行过程，它对应了从代码的加载，执行到执行完毕的一个完整过程。  线程：线程是进程中执行运算的最小单位，可完成一个独立的顺序控制流程，每个进程中，必须至少建立一个线程（这个线程被称为主线程）来作为这个程序的运行的入口点，如果在一个进程中同时运行了多个线程，用来完成不同的工作，则成为 “多线程”。 任何线程一般都具有五种状态：创建、就绪、运行、阻塞、死亡  多线程的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-09T06:30:37.000Z">
+<meta property="article:modified_time" content="2022-03-08T09:46:58.103Z">
+<meta property="article:author" content="牛大壮">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="牛大壮"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="牛大壮"><span class="site-author-status" title="我什么都做不到">😭</span></a><div class="site-author-name"><a href="/about/">牛大壮</a></div><a class="site-name" href="/about/site.html">牛大壮</a><sub class="site-subtitle"></sub><div class="site-description"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">26</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">14</span></a></div><a class="site-state-item hty-icon-button" href="https://miku0831.top" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="2783885223" title="QQ" target="_blank" style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Ayato233" title="GitHub" target="_blank" style="color:#6e5494"><span class="icon iconify" data-icon="ri:github-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=129610231" title="网易云音乐" target="_blank" style="color:#C20C0C"><span class="icon iconify" data-icon="ri:netease-cloud-music-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/24769766" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><span class="icon iconify" data-icon="ri:bilibili-line"></span></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">多线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E7%BA%BF%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">主线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%88%86%E4%B8%BA%E5%9B%9B%E4%B8%AA%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">使用一个线程的过程，可以分为四个步骤：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8java%E4%B8%AD%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%B8%A4%E4%B8%AA%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">在java中创建线程有两个方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">5.</span> <span class="toc-text">线程的优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BC%91%E7%9C%A0"><span class="toc-number">6.</span> <span class="toc-text">线程的休眠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%BC%BA%E5%88%B6%E8%BF%90%E8%A1%8C"><span class="toc-number">7.</span> <span class="toc-text">线程的强制运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%A4%BC%E8%AE%A9"><span class="toc-number">8.</span> <span class="toc-text">线程的礼让</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5"><span class="toc-number">9.</span> <span class="toc-text">线程的同步</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://miku0831.top/2021/11/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="牛大壮"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="牛大壮"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Java多线程</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-11-09 14:30:37" itemprop="dateCreated datePublished" datetime="2021-11-09T14:30:37+08:00">2021-11-09</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2022-03-08 17:46:58" itemprop="dateModified" datetime="2022-03-08T17:46:58+08:00">2022-03-08</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E6%8A%80%E6%9C%AF/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">技术</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/java/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">java</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><ol>
+<li><p>进程：进程是程序的一次动态执行过程，它对应了从代码的加载，执行到执行完毕的一个完整过程。</p>
+</li>
+<li><p>线程：线程是进程中执行运算的最小单位，可完成一个独立的顺序控制流程，每个进程中，必须至少建立一个线程（这个线程被称为主线程）来作为这个程序的运行的入口点，如果在一个进程中同时运行了多个线程，用来完成不同的工作，则成为 “多线程”。</p>
+<p>任何线程一般都具有五种状态：创建、就绪、运行、阻塞、死亡</p>
+</li>
+<li><p>多线程的好处：</p>
+<ol>
+<li>充分利用CPU资源</li>
+<li>简化编程模型</li>
+<li>带来良好的用户体验</li>
+</ol>
+</li>
+</ol>
+<hr>
+<p>Java 通过 Thread 类将线程所必须的功能都封装了起来</p>
+<p>Thread 类及其常用方法：</p>
+<table>
+<thead>
+<tr>
+<th>构造方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Thread()</td>
+<td>分配新的Thread对象</td>
+</tr>
+<tr>
+<td>Thread(Runnable target)</td>
+<td>分配新的Thread对象，target为run()方法被调用的对象</td>
+</tr>
+<tr>
+<td>Thread(Runnable target,String name)</td>
+<td>分配新的Thread对象，target为run()方法被调用的对象，name为新线程的名字</td>
+</tr>
+<tr>
+<td>void run()</td>
+<td>执行任务操作的方法</td>
+</tr>
+<tr>
+<td>void start()</td>
+<td>使该线程开始执行，Java虚拟机调用该线程的run()方法</td>
+</tr>
+<tr>
+<td>void sleep(loog millis)</td>
+<td>在指定的毫秒数内让当前正在执行的线程休眠(暂停执行)</td>
+</tr>
+<tr>
+<td>String getName()</td>
+<td>返回线程的名字</td>
+</tr>
+<tr>
+<td>int getPriority()</td>
+<td>返回线程的优先级</td>
+</tr>
+<tr>
+<td>void setPriority(int newPriority)</td>
+<td>更改线程的优先级</td>
+</tr>
+<tr>
+<td>static Thread currentThread()</td>
+<td>返回当前正在执行的线程对象的引用</td>
+</tr>
+<tr>
+<td>boolean isAlive()</td>
+<td>测试线程是否处于活动状态</td>
+</tr>
+<tr>
+<td>void join()</td>
+<td>等待该线程终止</td>
+</tr>
+<tr>
+<td>void interrupt()</td>
+<td>中断线程</td>
+</tr>
+<tr>
+<td>void yield()</td>
+<td>暂停当前正在执行的线程对象，并执行其他线程</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="主线程"><a href="#主线程" class="headerlink" title="主线程"></a>主线程</h3><p>在Java程序启动时，一个线程立刻运行，该线程通常称为程序的主线程，java程序中的public static void main() 方法是主线程的入口，每个进程都至少有一个主线程。它是程序开始时就执行的。主线程的重要性体现在以下两个方面：</p>
+<ol>
+<li>它是产生其他子线程的线程</li>
+<li>通常它必须最后完成执行，因为它执行各种关闭动作</li>
+</ol>
+<blockquote>
+<p>尽管主线程在程序启动时自动创建，但它可以由一个Thread对象控制。为此，需要调用方法 currentThread()获得它的一个引用，currentThread() 方法Thread类的共有静态成员，它的通常形式如下：</p>
+<p><strong>static Thread currentThread()</strong></p>
+<p>该方法返回一个调用它的线程的引用，一旦获得主线程的引用，就可以像控制其他线程那样控制主线程。</p>
+</blockquote>
+<hr>
+<h3 id="使用一个线程的过程，可以分为四个步骤："><a href="#使用一个线程的过程，可以分为四个步骤：" class="headerlink" title="使用一个线程的过程，可以分为四个步骤："></a>使用一个线程的过程，可以分为四个步骤：</h3><ol>
+<li>定义一个线程，同时指明这个线程所要执行的代码</li>
+<li>创建线程对象</li>
+<li>启动线程</li>
+<li>终止线程</li>
+</ol>
+<h3 id="在java中创建线程有两个方法："><a href="#在java中创建线程有两个方法：" class="headerlink" title="在java中创建线程有两个方法："></a>在java中创建线程有两个方法：</h3><ol>
+<li><p><strong>继承Thread类</strong></p>
+<p>因为使用此方法创建线程，此线程类需要继承Thread类并重写Thread类的run()方法，因为Thread类的run()方法是线程要执行操作任务的方法，所以线程要执行的操作代码都写run()方法中，并通过调用start（）方法启动线程后调用。</p>
+<p>实现步骤：</p>
+<ol>
+<li>定义MyThread类继承Thread类</li>
+<li>重写run()方法，在run()方法中实现数据输出</li>
+<li>创建线程对象，调用start()方法启动线程</li>
+</ol>
+</li>
+<li><p><strong>实现Runnable接口</strong></p>
+<p>Runnable接口定义在java.lang包中，其中声明了一个抽象方法run()，一个类可以通过实现Runnable接口并实现其run（）方法完成线程的所有活动，已实现的run（）方法称为该线程对线的线程体，任何实现runnable接口的对象都可以作为一个线程的目标对象。</p>
+<p>实现步骤：</p>
+<ol>
+<li>定义MyRunnable类实现Runnable接口，并实现run（）方法</li>
+<li>创建MyRunnable类型的myRunnable对象</li>
+<li>创建一个Thread类的对象myThread ，将myRunnable对象作为Thread类构造方法的参数传入</li>
+<li>调用myThread对象start方法启动线程</li>
+</ol>
+<blockquote>
+<p>两种创建线程的方式各有特点和应用领域，直接继承的方式编写简单，可以直接操作线程，适用于间继承的情况；当一个线程继承了另一个类时，就只能通过实现接口的方式来创建线程，而且这种方式还可以实现多个线程之间资源的共享。</p>
+</blockquote>
+<hr>
+<h3 id="线程的优先级"><a href="#线程的优先级" class="headerlink" title="线程的优先级"></a>线程的优先级</h3><p>每个线程会自动获得一个线程的优先级（Priority），优先级的高低反应线程的重要或紧急程度，一般情况下优先级高的线程获得CPU资源的概率较大</p>
+<p>线程的优先级用1~10表示，1表示最高，默认值为5，这些优先级对应一个Thread类的共用静态常量，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> NORM_PRIORITY=<span class="number">5</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> MAX_PRIORITY=<span class="number">10</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> MIN_PRIORITY=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>每个线程的优先级介于max<del>min之间，线程的优先级可通过getPriority()方法获取，setPriority(int grade)方法更改，grade必须是一个1</del>10的整数</p>
+<hr>
+<h3 id="线程的休眠"><a href="#线程的休眠" class="headerlink" title="线程的休眠"></a>线程的休眠</h3><p>在程序中允许一个线程进行暂时休眠，直接使用Thread.sleep(); 方法即可以实现线程的休眠，sleep方法定义语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">sleep</span><span class="params">(loog millis)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>sleep方法会让当前线程休眠（停止执行），mills是毫秒，线程运行中的状态进入不可运行状态 ，睡眠时间过后线程会进入可运行状态，调用sleep方法需要处理InterrupteException异常</p>
+<hr>
+<h3 id="线程的强制运行"><a href="#线程的强制运行" class="headerlink" title="线程的强制运行"></a>线程的强制运行</h3><p>join()方法使用当前线程暂停执行，等到调用该方法的线程节后再继续执行本线程，它有三个重载方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public final void join();//第一种</span><br><span class="line">public final void join(long millis);//第二种，给毫秒</span><br><span class="line">public final void join(long millis, int nanos);//第三种，给毫秒和纳秒</span><br></pre></td></tr></table></figure>
+
+<p>join方法也需要处理异常</p>
+<hr>
+<h3 id="线程的礼让"><a href="#线程的礼让" class="headerlink" title="线程的礼让"></a>线程的礼让</h3><p>yield()方法可暂停当前线程执行，允许其他具有相同优先级的线程获得运行机会，该线程任然处于就绪状态，不转为阻塞状态，此时，系统允许其他相同优先级或者更高优先级线程执行，若无其他线程执行，则该线程继续执行</p>
+<p>语法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">yield</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+<p>线程礼让只是提供一种可能，不能保证一定会实现礼让。</p>
+<hr>
+<h3 id="线程的同步"><a href="#线程的同步" class="headerlink" title="线程的同步"></a>线程的同步</h3><p>一个线程类如果是通过Runnable接口实现的，那么类中的属性又可能被多个该类的线程共享资源，有可能引发线程不安全的问题，解决这中问题需要使用线程同步。</p>
+<p>线程同步有两种方法：<strong>同步代码方法和同步代码块</strong></p>
+<p>这两种方法都使用synchronized关键字实现。</p>
+<ol>
+<li><p>同步方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> test&#123;&#125;;<span class="comment">//使用关键字修饰的方法</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同步代码块</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> test&#123;</span><br><span class="line">	<span class="keyword">synchronized</span>&#123;<span class="comment">//关键字</span></span><br><span class="line">		<span class="comment">//方法体</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">我很可爱，请给我钱</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/zhifubao.jpg"><img loading="lazy" src="/images/zhifubao.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><span class="icon iconify" data-icon="ri:alipay-line"></span></span></div></div><div style="display:inline-block"><a href="/images/qq.png"><img loading="lazy" src="/images/qq.png" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></span></div></div><div style="display:inline-block"><a href="/images/weixin.png"><img loading="lazy" src="/images/weixin.png" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><span class="icon iconify" data-icon="ri:wechat-pay-line"></span></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>牛大壮</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://miku0831.top/2021/11/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="Java多线程">http://miku0831.top/2021/11/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/11/09/Java%E5%BC%82%E5%B8%B8/" rel="prev" title="Java异常"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">Java异常</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/11/09/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" rel="next" title="Java集合框架"><span class="post-nav-text">Java集合框架</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>如果您有任何关于博客内容的相关讨论，欢迎前往 <a href="https://github.com/YunYouJun/yunyoujun.github.io/discussions" target="_blank">GitHub Discussions</a> 与我交流。</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2022 </span><a class="with-love" id="animate" href="https://miku0831.top" title="牛大壮的赞助者们"><span class="icon iconify" data-icon="ri:cloud-line"></span></a><span class="author"> 牛大壮</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.4</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2019-04-12T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><script>function initMourn() {
+  const date = new Date();
+  const today = (date.getMonth() + 1) + "-" + date.getDate()
+  const mourn_days = ["4-4","9-18"]
+  if (mourn_days.includes(today)) {
+    document.documentElement.style.filter = "grayscale(1)";
+  }
+}
+initMourn();</script><div class="aplayer no-destroy" id="aplayer" data-id="308168565" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listmaxheight="340px" data-storagename="metingjs"></div></body></html>

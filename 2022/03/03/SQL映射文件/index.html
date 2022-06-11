@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="牛大壮"><meta name="copyright" content="牛大壮"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>SQL映射文件 | 牛大壮</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://fastly.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"miku0831.top","root":"/","title":"牛大壮的小站","version":"1.10.4","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="SQL映射 mybatis的真正强大之处就在于SQL映射语句，也是它的魅力所在，相对于mybatis强大的功能，SQL映射文件打的配置却非常简单。    SQL映射xml文件是所有sql语句放置的地方，不同于JDBC连接的方法，需要构造方法，写statement和resultset语句才可以调用指定的sql语句，只需要把所有的sql语句写在配置文件中，根据不同的id，可以在类中直接调用这些语句。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL映射文件">
+<meta property="og:url" content="http://miku0831.top/2022/03/03/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="牛大壮">
+<meta property="og:description" content="SQL映射 mybatis的真正强大之处就在于SQL映射语句，也是它的魅力所在，相对于mybatis强大的功能，SQL映射文件打的配置却非常简单。    SQL映射xml文件是所有sql语句放置的地方，不同于JDBC连接的方法，需要构造方法，写statement和resultset语句才可以调用指定的sql语句，只需要把所有的sql语句写在配置文件中，根据不同的id，可以在类中直接调用这些语句。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-03T14:33:44.000Z">
+<meta property="article:modified_time" content="2022-03-09T08:28:05.819Z">
+<meta property="article:author" content="牛大壮">
+<meta property="article:tag" content="mybatis">
+<meta name="twitter:card" content="summary"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="牛大壮"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="牛大壮"><span class="site-author-status" title="我什么都做不到">😭</span></a><div class="site-author-name"><a href="/about/">牛大壮</a></div><a class="site-name" href="/about/site.html">牛大壮</a><sub class="site-subtitle"></sub><div class="site-description"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">26</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">14</span></a></div><a class="site-state-item hty-icon-button" href="https://miku0831.top" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="2783885223" title="QQ" target="_blank" style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Ayato233" title="GitHub" target="_blank" style="color:#6e5494"><span class="icon iconify" data-icon="ri:github-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=129610231" title="网易云音乐" target="_blank" style="color:#C20C0C"><span class="icon iconify" data-icon="ri:netease-cloud-music-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/24769766" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><span class="icon iconify" data-icon="ri:bilibili-line"></span></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E6%98%A0%E5%B0%84"><span class="toc-number">1.</span> <span class="toc-text">SQL映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BASQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">创建SQL映射文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.</span> <span class="toc-text">单条件查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-number">4.</span> <span class="toc-text">多条件查询</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://miku0831.top/2022/03/03/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="牛大壮"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="牛大壮"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">SQL映射文件</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2022-03-03 22:33:44" itemprop="dateCreated datePublished" datetime="2022-03-03T22:33:44+08:00">2022-03-03</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2022-03-09 16:28:05" itemprop="dateModified" datetime="2022-03-09T16:28:05+08:00">2022-03-09</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E6%8A%80%E6%9C%AF/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">技术</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/mybatis/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">mybatis</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h3 id="SQL映射"><a href="#SQL映射" class="headerlink" title="SQL映射"></a>SQL映射</h3><blockquote>
+<p>mybatis的真正强大之处就在于SQL映射语句，也是它的魅力所在，相对于mybatis强大的功能，SQL映射文件打的配置却非常简单。</p>
+</blockquote>
+<blockquote>
+<p> SQL映射xml文件是所有sql语句放置的地方，不同于JDBC连接的方法，需要构造方法，写statement和resultset语句才可以调用指定的sql语句，只需要把所有的sql语句写在配置文件中，根据不同的id，可以在类中直接调用这些语句。</p>
+</blockquote>
+<hr>
+<h3 id="创建SQL映射文件"><a href="#创建SQL映射文件" class="headerlink" title="创建SQL映射文件"></a>创建SQL映射文件</h3><p>注意点：</p>
+<p><strong><code>接口和他的Mapper配置文件必须同名!</code></strong></p>
+<p><strong><code>接口和他的Mapper配置文件必须在同一个包下!</code></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line"> </span><br><span class="line">&lt;mapper namespace=&quot;org.dao.UserDao&quot;&gt;</span><br><span class="line"> </span><br><span class="line">    &lt;select id=&quot;selectUserList&quot; resultType=&quot;org.pojo.User&quot;&gt;</span><br><span class="line">        select * from user;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>SQL映射文件一般都对应相应的POJO，所以一般都是POJO的名称+Mapper的规则来命名，当然该mapper文件属于DAO层的操作，应该放置在dao包中，并根据业务功能进行分包放置，如 <code>cn.smbms.dao.userMapper.xml</code></p>
+<p>其中</p>
+<p><code>mapper</code>：映射文件的根元素节点，只有一个属性 namespace</p>
+<p><code>namespace</code>：命名空间，用于区分不同的mapper，全局唯一。</p>
+<p><code>select</code>：表示查询语句，是mybatis最常用的元素之一，常用属性如下：</p>
+<ol>
+<li><code>id</code>属性：该命名空间下的唯一标识符。</li>
+<li><code>resultType</code>属性：表示SQL语句返回值类型。</li>
+</ol>
+<p><code>cache</code>：配置给定命名空间的缓存</p>
+<p><code>cache-ref</code>：从其它命名空间引用缓存配置</p>
+<p><code>resultMap</code>：用来描述数据库结果集和对象的对应关系</p>
+<p><code>sql</code>：可以重用的sql块，也可以被其它语句引用</p>
+<p><code>insert</code>：映射插入语句</p>
+<p><code>update</code>：映射更新语句</p>
+<p><code>delete</code>：映射删除语句</p>
+<p><code>select</code>：映射查询语句</p>
+<p><code>注意</code>：mybatis的SQL映射文件中mapper元素的namespace属性有如下要求：</p>
+<ol>
+<li>namespace的命名必须跟某个DAO接口相同，同属于DAO层，故在代码结构上，映射文件与该DAO接口应当放到同一包下，并且习惯上都是以Mapper结尾。</li>
+<li>在不同的mapper文件中，子元素的ID都可以相同，mybatis通过namespace和子元素的id联合区分，接口中的方法与映射文件中的sql语句id应该一一对应。</li>
+</ol>
+</blockquote>
+<hr>
+<h3 id="单条件查询"><a href="#单条件查询" class="headerlink" title="单条件查询"></a>单条件查询</h3><p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--根据姓名模糊查询用户列表--&gt;</span><br><span class="line">&lt;select id=&quot;getUsersByUserName&quot; resultType=&quot;user&quot; parameterType=&quot;string&quot;&gt;</span><br><span class="line">		&lt;!--                              这里的小括号换成大括号--&gt;</span><br><span class="line">        select * from user where username like  &#x27;%#(userName)%&#x27;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个id为getUsersByUserName的映射语句，参数类型为String，返回结果类型是User类型，为了使数据库查询的结果和返回类型能够自动匹配以便于开发，对于MySQL数据库和javabean都会采用同一套命名规则，即java驼峰命名法，这样就不需要再做映射（注：如果数据库表的字段和属性名不一样，则需要手动映射）。参数的传递使用#{参数名}，它告诉mybatis生成preparedStatement参数。</p>
+<p>例子中的<code>id</code>是命名空间中唯一标识符，可以被用来引用这条语句，<code>parameteType</code>表示查询语句传入参数的类型的全类名或者别名，它支持基础数据类型和负责数据类型，在上面的例子中使用的是基础数据string，这是一个别名，它代表String，属于一个内建的类型别名，对于普通的Java类型，有许多内建的类型别名，并且他们对大小写不敏感</p>
+<h3 id="多条件查询"><a href="#多条件查询" class="headerlink" title="多条件查询"></a>多条件查询</h3><blockquote>
+<p>上面的例子是一个条件对用户表进行查询操作，但在实际应用开发中，数据查询会有多种条件，结果也会有各种类型。</p>
+<p>我们可以考虑将查询条件封装成对象进行传参，改造上面的例子</p>
+</blockquote>
+<p>改造后的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;getUsersByUserName&quot; resultType=&quot;user&quot; parameterType=&quot;user&quot;&gt;</span><br><span class="line">        select * from user</span><br><span class="line">        where username like concat(&#x27;%&#x27;,#&#123;userName&#125;,&#x27;%&#x27;) and userPassword = #&#123;userPassword&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<dl><dt>“ &quot;<br>[ &amp;#91;<br>] &amp;#93;<br>{ &amp;#123;<br>} &amp;#125;</dt><dd>&amp;#58;</dd></dl></div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">我很可爱，请给我钱</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/zhifubao.jpg"><img loading="lazy" src="/images/zhifubao.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><span class="icon iconify" data-icon="ri:alipay-line"></span></span></div></div><div style="display:inline-block"><a href="/images/qq.png"><img loading="lazy" src="/images/qq.png" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></span></div></div><div style="display:inline-block"><a href="/images/weixin.png"><img loading="lazy" src="/images/weixin.png" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><span class="icon iconify" data-icon="ri:wechat-pay-line"></span></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>牛大壮</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://miku0831.top/2022/03/03/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6/" title="SQL映射文件">http://miku0831.top/2022/03/03/SQL%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2022/03/07/%E5%8A%A8%E6%80%81SQL/" rel="prev" title="动态SQL"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">动态SQL</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2022/03/02/MyBatis%E5%85%A5%E9%97%A8/" rel="next" title="MyBatis简单入门"><span class="post-nav-text">MyBatis简单入门</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>如果您有任何关于博客内容的相关讨论，欢迎前往 <a href="https://github.com/YunYouJun/yunyoujun.github.io/discussions" target="_blank">GitHub Discussions</a> 与我交流。</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2022 </span><a class="with-love" id="animate" href="https://miku0831.top" title="牛大壮的赞助者们"><span class="icon iconify" data-icon="ri:cloud-line"></span></a><span class="author"> 牛大壮</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.4</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2019-04-12T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><script>function initMourn() {
+  const date = new Date();
+  const today = (date.getMonth() + 1) + "-" + date.getDate()
+  const mourn_days = ["4-4","9-18"]
+  if (mourn_days.includes(today)) {
+    document.documentElement.style.filter = "grayscale(1)";
+  }
+}
+initMourn();</script><div class="aplayer no-destroy" id="aplayer" data-id="308168565" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listmaxheight="340px" data-storagename="metingjs"></div></body></html>
