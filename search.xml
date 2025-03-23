@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2013/12/24/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="http://zespia.tw/hexo">Hexo</a>! This is your very first post. Check <a href="http://zespia.tw/hexo/docs">documentation</a> to learn how to use.</p>
+    <title>MyBlog</title>
+    <url>/2025/03/23/MyBlog/</url>
+    <content><![CDATA[<hr>
+<blockquote>
+<p>哈哈哈哈哈哈</p>
+</blockquote>
 ]]></content>
   </entry>
 </search>
