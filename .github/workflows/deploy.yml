@@ -45,6 +45,10 @@ jobs:
           # USE_SUBMODULE: true
           # B站 SESSDATA（用于拉取追番观看进度）—— 需在仓库 Settings > Secrets 配置
           BILI_SESSDATA: ${{ secrets.BILI_SESSDATA }}
+
+      - name: Add .nojekyll file
+        # 阻止 GitHub Pages 使用 Jekyll 构建，否则 _astro/ 目录会被忽略导致样式/脚本 404
+        run: echo "" > dist/.nojekyll
       
       - name: Deploy to pages branch
         uses: JamesIves/github-pages-deploy-action@v4
