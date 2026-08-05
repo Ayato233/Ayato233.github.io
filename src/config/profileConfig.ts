@@ -9,11 +9,5 @@ export const profileConfig: ProfileConfig = {
 		enable: true, // 启用个人简介打字机效果
 		speed: 80, // 打字速度（毫秒）
 	},
-	links: [
-		{
-			name: "GitHub",
-			icon: "fa7-brands:github",
-			url: "https://github.com/your-username",
-		},
-	],
+	links: [],
 };
