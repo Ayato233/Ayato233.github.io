@@ -1,8 +1,8 @@
 ---
-title: Markdown Tutorial
+title: Markdown 教程
 published: 2025-01-20
 pinned: true
-description: A simple example of a Markdown blog post.
+description: 一个 Markdown 博客文章示例。
 tags: [Markdown, Blogging]
 category: Examples
 licenseName: "Unlicensed"
@@ -11,9 +11,9 @@ sourceLink: "https://github.com/emn178/markdown"
 draft: false
 ---
 
-# Markdown Tutorial
+# Markdown 教程
 
-A markdown example shows how to write a markdown file. This document integrates core syntax and extensions (GMF).
+本 markdown 示例展示了如何编写 markdown 文件。本文档整合了核心语法与扩展语法（GFM）。
 
 - [Block Elements](#block-elements)
   - [Paragraphs and Line Breaks](#paragraphs-and-line-breaks)
@@ -34,15 +34,15 @@ A markdown example shows how to write a markdown file. This document integrates 
   - [Backslash Escapes](#backslash-escapes)
 - [Inline HTML](#inline-html)
 
-## Block Elements
+## 块级元素
 
-### Paragraphs and Line Breaks
+### 段落与换行
 
-#### Paragraphs
+#### 段落
 
 HTML Tag: `<p>`
 
-One or more blank lines. (A blank line is a line containing nothing but **spaces** or **tabs** is considered blank.)
+一个或多个空行。（只包含**空格**或**制表符**的行视为空行。）
 
 Code:
 
@@ -62,11 +62,11 @@ This is second paragraph.
 
 ---
 
-#### Line Breaks
+#### 换行
 
 HTML Tag: `<br />`
 
-End a line with **two or more spaces**.
+在行尾加上**两个或更多空格**。
 
 Code:
 
@@ -82,11 +82,11 @@ inline.
 
 ---
 
-### Headers
+### 标题
 
-Markdown supports two styles of headers, Setext and atx.
+Markdown 支持两种标题样式：Setext 和 atx。
 
-#### Setext
+#### Setext 风格
 
 HTML Tags: `<h1>`, `<h2>`
 
@@ -109,11 +109,11 @@ Preview:
 
 ---
 
-#### atx
+#### atx 风格
 
 HTML Tags: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`
 
-Uses 1-6 **hash characters (#)** at the start of the line, corresponding to `<h1>` - `<h6>`.
+在行首使用 1-6 个**井号字符 (#)**，分别对应 `<h1>` - `<h6>`。
 
 Code:
 
@@ -133,7 +133,7 @@ Preview:
 
 ---
 
-Optionally, you may "close" atx-style headers. The closing hashes **don't need to match** the number of hashes used to open the header.
+可选地，你可以"闭合"atx 风格的标题。闭合的井号**无需与开头使用的井号数量一致**。
 
 Code:
 
@@ -153,11 +153,11 @@ Preview:
 
 ---
 
-### Blockquotes
+### 引用块
 
 HTML Tag: `<blockquote>`
 
-Markdown uses email-style **>** characters for blockquoting. It looks best if you hard wrap the text and put a > before every line.
+Markdown 使用邮件风格的 **>** 字符来表示引用。如果你手动换行并在每一行前加上 >，效果最好。
 
 Code:
 
@@ -181,7 +181,7 @@ Preview:
 
 ---
 
-Markdown allows you to be lazy and only put the > before the first line of a hard-wrapped paragraph.
+Markdown 允许你偷懒，只在硬换行段落的第一行前加上 >。
 
 Code:
 
@@ -205,7 +205,7 @@ Preview:
 
 ---
 
-Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by adding additional levels of >.
+引用块可以嵌套（即引用块中的引用块），通过添加更多层的 > 实现。
 
 Code:
 
@@ -227,7 +227,7 @@ Preview:
 
 ---
 
-Blockquotes can contain other Markdown elements, including headers, lists, and code blocks.
+引用块可以包含其他 Markdown 元素，包括标题、列表和代码块。
 
 Code:
 
@@ -255,15 +255,15 @@ Preview:
 
 ---
 
-### Lists
+### 列表
 
-Markdown supports ordered (numbered) and unordered (bulleted) lists.
+Markdown 支持有序（编号）和无序（项目符号）列表。
 
-#### Unordered
+#### 无序列表
 
 HTML Tag: `<ul>`
 
-Unordered lists use **asterisks (\*)**, **pluses (+)**, and **hyphens (-)**.
+无序列表使用**星号 (\*)**、**加号 (+)** 和**连字符 (-)**。
 
 Code:
 
@@ -297,11 +297,11 @@ Code:
     -   Green
     -   Blue
 
-#### Ordered
+#### 有序列表
 
 HTML Tag: `<ol>`
 
-Ordered lists use numbers followed by periods:
+有序列表使用数字后跟句点：
 
 Code:
 
@@ -333,7 +333,7 @@ Preview:
 
 ---
 
-You can **backslash-escape (\\)** the period:
+你可以使用**反斜杠转义 (\\)** 句点：
 
 Code:
 
@@ -347,11 +347,11 @@ Preview:
 
 ---
 
-#### Indented
+#### 缩进列表
 
-##### Blockquote
+##### 列表项内的引用块
 
-To put a blockquote within a list item, the blockquote's > delimiters need to be indented:
+要在列表项中放置引用块，引用块的 > 分隔符需要缩进：
 
 Code:
 
@@ -371,9 +371,9 @@ Preview:
 
 ---
 
-##### Code Block
+##### 列表项内的代码块
 
-To put a code block within a list item, the code block needs to be indented twice — **8 spaces** or **two tabs**:
+要在列表项中放置代码块，代码块需要缩进两次——**8 个空格**或**两个制表符**：
 
 Code:
 
@@ -391,7 +391,7 @@ Preview:
 
 ---
 
-##### Nested List
+##### 嵌套列表
 
 Code:
 
@@ -413,7 +413,7 @@ Preview:
 
 ---
 
-### Code Blocks
+### 代码块
 
 HTML Tag: `<pre>`
 
@@ -435,9 +435,9 @@ This is a normal paragraph:
 
 ---
 
-A code block continues until it reaches a line that is not indented (or the end of the article).
+代码块一直持续到遇到未缩进的行（或文章结束）。
 
-Within a code block, **_ampersands (&)_** and angle **brackets (< and >)** are automatically converted into HTML entities.
+在代码块中，**_与号 (&)_** 和尖**括号（< 和 >）**会自动转换为 HTML 实体。
 
 Code:
 
@@ -457,7 +457,7 @@ Preview:
 
 Following sections Fenced Code Blocks and Syntax Highlighting are extensions, you can use the other way to write the code block.
 
-#### Fenced Code Blocks
+#### 围栏代码块
 
 Just wrap your code in ` ``` ` (as shown below) and you won't need to indent it by four spaces.
 
@@ -485,7 +485,7 @@ function test() {
 
 ---
 
-#### Syntax Highlighting
+#### 语法高亮
 
 In your fenced block, add an optional language identifier and we'll run it through syntax highlighting ([Support Languages](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml)).
 
@@ -509,10 +509,10 @@ puts markdown.to_html
 
 ---
 
-### Horizontal Rules
+### 水平分隔线
 
 HTML Tag: `<hr />`
-Places **three or more hyphens (-), asterisks (\*), or underscores (\_)** on a line by themselves. You may use spaces between the hyphens or asterisks.
+在单独一行上放置**三个或更多连字符 (-)、星号 (\*) 或下划线 (\_)**。你可以在连字符或星号之间使用空格。
 
 Code:
 
@@ -541,13 +541,13 @@ Preview:
 
 ---
 
-### Table
+### 表格
 
 HTML Tag: `<table>`
 
-It's an extension.
+这是一个扩展功能。
 
-Separates column by **pipe (|)** and header by **dashes (-)**, and uses **colon (:)** for alignment.
+用**竖线 (|)** 分隔列，用**破折号 (-)** 分隔表头，并使用**冒号 (:)** 进行对齐。
 
 The outer **pipes (|)** and alignment are optional. There are **3 delimiters** each cell at least for separating header.
 
@@ -588,19 +588,19 @@ Preview:
 
 ---
 
-## Span Elements
+## 行内元素
 
-### Links
+### 链接
 
 HTML Tag: `<a>`
 
-Markdown supports two style of links: inline and reference.
+Markdown 支持两种链接样式：行内式和引用式。
 
-#### Inline
+#### 行内链接
 
 Inline link format like this: `[Link Text](URL "Title")`
 
-Title is optional.
+标题是可选的。
 
 Code:
 
@@ -632,11 +632,11 @@ See my [About](/about/) page for details.
 
 ---
 
-#### Reference
+#### 引用式链接
 
-You could predefine link references. Format like this: `[id]: URL "Title"`
+你可以预定义链接引用。格式如下：`[id]: URL "Title"`
 
-Title is also optional. And the you refer the link, format like this: `[Link Text][id]`
+标题也是可选的。引用链接时，格式如下：`[Link Text][id]`
 
 Code:
 
@@ -688,11 +688,11 @@ Preview:
 
 ---
 
-### Emphasis
+### 强调
 
 HTML Tags: `<em>`, `<strong>`
 
-Markdown treats **asterisks (\*)** and **underscores (\_)** as indicators of emphasis. **One delimiter** will be `<em>`; \*_double delimiters_ will be `<strong>`.
+Markdown 将**星号 (\*)** 和**下划线 (\_)** 视为强调的标记。**一个分隔符**是 `<em>`；**双分隔符**是 `<strong>`。
 
 Code:
 
@@ -720,7 +720,7 @@ _single underscores_
 
 But if you surround an \* or \_ with spaces, it'll be treated as a literal asterisk or underscore.
 
-You can backslash escape it:
+你可以用反斜杠转义它：
 
 Code:
 
@@ -734,11 +734,11 @@ Preview:
 
 ---
 
-### Code
+### 行内代码
 
 HTML Tag: `<code>`
 
-Wraps it with **backtick quotes (`)**.
+用**反引号 (`)** 包裹它。
 
 Code:
 
@@ -752,7 +752,7 @@ Use the `printf()` function.
 
 ---
 
-To include a literal backtick character within a code span, you can use **multiple backticks** as the opening and closing delimiters:
+要在代码片段中包含字面反引号字符，你可以使用**多个反引号**作为开头和结尾的分隔符：
 
 Code:
 
@@ -784,17 +784,17 @@ A backtick-delimited string in a code span: `` `foo` ``
 
 ---
 
-### Images
+### 图片
 
 HTML Tag: `<img />`
 
-Markdown uses an image syntax that is intended to resemble the syntax for links, allowing for two styles: inline and reference.
+Markdown 使用的图片语法旨在与链接语法相似，支持两种样式：行内式和引用式。
 
-#### Inline
+#### 行内图片
 
 Inline image syntax looks like this: `![Alt text](URL "Title")`
 
-Title is optional.
+标题是可选的。
 
 Code:
 
@@ -818,7 +818,7 @@ That is:
 - followed by a set of square brackets, containing the alt attribute text for the image;
 - followed by a set of parentheses, containing the URL or path to the image, and an optional title attribute enclosed in double or single quotes.
 
-#### Reference
+#### 引用式图片
 
 Reference-style image syntax looks like this: `![Alt text][id]`
 
@@ -837,13 +837,13 @@ Preview:
 
 ---
 
-### Strikethrough
+### 删除线
 
 HTML Tag: `<del>`
 
-It's an extension.
+这是一个扩展功能。
 
-GFM adds syntax to strikethrough text.
+GFM 为删除线文本添加了语法支持。
 
 Code:
 
@@ -859,11 +859,11 @@ Preview:
 
 ---
 
-## Miscellaneous
+## 其他
 
-### Automatic Links
+### 自动链接
 
-Markdown supports a shortcut style for creating "automatic" links for URLs and email addresses: simply surround the URL or email address with angle brackets.
+Markdown 支持为 URL 和电子邮件地址创建"自动"链接的快捷方式：只需用尖括号将 URL 或电子邮件地址括起来即可。
 
 Code:
 
@@ -881,7 +881,7 @@ Preview:
 
 ---
 
-GFM will autolink standard URLs.
+GFM 会自动链接标准的 URL。
 
 Code:
 
@@ -897,9 +897,9 @@ https://github.com/emn178/markdown
 
 ---
 
-### Backslash Escapes
+### 反斜杠转义
 
-Markdown allows you to use backslash escapes to generate literal characters which would otherwise have special meaning in Markdown's formatting syntax.
+Markdown 允许你使用反斜杠转义来生成字面字符，否则这些字符在 Markdown 的格式语法中具有特殊含义。
 
 Code:
 
@@ -913,7 +913,7 @@ Preview:
 
 ---
 
-Markdown provides backslash escapes for the following characters:
+Markdown 为以下字符提供反斜杠转义：
 
 Code:
 
@@ -930,7 +930,7 @@ Code:
     .   dot
     !   exclamation mark
 
-## Inline HTML
+## 内联 HTML
 
 For any markup that is not covered by Markdown's syntax, you simply use HTML itself. There's no need to preface it or delimit it to indicate that you're switching from Markdown to HTML; you just use the tags.
 
