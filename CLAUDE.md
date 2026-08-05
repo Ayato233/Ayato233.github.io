@@ -71,6 +71,18 @@ If the project has no test infrastructure and the task is exploratory, state suc
 - **If any sensitive information needs to be included in the code to function, you must ask me first before committing. Do not decide on your own.**
 - If you discover sensitive data that has already been committed, immediately alert me so I can rotate the key and clean up the Git history.
 
+## 6. 优先使用主题文档提供的方法
+
+本项目基于 Mizuki 主题（Astro），进行任何功能优化或修改时：
+
+1. **先阅读主题文档**，确认是否有官方支持的方法来实现需求：
+   - 本地：`README.zh.md`（主文档）、`src/config/` 下各配置文件的注释说明
+   - 在线：https://docs.mizuki.mysqil.com/
+   - 相关脚本：`scripts/`（update-bilibili.mjs、new-post.js 等）
+2. **优先采用文档中提供的方式**，不要自行发明替代方案或改主题源码。
+3. 文档没有对应方法时，再提出其他方案供用户选择，说明原因和权衡。
+4. 改配置不成就改源码，改源码需谨慎并说明理由。
+
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
