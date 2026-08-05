@@ -20,6 +20,15 @@ const diaryData: DiaryItem[] = [
 		date: "2025-01-15T10:30:00Z",
 		images: ["/images/diary/sakura.jpg", "/images/diary/1.webp"],
 	},
+	{
+		id: 2,
+		content:
+			"今天把博客换上了 Mizuki 主题，忙活了一整天。从 Fuwari 迁移过来，改了导航栏、接了 B 站追番数据、还把歌单换成了自己的网易云歌单。虽然过程有点折腾，但看到卡片式的界面一点点成型，还挺有成就感的。",
+		date: "2026-08-06T21:30:00+08:00",
+		location: "家中",
+		mood: "充实",
+		tags: ["博客", "折腾"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）
