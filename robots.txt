@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /
+Allow: /$
+Allow: /posts/
+
+Sitemap: https://ayato233.github.io/sitemap-index.xml
