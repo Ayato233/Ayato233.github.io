@@ -5,7 +5,6 @@ import Banner from "@components/layout/Banner.astro";
 import RightSideBar from "@components/layout/RightSideBar.astro";
 import FullscreenWallpaper from "@components/misc/FullscreenWallpaper.astro";
 import IconifyLoader from "@components/misc/IconifyLoader.astro";
-import Footer from "@components/organisms/footer/Footer.astro";
 import Navbar from "@components/organisms/navigation/Navbar.astro";
 import SideBar from "@components/widgets/sidebar/SideBar.astro";
 import type { MarkdownHeading } from "astro";
@@ -249,19 +248,9 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 						>
 						</div>
 						<slot />
-						<div
-							class="footer col-span-full onload-animation hidden lg:block"
-						>
-							<Footer />
-						</div>
 					</div>
 				</main>
 
-				<div
-					class="footer col-span-full onload-animation block lg:hidden"
-				>
-					<Footer />
-				</div>
 			</div>
 
 			<FloatingControls headings={headings} />
