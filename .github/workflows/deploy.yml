@@ -38,10 +38,12 @@ jobs:
       - name: Build site
         run: pnpm run build
         env:
-          # 如果需要启用内容分离,取消以下注释并配置
+          # 如需启用内容分离,取消以下注释并配置
           # ENABLE_CONTENT_SYNC: true
           # CONTENT_REPO_URL: ${{ secrets.CONTENT_REPO_URL }}
           # USE_SUBMODULE: true
+          # B站 SESSDATA（用于拉取追番观看进度）—— 需在仓库 Settings > Secrets 配置
+          BILI_SESSDATA: ${{ secrets.BILI_SESSDATA }}
       
       - name: Deploy to pages branch
         uses: JamesIves/github-pages-deploy-action@v4
