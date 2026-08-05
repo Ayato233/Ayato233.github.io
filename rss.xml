@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>My Blog</title><description>我的个人博客</description><link>https://ayato233.github.io/</link><language>zh_CN</language><item><title>Markdown Tutorial</title><link>https://ayato233.github.io/posts/markdown-tutorial/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-tutorial/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Mon, 20 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Markdown Tutorial&lt;/h1&gt;
-&lt;p&gt;A markdown example shows how to write a markdown file. This document integrates core syntax and extensions (GMF).&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>My Blog</title><description>我的个人博客</description><link>https://ayato233.github.io/</link><language>zh_CN</language><item><title>Markdown 教程</title><link>https://ayato233.github.io/posts/markdown-tutorial/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-tutorial/</guid><description>一个 Markdown 博客文章示例。</description><pubDate>Mon, 20 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Markdown 教程&lt;/h1&gt;
+&lt;p&gt;本 markdown 示例展示了如何编写 markdown 文件。本文档整合了核心语法与扩展语法（GFM）。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#block-elements&quot;&gt;Block Elements&lt;/a&gt;
 &lt;ul&gt;
@@ -29,11 +29,11 @@
 &lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#inline-html&quot;&gt;Inline HTML&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;Block Elements&lt;/h2&gt;
-&lt;h3&gt;Paragraphs and Line Breaks&lt;/h3&gt;
-&lt;h4&gt;Paragraphs&lt;/h4&gt;
+&lt;h2&gt;块级元素&lt;/h2&gt;
+&lt;h3&gt;段落与换行&lt;/h3&gt;
+&lt;h4&gt;段落&lt;/h4&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;One or more blank lines. (A blank line is a line containing nothing but &lt;strong&gt;spaces&lt;/strong&gt; or &lt;strong&gt;tabs&lt;/strong&gt; is considered blank.)&lt;/p&gt;
+&lt;p&gt;一个或多个空行。（只包含&lt;strong&gt;空格&lt;/strong&gt;或&lt;strong&gt;制表符&lt;/strong&gt;的行视为空行。）&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This will be
 inline.
@@ -46,9 +46,9 @@ This is second paragraph.
 inline.&lt;/p&gt;
 &lt;p&gt;This is second paragraph.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h4&gt;Line Breaks&lt;/h4&gt;
+&lt;h4&gt;换行&lt;/h4&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;br /&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;End a line with &lt;strong&gt;two or more spaces&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;在行尾加上&lt;strong&gt;两个或更多空格&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This will be not
 inline.
@@ -58,9 +58,9 @@ inline.
 &lt;p&gt;This will be not&lt;br /&gt;
 inline.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Headers&lt;/h3&gt;
-&lt;p&gt;Markdown supports two styles of headers, Setext and atx.&lt;/p&gt;
-&lt;h4&gt;Setext&lt;/h4&gt;
+&lt;h3&gt;标题&lt;/h3&gt;
+&lt;p&gt;Markdown 支持两种标题样式：Setext 和 atx。&lt;/p&gt;
+&lt;h4&gt;Setext 风格&lt;/h4&gt;
 &lt;p&gt;HTML Tags: &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;h2&amp;gt;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&quot;Underlined&quot; using &lt;strong&gt;equal signs (=)&lt;/strong&gt; as &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; and &lt;strong&gt;dashes (-)&lt;/strong&gt; as &lt;code&gt;&amp;lt;h2&amp;gt;&lt;/code&gt; in any number.&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
@@ -74,9 +74,9 @@ This is an H2
 &lt;h1&gt;This is an H1&lt;/h1&gt;
 &lt;h2&gt;This is an H2&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h4&gt;atx&lt;/h4&gt;
+&lt;h4&gt;atx 风格&lt;/h4&gt;
 &lt;p&gt;HTML Tags: &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;h2&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;h3&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;h4&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;h5&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Uses 1-6 &lt;strong&gt;hash characters (#)&lt;/strong&gt; at the start of the line, corresponding to &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; - &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;在行首使用 1-6 个&lt;strong&gt;井号字符 (#)&lt;/strong&gt;，分别对应 &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; - &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# This is an H1
 ## This is an H2
@@ -88,7 +88,7 @@ This is an H2
 &lt;h2&gt;This is an H2&lt;/h2&gt;
 &lt;h6&gt;This is an H6&lt;/h6&gt;
 &lt;hr /&gt;
-&lt;p&gt;Optionally, you may &quot;close&quot; atx-style headers. The closing hashes &lt;strong&gt;don&apos;t need to match&lt;/strong&gt; the number of hashes used to open the header.&lt;/p&gt;
+&lt;p&gt;可选地，你可以&quot;闭合&quot;atx 风格的标题。闭合的井号&lt;strong&gt;无需与开头使用的井号数量一致&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# This is an H1 #
 ## This is an H2 ##
@@ -100,9 +100,9 @@ This is an H2
 &lt;h2&gt;This is an H2&lt;/h2&gt;
 &lt;h3&gt;This is an H3&lt;/h3&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Blockquotes&lt;/h3&gt;
+&lt;h3&gt;引用块&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;blockquote&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown uses email-style &lt;strong&gt;&amp;gt;&lt;/strong&gt; characters for blockquoting. It looks best if you hard wrap the text and put a &amp;gt; before every line.&lt;/p&gt;
+&lt;p&gt;Markdown 使用邮件风格的 &lt;strong&gt;&amp;gt;&lt;/strong&gt; 字符来表示引用。如果你手动换行并在每一行前加上 &amp;gt;，效果最好。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
 &amp;gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
@@ -121,7 +121,7 @@ Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.&lt;/p&gt;
 id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr /&gt;
-&lt;p&gt;Markdown allows you to be lazy and only put the &amp;gt; before the first line of a hard-wrapped paragraph.&lt;/p&gt;
+&lt;p&gt;Markdown 允许你偷懒，只在硬换行段落的第一行前加上 &amp;gt;。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
 consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
@@ -142,7 +142,7 @@ Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.&lt;/p&gt;
 id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr /&gt;
-&lt;p&gt;Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by adding additional levels of &amp;gt;.&lt;/p&gt;
+&lt;p&gt;引用块可以嵌套（即引用块中的引用块），通过添加更多层的 &amp;gt; 实现。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt; This is the first level of quoting.
 &amp;gt;
@@ -160,7 +160,7 @@ id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
 &lt;p&gt;Back to the first level.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr /&gt;
-&lt;p&gt;Blockquotes can contain other Markdown elements, including headers, lists, and code blocks.&lt;/p&gt;
+&lt;p&gt;引用块可以包含其他 Markdown 元素，包括标题、列表和代码块。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt; ## This is a header.
 &amp;gt;
@@ -184,11 +184,11 @@ id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Lists&lt;/h3&gt;
-&lt;p&gt;Markdown supports ordered (numbered) and unordered (bulleted) lists.&lt;/p&gt;
-&lt;h4&gt;Unordered&lt;/h4&gt;
+&lt;h3&gt;列表&lt;/h3&gt;
+&lt;p&gt;Markdown 支持有序（编号）和无序（项目符号）列表。&lt;/p&gt;
+&lt;h4&gt;无序列表&lt;/h4&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;ul&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Unordered lists use &lt;strong&gt;asterisks (*)&lt;/strong&gt;, &lt;strong&gt;pluses (+)&lt;/strong&gt;, and &lt;strong&gt;hyphens (-)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;无序列表使用&lt;strong&gt;星号 (*)&lt;/strong&gt;、&lt;strong&gt;加号 (+)&lt;/strong&gt; 和&lt;strong&gt;连字符 (-)&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   Red
 *   Green
@@ -214,9 +214,9 @@ id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
 -   Green
 -   Blue
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;Ordered&lt;/h4&gt;
+&lt;h4&gt;有序列表&lt;/h4&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;ol&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Ordered lists use numbers followed by periods:&lt;/p&gt;
+&lt;p&gt;有序列表使用数字后跟句点：&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;1.  Bird
 2.  McHale
@@ -240,7 +240,7 @@ id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
 &lt;li&gt;What a great season.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;hr /&gt;
-&lt;p&gt;You can &lt;strong&gt;backslash-escape (\)&lt;/strong&gt; the period:&lt;/p&gt;
+&lt;p&gt;你可以使用&lt;strong&gt;反斜杠转义 (\)&lt;/strong&gt; 句点：&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;1986\. What a great season.
 &lt;/code&gt;&lt;/pre&gt;
@@ -248,9 +248,9 @@ id sem consectetuer libero luctus adipiscing.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;1986. What a great season.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h4&gt;Indented&lt;/h4&gt;
-&lt;h5&gt;Blockquote&lt;/h5&gt;
-&lt;p&gt;To put a blockquote within a list item, the blockquote&apos;s &amp;gt; delimiters need to be indented:&lt;/p&gt;
+&lt;h4&gt;缩进列表&lt;/h4&gt;
+&lt;h5&gt;列表项内的引用块&lt;/h5&gt;
+&lt;p&gt;要在列表项中放置引用块，引用块的 &amp;gt; 分隔符需要缩进：&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   A list item with a blockquote:
 
@@ -269,8 +269,8 @@ inside a list item.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;h5&gt;Code Block&lt;/h5&gt;
-&lt;p&gt;To put a code block within a list item, the code block needs to be indented twice — &lt;strong&gt;8 spaces&lt;/strong&gt; or &lt;strong&gt;two tabs&lt;/strong&gt;:&lt;/p&gt;
+&lt;h5&gt;列表项内的代码块&lt;/h5&gt;
+&lt;p&gt;要在列表项中放置代码块，代码块需要缩进两次——&lt;strong&gt;8 个空格&lt;/strong&gt;或&lt;strong&gt;两个制表符&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*   A list item with a code block:
 
@@ -286,7 +286,7 @@ inside a list item.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;h5&gt;Nested List&lt;/h5&gt;
+&lt;h5&gt;嵌套列表&lt;/h5&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;* A
   * A1
@@ -307,7 +307,7 @@ inside a list item.&lt;/p&gt;
 &lt;li&gt;C&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Code Blocks&lt;/h3&gt;
+&lt;h3&gt;代码块&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;pre&amp;gt;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Indent every line of the block by at least &lt;strong&gt;4 spaces&lt;/strong&gt; or &lt;strong&gt;1 tab&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
@@ -321,8 +321,8 @@ inside a list item.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This is a code block.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr /&gt;
-&lt;p&gt;A code block continues until it reaches a line that is not indented (or the end of the article).&lt;/p&gt;
-&lt;p&gt;Within a code block, &lt;strong&gt;&lt;em&gt;ampersands (&amp;amp;)&lt;/em&gt;&lt;/strong&gt; and angle &lt;strong&gt;brackets (&amp;lt; and &amp;gt;)&lt;/strong&gt; are automatically converted into HTML entities.&lt;/p&gt;
+&lt;p&gt;代码块一直持续到遇到未缩进的行（或文章结束）。&lt;/p&gt;
+&lt;p&gt;在代码块中，&lt;strong&gt;&lt;em&gt;与号 (&amp;amp;)&lt;/em&gt;&lt;/strong&gt; 和尖**括号（&amp;lt; 和 &amp;gt;）**会自动转换为 HTML 实体。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    &amp;lt;div class=&quot;footer&quot;&amp;gt;
         &amp;amp;copy; 2004 Foo Corporation
@@ -336,7 +336,7 @@ inside a list item.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr /&gt;
 &lt;p&gt;Following sections Fenced Code Blocks and Syntax Highlighting are extensions, you can use the other way to write the code block.&lt;/p&gt;
-&lt;h4&gt;Fenced Code Blocks&lt;/h4&gt;
+&lt;h4&gt;围栏代码块&lt;/h4&gt;
 &lt;p&gt;Just wrap your code in &lt;code&gt;```&lt;/code&gt; (as shown below) and you won&apos;t need to indent it by four spaces.&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Here&apos;s an example:
@@ -355,7 +355,7 @@ function test() {
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr /&gt;
-&lt;h4&gt;Syntax Highlighting&lt;/h4&gt;
+&lt;h4&gt;语法高亮&lt;/h4&gt;
 &lt;p&gt;In your fenced block, add an optional language identifier and we&apos;ll run it through syntax highlighting (&lt;a href=&quot;https://github.com/github/linguist/blob/master/lib/linguist/languages.yml&quot;&gt;Support Languages&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;```ruby
@@ -371,9 +371,9 @@ markdown = Redcarpet.new(&quot;Hello World!&quot;)
 puts markdown.to_html
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Horizontal Rules&lt;/h3&gt;
+&lt;h3&gt;水平分隔线&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;hr /&amp;gt;&lt;/code&gt;
-Places &lt;strong&gt;three or more hyphens (-), asterisks (*), or underscores (_)&lt;/strong&gt; on a line by themselves. You may use spaces between the hyphens or asterisks.&lt;/p&gt;
+在单独一行上放置&lt;strong&gt;三个或更多连字符 (-)、星号 (*) 或下划线 (_)&lt;/strong&gt;。你可以在连字符或星号之间使用空格。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;* * *
 ***
@@ -391,10 +391,10 @@ ___
 &lt;hr /&gt;
 &lt;hr /&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Table&lt;/h3&gt;
+&lt;h3&gt;表格&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;It&apos;s an extension.&lt;/p&gt;
-&lt;p&gt;Separates column by &lt;strong&gt;pipe (|)&lt;/strong&gt; and header by &lt;strong&gt;dashes (-)&lt;/strong&gt;, and uses &lt;strong&gt;colon (:)&lt;/strong&gt; for alignment.&lt;/p&gt;
+&lt;p&gt;这是一个扩展功能。&lt;/p&gt;
+&lt;p&gt;用&lt;strong&gt;竖线 (|)&lt;/strong&gt; 分隔列，用&lt;strong&gt;破折号 (-)&lt;/strong&gt; 分隔表头，并使用&lt;strong&gt;冒号 (:)&lt;/strong&gt; 进行对齐。&lt;/p&gt;
 &lt;p&gt;The outer &lt;strong&gt;pipes (|)&lt;/strong&gt; and alignment are optional. There are &lt;strong&gt;3 delimiters&lt;/strong&gt; each cell at least for separating header.&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;| Left | Center | Right |
@@ -463,13 +463,13 @@ A |B
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;hr /&gt;
-&lt;h2&gt;Span Elements&lt;/h2&gt;
-&lt;h3&gt;Links&lt;/h3&gt;
+&lt;h2&gt;行内元素&lt;/h2&gt;
+&lt;h3&gt;链接&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown supports two style of links: inline and reference.&lt;/p&gt;
-&lt;h4&gt;Inline&lt;/h4&gt;
+&lt;p&gt;Markdown 支持两种链接样式：行内式和引用式。&lt;/p&gt;
+&lt;h4&gt;行内链接&lt;/h4&gt;
 &lt;p&gt;Inline link format like this: &lt;code&gt;[Link Text](URL &quot;Title&quot;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Title is optional.&lt;/p&gt;
+&lt;p&gt;标题是可选的。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This is [an example](http://example.com/ &quot;Title&quot;) inline link.
 
@@ -488,9 +488,9 @@ A |B
 &lt;hr /&gt;
 &lt;p&gt;See my &lt;a href=&quot;/about/&quot;&gt;About&lt;/a&gt; page for details.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;You could predefine link references. Format like this: &lt;code&gt;[id]: URL &quot;Title&quot;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Title is also optional. And the you refer the link, format like this: &lt;code&gt;[Link Text][id]&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;引用式链接&lt;/h4&gt;
+&lt;p&gt;你可以预定义链接引用。格式如下：&lt;code&gt;[id]: URL &quot;Title&quot;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;标题也是可选的。引用链接时，格式如下：&lt;code&gt;[Link Text][id]&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[id]: http://example.com/  &quot;Optional Title Here&quot;
 This is [an example][id] reference-style link.
@@ -524,9 +524,9 @@ This is [an example][id] reference-style link.
 &lt;hr /&gt;
 &lt;p&gt;&lt;a href=&quot;http://google.com/&quot;&gt;Google&lt;/a&gt;&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Emphasis&lt;/h3&gt;
+&lt;h3&gt;强调&lt;/h3&gt;
 &lt;p&gt;HTML Tags: &lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown treats &lt;strong&gt;asterisks (*)&lt;/strong&gt; and &lt;strong&gt;underscores (_)&lt;/strong&gt; as indicators of emphasis. &lt;strong&gt;One delimiter&lt;/strong&gt; will be &lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt;; *&lt;em&gt;double delimiters&lt;/em&gt; will be &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Markdown 将&lt;strong&gt;星号 (*)&lt;/strong&gt; 和&lt;strong&gt;下划线 (_)&lt;/strong&gt; 视为强调的标记。&lt;strong&gt;一个分隔符&lt;/strong&gt;是 &lt;code&gt;&amp;lt;em&amp;gt;&lt;/code&gt;；&lt;strong&gt;双分隔符&lt;/strong&gt;是 &lt;code&gt;&amp;lt;strong&amp;gt;&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;*single asterisks*
 
@@ -544,7 +544,7 @@ __double underscores__
 &lt;p&gt;&lt;strong&gt;double underscores&lt;/strong&gt;&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;But if you surround an * or _ with spaces, it&apos;ll be treated as a literal asterisk or underscore.&lt;/p&gt;
-&lt;p&gt;You can backslash escape it:&lt;/p&gt;
+&lt;p&gt;你可以用反斜杠转义它：&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;\*this text is surrounded by literal asterisks\*
 &lt;/code&gt;&lt;/pre&gt;
@@ -552,9 +552,9 @@ __double underscores__
 &lt;hr /&gt;
 &lt;p&gt;*this text is surrounded by literal asterisks*&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Code&lt;/h3&gt;
+&lt;h3&gt;行内代码&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Wraps it with &lt;strong&gt;backtick quotes (`)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;用&lt;strong&gt;反引号 (`)&lt;/strong&gt; 包裹它。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Use the `printf()` function.
 &lt;/code&gt;&lt;/pre&gt;
@@ -562,7 +562,7 @@ __double underscores__
 &lt;hr /&gt;
 &lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;To include a literal backtick character within a code span, you can use &lt;strong&gt;multiple backticks&lt;/strong&gt; as the opening and closing delimiters:&lt;/p&gt;
+&lt;p&gt;要在代码片段中包含字面反引号字符，你可以使用&lt;strong&gt;多个反引号&lt;/strong&gt;作为开头和结尾的分隔符：&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;``There is a literal backtick (`) here.``
 &lt;/code&gt;&lt;/pre&gt;
@@ -581,12 +581,12 @@ A backtick-delimited string in a code span: `` `foo` ``
 &lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Images&lt;/h3&gt;
+&lt;h3&gt;图片&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;img /&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Markdown uses an image syntax that is intended to resemble the syntax for links, allowing for two styles: inline and reference.&lt;/p&gt;
-&lt;h4&gt;Inline&lt;/h4&gt;
+&lt;p&gt;Markdown 使用的图片语法旨在与链接语法相似，支持两种样式：行内式和引用式。&lt;/p&gt;
+&lt;h4&gt;行内图片&lt;/h4&gt;
 &lt;p&gt;Inline image syntax looks like this: &lt;code&gt;![Alt text](URL &quot;Title&quot;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Title is optional.&lt;/p&gt;
+&lt;p&gt;标题是可选的。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;![Alt text](/path/to/img.jpg)
 
@@ -603,7 +603,7 @@ A backtick-delimited string in a code span: `` `foo` ``
 &lt;li&gt;followed by a set of square brackets, containing the alt attribute text for the image;&lt;/li&gt;
 &lt;li&gt;followed by a set of parentheses, containing the URL or path to the image, and an optional title attribute enclosed in double or single quotes.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;h4&gt;引用式图片&lt;/h4&gt;
 &lt;p&gt;Reference-style image syntax looks like this: &lt;code&gt;![Alt text][id]&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[img id]: https://s2.loli.net/2024/08/20/5fszgXeOxmL3Wdv.webp  &quot;Optional title attribute&quot;
@@ -613,10 +613,10 @@ A backtick-delimited string in a code span: `` `foo` ``
 &lt;hr /&gt;
 &lt;p&gt;&lt;img src=&quot;https://s2.loli.net/2024/08/20/5fszgXeOxmL3Wdv.webp&quot; alt=&quot;Alt text&quot; title=&quot;Optional title attribute&quot; /&gt;&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Strikethrough&lt;/h3&gt;
+&lt;h3&gt;删除线&lt;/h3&gt;
 &lt;p&gt;HTML Tag: &lt;code&gt;&amp;lt;del&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;It&apos;s an extension.&lt;/p&gt;
-&lt;p&gt;GFM adds syntax to strikethrough text.&lt;/p&gt;
+&lt;p&gt;这是一个扩展功能。&lt;/p&gt;
+&lt;p&gt;GFM 为删除线文本添加了语法支持。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;~~Mistaken text.~~
 &lt;/code&gt;&lt;/pre&gt;
@@ -624,9 +624,9 @@ A backtick-delimited string in a code span: `` `foo` ``
 &lt;hr /&gt;
 &lt;p&gt;&lt;s&gt;Mistaken text.&lt;/s&gt;&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h2&gt;Miscellaneous&lt;/h2&gt;
-&lt;h3&gt;Automatic Links&lt;/h3&gt;
-&lt;p&gt;Markdown supports a shortcut style for creating &quot;automatic&quot; links for URLs and email addresses: simply surround the URL or email address with angle brackets.&lt;/p&gt;
+&lt;h2&gt;其他&lt;/h2&gt;
+&lt;h3&gt;自动链接&lt;/h3&gt;
+&lt;p&gt;Markdown 支持为 URL 和电子邮件地址创建&quot;自动&quot;链接的快捷方式：只需用尖括号将 URL 或电子邮件地址括起来即可。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;http://example.com/&amp;gt;
 
@@ -637,7 +637,7 @@ A backtick-delimited string in a code span: `` `foo` ``
 &lt;p&gt;&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;GFM will autolink standard URLs.&lt;/p&gt;
+&lt;p&gt;GFM 会自动链接标准的 URL。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;https://github.com/emn178/markdown
 &lt;/code&gt;&lt;/pre&gt;
@@ -645,8 +645,8 @@ A backtick-delimited string in a code span: `` `foo` ``
 &lt;hr /&gt;
 &lt;p&gt;https://github.com/emn178/markdown&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Backslash Escapes&lt;/h3&gt;
-&lt;p&gt;Markdown allows you to use backslash escapes to generate literal characters which would otherwise have special meaning in Markdown&apos;s formatting syntax.&lt;/p&gt;
+&lt;h3&gt;反斜杠转义&lt;/h3&gt;
+&lt;p&gt;Markdown 允许你使用反斜杠转义来生成字面字符，否则这些字符在 Markdown 的格式语法中具有特殊含义。&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;\*literal asterisks\*
 &lt;/code&gt;&lt;/pre&gt;
@@ -654,7 +654,7 @@ A backtick-delimited string in a code span: `` `foo` ``
 &lt;hr /&gt;
 &lt;p&gt;*literal asterisks*&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;Markdown provides backslash escapes for the following characters:&lt;/p&gt;
+&lt;p&gt;Markdown 为以下字符提供反斜杠转义：&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;\   backslash
 `   backtick
@@ -669,7 +669,7 @@ _   underscore
 .   dot
 !   exclamation mark
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Inline HTML&lt;/h2&gt;
+&lt;h2&gt;内联 HTML&lt;/h2&gt;
 &lt;p&gt;For any markup that is not covered by Markdown&apos;s syntax, you simply use HTML itself. There&apos;s no need to preface it or delimit it to indicate that you&apos;re switching from Markdown to HTML; you just use the tags.&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This is a regular paragraph.
@@ -708,58 +708,58 @@ This is another regular paragraph.
 &lt;strong&gt;No Work&lt;/strong&gt;
 &amp;lt;/div&amp;gt;&lt;/p&gt;
 &lt;hr /&gt;
-</content:encoded></item><item><title>Image Gallery Grid: Syntax and Complete Examples</title><link>https://ayato233.github.io/posts/image-grid-demo/</link><guid isPermaLink="true">https://ayato233.github.io/posts/image-grid-demo/</guid><description>A complete guide to image gallery grid syntax, parameters, cropping, responsive behavior, captions, and lightbox navigation.</description><pubDate>Mon, 13 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code&gt;:::grid&lt;/code&gt; is the blog&apos;s image gallery container directive. It arranges ordinary Markdown images in a responsive grid with a consistent aspect ratio and automatically enables lightbox viewing. Use it for article images, screenshots, portfolios, or small albums.&lt;/p&gt;
-&lt;p&gt;Images in the same gallery use the same card ratio. By default, center cropping fills every card and keeps each row tidy; clicking an image opens the complete original in a lightbox. Every gallery has its own lightbox group and does not mix with other images in the post.&lt;/p&gt;
+</content:encoded></item><item><title>图片画廊网格：语法与完整示例</title><link>https://ayato233.github.io/posts/image-grid-demo/</link><guid isPermaLink="true">https://ayato233.github.io/posts/image-grid-demo/</guid><description>图片画廊网格语法、参数、裁剪、响应式行为、说明文字和灯箱导航的完整指南。</description><pubDate>Mon, 13 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code&gt;:::grid&lt;/code&gt; 是博客的图片画廊容器指令。它将普通的 Markdown 图片排列成响应式网格，并保持一致的宽高比，自动启用灯箱查看。可用于文章配图、截图、作品集或小型相册。&lt;/p&gt;
+&lt;p&gt;同一画廊中的图片使用相同的卡片比例。默认情况下，居中裁剪会填满每张卡片并保持每一行整齐；点击图片可在灯箱中打开完整的原始图片。每个画廊都有独立的灯箱分组，不会与文章中的其他图片混合。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;This post is both feature documentation and a visual test page. View the examples at desktop, tablet, and mobile widths, then click any image to verify lightbox grouping.&lt;/p&gt;
+&lt;p&gt;本文既是功能文档，也是可视化测试页面。请在桌面、平板和移动宽度下查看示例，然后点击任意图片以验证灯箱分组。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2&gt;Minimal Syntax&lt;/h2&gt;
-&lt;p&gt;Write Markdown images directly between &lt;code&gt;:::grid&lt;/code&gt; and the closing &lt;code&gt;:::&lt;/code&gt;:&lt;/p&gt;
+&lt;h2&gt;最简语法&lt;/h2&gt;
+&lt;p&gt;直接在 &lt;code&gt;:::grid&lt;/code&gt; 和结束的 &lt;code&gt;:::&lt;/code&gt; 之间编写 Markdown 图片：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid
 ![Image description](./image-1.webp)
 
 ![Image description](./image-2.webp)
 :::
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Each image must occupy its own paragraph, with a blank line between images. Keep only images in a gallery; write paragraphs, lists, and code blocks outside the container.&lt;/p&gt;
-&lt;p&gt;Here is the result of the minimal syntax. Without parameters, the grid uses three columns, a &lt;code&gt;16/10&lt;/code&gt; ratio, and &lt;code&gt;cover&lt;/code&gt; by default.&lt;/p&gt;
+&lt;p&gt;每张图片必须独占一个段落，图片之间用空行分隔。画廊中只放图片；段落、列表和代码块请写在容器外面。&lt;/p&gt;
+&lt;p&gt;以下是最简语法的结果。未指定参数时，网格默认使用三列、&lt;code&gt;16/10&lt;/code&gt; 比例和 &lt;code&gt;cover&lt;/code&gt; 模式。&lt;/p&gt;
 &lt;p&gt;:::grid
 &lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Minimal syntax result: first image&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Minimal syntax result: second image&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Parameters at a Glance&lt;/h2&gt;
-&lt;p&gt;Write all parameters in braces after the opening directive: &lt;code&gt;:::grid{parameter=&quot;value&quot;}&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;参数速览&lt;/h2&gt;
+&lt;p&gt;在起始指令后用花括号编写所有参数：&lt;code&gt;:::grid{parameter=&quot;value&quot;}&lt;/code&gt;。&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;Parameter&lt;/th&gt;
-&lt;th&gt;Allowed values&lt;/th&gt;
-&lt;th&gt;Default&lt;/th&gt;
-&lt;th&gt;Purpose&lt;/th&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;允许值&lt;/th&gt;
+&lt;th&gt;默认值&lt;/th&gt;
+&lt;th&gt;用途&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;columns&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Integers from &lt;code&gt;1&lt;/code&gt; to &lt;code&gt;6&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;1&lt;/code&gt; 到 &lt;code&gt;6&lt;/code&gt; 的整数&lt;/td&gt;
 &lt;td&gt;&lt;code&gt;3&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Number of columns per row on desktop. Invalid values fall back to &lt;code&gt;3&lt;/code&gt;.&lt;/td&gt;
+&lt;td&gt;桌面上每行的列数。无效值回退到 &lt;code&gt;3&lt;/code&gt;。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;aspect&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;A positive ratio, such as &lt;code&gt;16/9&lt;/code&gt;, &lt;code&gt;3/4&lt;/code&gt;, or &lt;code&gt;1/1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;正比例，如 &lt;code&gt;16/9&lt;/code&gt;、&lt;code&gt;3/4&lt;/code&gt; 或 &lt;code&gt;1/1&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;&lt;code&gt;16/10&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The displayed card ratio, not the original image ratio.&lt;/td&gt;
+&lt;td&gt;显示的卡片比例，而非原始图片比例。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;fit&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;cover&lt;/code&gt;, &lt;code&gt;contain&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;cover&lt;/code&gt;、&lt;code&gt;contain&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;&lt;code&gt;cover&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Image fitting mode. &lt;code&gt;cover&lt;/code&gt; crops to fill; &lt;code&gt;contain&lt;/code&gt; preserves the complete image and may leave empty space.&lt;/td&gt;
+&lt;td&gt;图片适配模式。&lt;code&gt;cover&lt;/code&gt; 裁剪以填满；&lt;code&gt;contain&lt;/code&gt; 保留完整图片，可能留出空白。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;Complete example:&lt;/p&gt;
+&lt;p&gt;完整示例：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
 ![First image](./image-1.webp &quot;Optional caption&quot;)
 
@@ -768,31 +768,31 @@ This is another regular paragraph.
 ![Third image](./image-3.webp &quot;Optional caption&quot;)
 :::
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The following result uses the three-column landscape syntax above. Compare the card ratio, column count, and the way a title takes precedence over alt text as the caption:&lt;/p&gt;
+&lt;p&gt;以下结果使用了上述三列横版语法。对比卡片比例、列数，以及标题优先于替代文本作为说明文字的方式：&lt;/p&gt;
 &lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
 &lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Parameter example: first landscape image&quot; title=&quot;Landscape caption 1&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Parameter example: second landscape image&quot; title=&quot;Landscape caption 2&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-3.webp&quot; alt=&quot;Parameter example: third landscape image&quot; title=&quot;Landscape caption 3&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Captions and Alt Text&lt;/h2&gt;
-&lt;p&gt;An image&apos;s alt text serves both as accessible alternative text and as its default caption. When an image has an optional title, the title is used as the caption instead:&lt;/p&gt;
+&lt;h2&gt;说明文字与替代文本&lt;/h2&gt;
+&lt;p&gt;图片的替代文本既作为无障碍替代文字，也作为默认说明文字。当图片有可选标题时，标题会作为说明文字显示：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;![Text used for accessibility](./image.webp &quot;Caption shown below the image&quot;)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In the same row, captions align to the bottom of every card. A wrapping caption does not make the others float at a different height. Ratio text such as &lt;code&gt;3:4&lt;/code&gt; and &lt;code&gt;16:9&lt;/code&gt; can be written directly in body text, headings, and alt text without escaping.&lt;/p&gt;
-&lt;p&gt;This example demonstrates the default alt-text caption, an explicit title caption, and bottom alignment for a longer caption:&lt;/p&gt;
+&lt;p&gt;同一行中，说明文字与每张卡片的底部对齐。换行的说明文字不会导致其他说明文字停留在不同的高度。&lt;code&gt;3:4&lt;/code&gt; 和 &lt;code&gt;16:9&lt;/code&gt; 这样的比例文本可以直接写在正文、标题和替代文本中，无需转义。&lt;/p&gt;
+&lt;p&gt;此示例演示了默认的替代文本说明、显式标题说明，以及较长说明的底部对齐：&lt;/p&gt;
 &lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;1/1&quot;}
 &lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-1.webp&quot; alt=&quot;This image has no title, so its alt text is the caption&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-2.webp&quot; alt=&quot;Second square image with accessible alt text&quot; title=&quot;This title is displayed as the caption&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-3.webp&quot; alt=&quot;Accessible description of a 3:4 poster&quot; title=&quot;This is a longer caption for checking that every caption remains aligned to the bottom of its card when it wraps&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Layout and Cropping&lt;/h2&gt;
-&lt;p&gt;Desktop layouts use the number of columns specified by &lt;code&gt;columns&lt;/code&gt;. Below &lt;code&gt;768px&lt;/code&gt;, grids use at most two columns; below &lt;code&gt;480px&lt;/code&gt;, they switch to one column. The card wrapper fixes the &lt;code&gt;aspect&lt;/code&gt; ratio and clips rounded corners, while the image fills the card without the theme&apos;s default image margins.&lt;/p&gt;
+&lt;h2&gt;布局与裁剪&lt;/h2&gt;
+&lt;p&gt;桌面布局使用 &lt;code&gt;columns&lt;/code&gt; 指定的列数。低于 &lt;code&gt;768px&lt;/code&gt; 时，网格最多使用两列；低于 &lt;code&gt;480px&lt;/code&gt; 时切换为单列。卡片容器固定 &lt;code&gt;aspect&lt;/code&gt; 比例并裁剪圆角，而图片填满卡片，不带有主题默认的图片边距。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Choose &lt;code&gt;cover&lt;/code&gt;: the recommended default. Images are cropped from the center to fill the card, making the gallery look consistent.&lt;/li&gt;
-&lt;li&gt;Choose &lt;code&gt;contain&lt;/code&gt;: the full original image is shown without cropping. When its ratio differs from the card, the theme background remains visible; use this for images that cannot be cropped.&lt;/li&gt;
-&lt;li&gt;To preserve the complete image without empty space, set &lt;code&gt;aspect&lt;/code&gt; close to the original image ratio or place the image in a grid of its own.&lt;/li&gt;
+&lt;li&gt;选择 &lt;code&gt;cover&lt;/code&gt;：推荐的默认模式。图片从中心裁剪以填满卡片，使画廊看起来更一致。&lt;/li&gt;
+&lt;li&gt;选择 &lt;code&gt;contain&lt;/code&gt;：显示完整原始图片，不裁剪。当其比例与卡片不同时，主题背景仍可见；用于不能裁剪的图片。&lt;/li&gt;
+&lt;li&gt;要在不留空白的情况下保留完整图片，可将 &lt;code&gt;aspect&lt;/code&gt; 设为接近原始图片比例，或将图片放入独立网格。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The following examples place the same portrait images in &lt;code&gt;16/9&lt;/code&gt; cards with &lt;code&gt;cover&lt;/code&gt; and &lt;code&gt;contain&lt;/code&gt;. The first crops them; the second preserves the full image and leaves background space.&lt;/p&gt;
+&lt;p&gt;以下示例将相同的竖向图片放入 &lt;code&gt;16/9&lt;/code&gt; 卡片中，分别使用 &lt;code&gt;cover&lt;/code&gt; 和 &lt;code&gt;contain&lt;/code&gt;。第一种会裁剪；第二种保留完整图片并留下背景空白。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
 ![Image description](./image-1.webp &quot;Optional caption&quot;)
 
@@ -815,8 +815,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Second contain result&quot; title=&quot;Contain: empty space may appear&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Third contain result&quot; title=&quot;Contain: suitable for edge details&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Default Configuration&lt;/h2&gt;
-&lt;p&gt;Without attributes, the default is three columns, a &lt;code&gt;16/10&lt;/code&gt; ratio, and &lt;code&gt;cover&lt;/code&gt; cropping. These three portrait images verify default cropping and captions.&lt;/p&gt;
+&lt;h2&gt;默认配置&lt;/h2&gt;
+&lt;p&gt;不指定属性时，默认是三列、&lt;code&gt;16/10&lt;/code&gt; 比例和 &lt;code&gt;cover&lt;/code&gt; 裁剪。这三张竖向图片用于验证默认裁剪和说明文字。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid
 ![Image description](./image-1.webp)
 
@@ -830,8 +830,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Default configuration: portrait image two&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Default configuration: portrait image three&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Three-Column Portraits: 3:4&lt;/h2&gt;
-&lt;p&gt;With &lt;code&gt;aspect=&quot;3/4&quot;&lt;/code&gt;, the three portrait images fill consistently proportioned vertical cards. If an original image has a different ratio, &lt;code&gt;cover&lt;/code&gt; crops its edges from the center.&lt;/p&gt;
+&lt;h2&gt;三列竖向：3:4&lt;/h2&gt;
+&lt;p&gt;使用 &lt;code&gt;aspect=&quot;3/4&quot;&lt;/code&gt; 时，三张竖向图片会填满比例一致的竖向卡片。如果原始图片比例不同，&lt;code&gt;cover&lt;/code&gt; 会从中心裁剪其边缘。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
 ![Portrait image description](./portrait-1.webp)
 
@@ -845,8 +845,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;3:4 test image two&quot; title=&quot;Portrait 2&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;3:4 test image three&quot; title=&quot;Portrait 3&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Three-Column Landscapes: 16:9&lt;/h2&gt;
-&lt;p&gt;This set demonstrates a common video-cover ratio in a three-column layout. Cropping is minimal when the landscape images are close to the card ratio.&lt;/p&gt;
+&lt;h2&gt;三列横版：16:9&lt;/h2&gt;
+&lt;p&gt;这组示例展示了三列布局中常见的视频封面比例。当横版图片接近卡片比例时，裁剪很少。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot;}
 ![Landscape image description](./landscape-1.webp)
 
@@ -860,8 +860,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-2.webp&quot; alt=&quot;16:9 test image two&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-3.webp&quot; alt=&quot;16:9 test image three&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Two-Column Squares: 1:1&lt;/h2&gt;
-&lt;p&gt;Two columns work well when larger preview cards are needed. The third image moves to the next row. The final row keeps its grid-track width instead of stretching images to fill the row.&lt;/p&gt;
+&lt;h2&gt;两列正方形：1:1&lt;/h2&gt;
+&lt;p&gt;当需要更大的预览卡片时，两列效果很好。第三张图片会移到下一行。最后一行保持其网格轨道宽度，而不是拉伸图片填满整行。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;2&quot; aspect=&quot;1/1&quot;}
 ![Square image description](./square-1.webp)
 
@@ -875,8 +875,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-2.webp&quot; alt=&quot;1:1 test image two&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-3.webp&quot; alt=&quot;1:1 test image three&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Four Columns with &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;fit=&quot;contain&quot;&lt;/code&gt; does not crop the original image. When the image ratio differs from the card ratio, the theme background remains visible. This is intentional, not a layout issue. It also verifies that four-column grids and separate lightbox groups do not interfere with each other.&lt;/p&gt;
+&lt;h2&gt;四列 &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;fit=&quot;contain&quot;&lt;/code&gt; 不会裁剪原始图片。当图片比例与卡片比例不同时，主题背景仍可见。这是有意为之，并非布局问题。它同时验证了四列网格和独立灯箱分组互不干扰。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;4&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
 ![Image description](./image-1.webp)
 
@@ -890,8 +890,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Contain: portrait image two&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Contain: portrait image three&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Single-Column Detail Image&lt;/h2&gt;
-&lt;p&gt;One column is suitable when an image needs a larger reading size. It remains one column on desktop, tablet, and mobile, and the original is still available in the lightbox.&lt;/p&gt;
+&lt;h2&gt;单列细节图&lt;/h2&gt;
+&lt;p&gt;当图片需要更大的阅读尺寸时，单列很合适。它在桌面、平板和移动端都保持单列，原始图片仍可在灯箱中查看。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot;}
 ![Image description](./detail.webp)
 :::
@@ -899,8 +899,8 @@ This is another regular paragraph.
 &lt;p&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot;}
 &lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-1.webp&quot; alt=&quot;Single-column test image&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Sparse Five-Column Row&lt;/h2&gt;
-&lt;p&gt;Five columns verify a higher supported column count. With only three images, the final row remains left-aligned instead of stretching the images.&lt;/p&gt;
+&lt;h2&gt;稀疏五列行&lt;/h2&gt;
+&lt;p&gt;五列用于验证更高的支持列数。只有三张图片时，最后一行保持左对齐，而不是拉伸图片。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;5&quot; aspect=&quot;1/1&quot;}
 ![Thumbnail description](./thumb-1.webp)
 
@@ -914,8 +914,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-2.webp&quot; alt=&quot;Five-column test image two&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-3.webp&quot; alt=&quot;Five-column test image three&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Mixed Images in Six Columns&lt;/h2&gt;
-&lt;p&gt;Six columns are the current maximum. Mixing landscape and portrait images verifies &lt;code&gt;cover&lt;/code&gt; cropping, captions on narrow cards, and a dense desktop layout. For readable article content, two to four columns are usually preferable.&lt;/p&gt;
+&lt;h2&gt;六列混合图片&lt;/h2&gt;
+&lt;p&gt;六列是当前的最大值。混合横版和竖向图片可验证 &lt;code&gt;cover&lt;/code&gt; 裁剪、窄卡片上的说明文字，以及密集的桌面布局。对于可读的文章内容，通常两到四列更合适。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;6&quot; aspect=&quot;1/1&quot;}
 ![Image description](./image-1.webp)
 
@@ -938,8 +938,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-2.webp&quot; alt=&quot;Six-column test image five&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-3.webp&quot; alt=&quot;Six-column test image six&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Four-Column Squares: 1:1&lt;/h2&gt;
-&lt;p&gt;Four square images with the same ratio are a typical four-column layout. Desktop displays all four in one row; tablet collapses to two columns and mobile to one.&lt;/p&gt;
+&lt;h2&gt;四列正方形：1:1&lt;/h2&gt;
+&lt;p&gt;四张比例相同的方形图片是典型的四列布局。桌面端四张图片排成一行；平板端折叠为两列，移动端为单列。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;4&quot; aspect=&quot;1/1&quot;}
 ![Square image description](./square-1.webp)
 
@@ -956,8 +956,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-3.webp&quot; alt=&quot;Square image three&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-4.webp&quot; alt=&quot;Square image four&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Six-Column Landscapes: 16:9&lt;/h2&gt;
-&lt;p&gt;Six landscape columns work well for thumbnail previews, portfolios, and screenshot indexes. Even if original ratios differ slightly, &lt;code&gt;cover&lt;/code&gt; fills every &lt;code&gt;16/9&lt;/code&gt; card consistently.&lt;/p&gt;
+&lt;h2&gt;六列横版：16:9&lt;/h2&gt;
+&lt;p&gt;六列横版适合缩略图预览、作品集和截图索引。即使原始比例略有差异，&lt;code&gt;cover&lt;/code&gt; 也会一致地填满每张 &lt;code&gt;16/9&lt;/code&gt; 卡片。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;6&quot; aspect=&quot;16/9&quot;}
 ![Landscape image description](./landscape-1.webp)
 
@@ -980,8 +980,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-5.webp&quot; alt=&quot;Landscape image five&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-6.webp&quot; alt=&quot;Landscape image six&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Three-Column Portraits: 3:4&lt;/h2&gt;
-&lt;p&gt;This group of six portrait images demonstrates a common layout for people, posters, or mobile screenshots. The images form two rows of three, with captions aligned to the bottom.&lt;/p&gt;
+&lt;h2&gt;三列竖向：3:4&lt;/h2&gt;
+&lt;p&gt;这组六张竖向图片展示了人物、海报或手机截图的常见布局。图片排列为两行三列，说明文字底部对齐。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
 ![Portrait image description](./portrait-1.webp)
 
@@ -1004,8 +1004,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-5.webp&quot; alt=&quot;Portrait image five&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-6.webp&quot; alt=&quot;Portrait image six&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Edge-Critical Content: &lt;code&gt;cover&lt;/code&gt; and Lightbox&lt;/h2&gt;
-&lt;p&gt;These images contain important text or details near their edges. &lt;code&gt;cover&lt;/code&gt; keeps the grid tidy but may crop those edges; click an image to view the uncropped original in the lightbox. Use clear captions for edge-sensitive images, or use &lt;code&gt;contain&lt;/code&gt; below.&lt;/p&gt;
+&lt;h2&gt;边缘关键内容：&lt;code&gt;cover&lt;/code&gt; 与灯箱&lt;/h2&gt;
+&lt;p&gt;这些图片在边缘附近包含重要文字或细节。&lt;code&gt;cover&lt;/code&gt; 保持网格整齐，但可能会裁剪这些边缘；点击图片可在灯箱中查看未裁剪的原始图。对边缘敏感的图片请使用清晰的说明文字，或使用下方的 &lt;code&gt;contain&lt;/code&gt;。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
 ![Edge-critical content](./critical-1.webp &quot;Open the lightbox to view the complete edge content&quot;)
 
@@ -1019,8 +1019,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-2.webp&quot; alt=&quot;Second edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-3.webp&quot; alt=&quot;Third edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Extreme Ratios with &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;For banners, long screenshots, and other extreme image ratios, &lt;code&gt;contain&lt;/code&gt; displays the complete original. Unlike &lt;code&gt;cover&lt;/code&gt;, it may leave theme-background space, but it never crops content.&lt;/p&gt;
+&lt;h2&gt;极端比例 &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;对于横幅、长截图和其他极端图片比例，&lt;code&gt;contain&lt;/code&gt; 会显示完整原始图片。与 &lt;code&gt;cover&lt;/code&gt; 不同，它可能会留下主题背景空白，但绝不会裁剪内容。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
 ![Complete screenshot description](./wide-1.webp)
 
@@ -1034,8 +1034,8 @@ This is another regular paragraph.
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-2.webp&quot; alt=&quot;Extreme-ratio image two&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-3.webp&quot; alt=&quot;Extreme-ratio image three&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Transparent Images&lt;/h2&gt;
-&lt;p&gt;Transparent images reveal the card&apos;s theme background. This single-column &lt;code&gt;contain&lt;/code&gt; example makes the transparent areas, original edges, and lightbox behavior easy to inspect.&lt;/p&gt;
+&lt;h2&gt;透明图片&lt;/h2&gt;
+&lt;p&gt;透明图片会露出卡片的主题背景。这个单列 &lt;code&gt;contain&lt;/code&gt; 示例便于检查透明区域、原始边缘和灯箱行为。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
 ![Transparent image description](./transparent.webp)
 :::
@@ -1043,42 +1043,42 @@ This is another regular paragraph.
 &lt;p&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
 &lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/transparent-1.webp&quot; alt=&quot;Transparent-background test image&quot; /&gt;
 :::&lt;/p&gt;
-&lt;h2&gt;Lightbox Navigation&lt;/h2&gt;
-&lt;p&gt;Click any image in a grid to open the Fancybox lightbox. There you can zoom, rotate, enter fullscreen, view thumbnails, and navigate with the arrow keys. Navigation is limited to the current &lt;code&gt;:::grid&lt;/code&gt; container: for example, clicking &quot;16:9 test image one&quot; only opens the other two landscape images in that section.&lt;/p&gt;
-&lt;p&gt;Ordinary Markdown images in the same post continue to be handled separately; they are not added to any grid gallery.&lt;/p&gt;
-&lt;h2&gt;Checklist&lt;/h2&gt;
+&lt;h2&gt;灯箱导航&lt;/h2&gt;
+&lt;p&gt;点击网格中的任意图片即可打开 Fancybox 灯箱。在那里你可以缩放、旋转、进入全屏、查看缩略图，并使用方向键导航。导航仅限于当前的 &lt;code&gt;:::grid&lt;/code&gt; 容器：例如，点击&quot;16:9 test image one&quot;只会打开该部分的另外两张横版图片。&lt;/p&gt;
+&lt;p&gt;同一篇文章中的普通 Markdown 图片会继续单独处理，不会加入任何网格画廊。&lt;/p&gt;
+&lt;h2&gt;检查清单&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;Images in each grid have consistent dimensions, with captions below the cards.&lt;/li&gt;
-&lt;li&gt;Images scale slightly on hover; after clicking, they can be zoomed, rotated, and navigated with the keyboard.&lt;/li&gt;
-&lt;li&gt;Clicking &quot;16:9 test image one&quot; lets the lightbox browse only the other two landscape images in that section.&lt;/li&gt;
-&lt;li&gt;Below 768px, grids use at most two columns; below 480px, they use one column.&lt;/li&gt;
-&lt;li&gt;Portrait images in &quot;Four Columns with &lt;code&gt;contain&lt;/code&gt;&quot; are fully visible with empty space and no cropping.&lt;/li&gt;
-&lt;li&gt;Five- and six-column grids retain their specified column count on wide screens, then collapse to two or one column according to the responsive rules.&lt;/li&gt;
+&lt;li&gt;每个网格中的图片尺寸一致，说明文字位于卡片下方。&lt;/li&gt;
+&lt;li&gt;图片悬停时轻微缩放；点击后可缩放、旋转，并可用键盘导航。&lt;/li&gt;
+&lt;li&gt;点击&quot;16:9 test image one&quot;时，灯箱只会浏览该部分的另外两张横版图片。&lt;/li&gt;
+&lt;li&gt;低于 &lt;code&gt;768px&lt;/code&gt; 时，网格最多使用两列；低于 &lt;code&gt;480px&lt;/code&gt; 时使用单列。&lt;/li&gt;
+&lt;li&gt;&quot;四列 &lt;code&gt;contain&lt;/code&gt;&quot;中的竖向图片完整可见，带空白且不裁剪。&lt;/li&gt;
+&lt;li&gt;五列和六列网格在宽屏上保持指定的列数，然后根据响应式规则折叠为两列或单列。&lt;/li&gt;
 &lt;/ol&gt;
-</content:encoded></item><item><title>Markdown Extended Features</title><link>https://ayato233.github.io/posts/markdown-extended/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-extended/</guid><description>GitHub cards, callouts, code groups, Wiki Links, image grids, PlantUML, and other enhanced Markdown features in Mizuki.</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub Repository Cards&lt;/h2&gt;
-&lt;p&gt;You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API.&lt;/p&gt;
+</content:encoded></item><item><title>Markdown 扩展功能</title><link>https://ayato233.github.io/posts/markdown-extended/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-extended/</guid><description>Mizuki 中的 GitHub 卡片、提示框、代码组、Wiki 链接、图片网格、PlantUML 等增强 Markdown 功能。</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub 仓库卡片&lt;/h2&gt;
+&lt;p&gt;你可以添加链接到 GitHub 仓库的动态卡片，页面加载时会从 GitHub API 拉取仓库信息。&lt;/p&gt;
 &lt;p&gt;::github{repo=&quot;LyraVoid/Mizuki&quot;}&lt;/p&gt;
-&lt;p&gt;Create a GitHub repository card with the code &lt;code&gt;::github{repo=&quot;LyraVoid/Mizuki&quot;}&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;::github{repo=&quot;LyraVoid/Mizuki&quot;}&lt;/code&gt; 代码创建 GitHub 仓库卡片。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;::github{repo=&quot;LyraVoid/Mizuki&quot;}
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Admonitions&lt;/h2&gt;
-&lt;p&gt;Following types of admonitions are supported: &lt;code&gt;note&lt;/code&gt; &lt;code&gt;tip&lt;/code&gt; &lt;code&gt;important&lt;/code&gt; &lt;code&gt;warning&lt;/code&gt; &lt;code&gt;caution&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;提示框（Admonitions）&lt;/h2&gt;
+&lt;p&gt;支持以下类型的提示框：&lt;code&gt;note&lt;/code&gt; &lt;code&gt;tip&lt;/code&gt; &lt;code&gt;important&lt;/code&gt; &lt;code&gt;warning&lt;/code&gt; &lt;code&gt;caution&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;:::note
-Highlights information that users should take into account, even when skimming.
+突出显示用户即使略读也应关注的信息。
 :::&lt;/p&gt;
 &lt;p&gt;:::tip
-Optional information to help a user be more successful.
+可选信息，帮助用户更成功。
 :::&lt;/p&gt;
 &lt;p&gt;:::important
-Crucial information necessary for users to succeed.
+用户成功所必需的关键信息。
 :::&lt;/p&gt;
 &lt;p&gt;:::warning
-Critical content demanding immediate user attention due to potential risks.
+因潜在风险需要用户立即关注的关键内容。
 :::&lt;/p&gt;
 &lt;p&gt;:::caution
-Negative potential consequences of an action.
+某个行为的潜在负面后果。
 :::&lt;/p&gt;
-&lt;h3&gt;Basic Syntax&lt;/h3&gt;
+&lt;h3&gt;基本语法&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;:::note
 Highlights information that users should take into account, even when skimming.
 :::
@@ -1087,8 +1087,8 @@ Highlights information that users should take into account, even when skimming.
 Optional information to help a user be more successful.
 :::
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Custom Titles&lt;/h3&gt;
-&lt;p&gt;The title of the admonition can be customized.&lt;/p&gt;
+&lt;h3&gt;自定义标题&lt;/h3&gt;
+&lt;p&gt;提示框的标题可以自定义。&lt;/p&gt;
 &lt;p&gt;:::note[MY CUSTOM TITLE]
 This is a note with a custom title.
 :::&lt;/p&gt;
@@ -1096,10 +1096,10 @@ This is a note with a custom title.
 This is a note with a custom title.
 :::
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;GitHub Syntax&lt;/h3&gt;
+&lt;h3&gt;GitHub 语法&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;[!TIP]
-&lt;a href=&quot;https://github.com/orgs/community/discussions/16925&quot;&gt;The GitHub syntax&lt;/a&gt; is also supported.&lt;/p&gt;
+&lt;a href=&quot;https://github.com/orgs/community/discussions/16925&quot;&gt;GitHub 语法&lt;/a&gt; 也支持。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt; [!NOTE]
 &amp;gt; The GitHub syntax is also supported.
@@ -1107,15 +1107,14 @@ This is a note with a custom title.
 &amp;gt; [!TIP]
 &amp;gt; The GitHub syntax is also supported.
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Spoiler&lt;/h3&gt;
-&lt;p&gt;You can add spoilers to your text. The text also supports &lt;strong&gt;Markdown&lt;/strong&gt; syntax.&lt;/p&gt;
+&lt;h3&gt;剧透&lt;/h3&gt;
+&lt;p&gt;你可以为文本添加剧透效果。文本同样支持 &lt;strong&gt;Markdown&lt;/strong&gt; 语法。&lt;/p&gt;
 &lt;p&gt;The content :spoiler[is hidden &lt;strong&gt;ayyy&lt;/strong&gt;]!&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;The content :spoiler[is hidden **ayyy**]!
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Code Groups&lt;/h2&gt;
-&lt;p&gt;Use VitePress-style &lt;code&gt;::: code-group labels=[...]&lt;/code&gt; syntax to present related
-examples as accessible tabs. Tabs support mouse input and the
-&amp;lt;kbd&amp;gt;Left&amp;lt;/kbd&amp;gt;, &amp;lt;kbd&amp;gt;Right&amp;lt;/kbd&amp;gt;, &amp;lt;kbd&amp;gt;Home&amp;lt;/kbd&amp;gt;, and &amp;lt;kbd&amp;gt;End&amp;lt;/kbd&amp;gt; keys.&lt;/p&gt;
+&lt;h2&gt;代码组&lt;/h2&gt;
+&lt;p&gt;使用 VitePress 风格的 &lt;code&gt;::: code-group labels=[...]&lt;/code&gt; 语法，将相关示例以可访问的标签页形式呈现。标签页支持鼠标输入以及
+&amp;lt;kbd&amp;gt;Left&amp;lt;/kbd&amp;gt;、&amp;lt;kbd&amp;gt;Right&amp;lt;/kbd&amp;gt;、&amp;lt;kbd&amp;gt;Home&amp;lt;/kbd&amp;gt; 和 &amp;lt;kbd&amp;gt;End&amp;lt;/kbd&amp;gt; 键。&lt;/p&gt;
 &lt;p&gt;::: code-group labels=[TypeScript, Shell, Collapsed]&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;export const config = {
   framework: &quot;Mizuki&quot;,
@@ -1142,9 +1141,8 @@ pnpm build
 
 :::
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Automatic Long-Code Collapse&lt;/h3&gt;
-&lt;p&gt;Code blocks longer than the configured threshold are collapsed automatically.
-Authors can continue using &lt;code&gt;collapse={...}&lt;/code&gt; to fold selected line ranges.&lt;/p&gt;
+&lt;h3&gt;自动折叠长代码&lt;/h3&gt;
+&lt;p&gt;超过配置阈值的代码块会自动折叠。作者可以继续使用 &lt;code&gt;collapse={...}&lt;/code&gt; 折叠选定的行范围。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;01
 02
 03
@@ -1168,15 +1166,15 @@ Authors can continue using &lt;code&gt;collapse={...}&lt;/code&gt; to fold selec
 21
 22
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Extended Callouts&lt;/h2&gt;
-&lt;p&gt;In addition to GitHub&apos;s five alert types, Mizuki accepts common Obsidian
-aliases such as &lt;code&gt;INFO&lt;/code&gt;, &lt;code&gt;TODO&lt;/code&gt;, &lt;code&gt;SUCCESS&lt;/code&gt;, &lt;code&gt;QUESTION&lt;/code&gt;, &lt;code&gt;DANGER&lt;/code&gt;, &lt;code&gt;BUG&lt;/code&gt;,
-&lt;code&gt;EXAMPLE&lt;/code&gt;, and &lt;code&gt;QUOTE&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;扩展提示框&lt;/h2&gt;
+&lt;p&gt;除了 GitHub 的五个提醒类型外，Mizuki 还接受常见的 Obsidian
+别名，如 &lt;code&gt;INFO&lt;/code&gt;、&lt;code&gt;TODO&lt;/code&gt;、&lt;code&gt;SUCCESS&lt;/code&gt;、&lt;code&gt;QUESTION&lt;/code&gt;、&lt;code&gt;DANGER&lt;/code&gt;、&lt;code&gt;BUG&lt;/code&gt;、
+&lt;code&gt;EXAMPLE&lt;/code&gt; 和 &lt;code&gt;QUOTE&lt;/code&gt;。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;[!BUG] Known limitation
 Extended aliases are mapped to Mizuki&apos;s semantic callout styles.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Python Markdown and Docusaurus-style directives are supported as well:&lt;/p&gt;
+&lt;p&gt;同时支持 Python Markdown 和 Docusaurus 风格的指令：&lt;/p&gt;
 &lt;p&gt;:::danger[Danger directive]
 This directive uses a custom title.
 :::&lt;/p&gt;
@@ -1187,30 +1185,29 @@ This directive uses a custom title.
 This directive uses a custom title.
 :::
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Wiki Links&lt;/h2&gt;
-&lt;p&gt;Obsidian-style Wiki Links resolve article paths, aliases, and heading anchors.
-A standalone link becomes an article card:&lt;/p&gt;
+&lt;h2&gt;Wiki 链接&lt;/h2&gt;
+&lt;p&gt;Obsidian 风格的 Wiki 链接可解析文章路径、别名和标题锚点。
+独立链接会变成文章卡片：&lt;/p&gt;
 &lt;p&gt;[[markdown-mermaid]]&lt;/p&gt;
-&lt;p&gt;Inline links stay inline. See
-[[markdown-mermaid|the Mermaid examples]], or link directly to
-[[markdown-mermaid#Flowchart Example|a section]].&lt;/p&gt;
+&lt;p&gt;行内链接保持行内显示。参见
+[[markdown-mermaid|the Mermaid examples]]，或直接链接到
+[[markdown-mermaid#Flowchart Example|a section]]。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[[markdown-mermaid]]
 
 See [[markdown-mermaid|the Mermaid examples]].
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Automatic Image Grids&lt;/h2&gt;
-&lt;p&gt;Two or more adjacent standalone images are grouped into a responsive gallery.
-Explicit &lt;code&gt;:::grid&lt;/code&gt; directives remain available when custom columns, aspect
-ratio, or object fitting are required.&lt;/p&gt;
+&lt;h2&gt;自动图片网格&lt;/h2&gt;
+&lt;p&gt;两张或更多相邻的独立图片会自动分组为响应式画廊。
+当需要自定义列数、宽高比或对象适配时，仍可使用显式的 &lt;code&gt;:::grid&lt;/code&gt; 指令。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-1.webp&quot; alt=&quot;Square demo 1&quot; /&gt;
 &lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-2.webp&quot; alt=&quot;Square demo 2&quot; /&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;![First image](/images/first.webp)
 ![Second image](/images/second.webp)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;PlantUML&lt;/h2&gt;
-&lt;p&gt;PlantUML fences generate SVG diagrams through the configured server. Diagrams
-support light and dark sources, zooming, dragging, resetting, and fullscreen
-viewing.&lt;/p&gt;
+&lt;p&gt;PlantUML 围栏通过配置的服务器生成 SVG 图表。图表
+支持明暗主题、缩放、拖拽、重置和全屏
+查看。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;@startuml
 actor Author
 Author -&amp;gt; Mizuki: Write Markdown
@@ -1223,13 +1220,13 @@ Alice -&amp;gt; Bob: Hello
 @enduml
 ```
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Chemistry&lt;/h2&gt;
-&lt;p&gt;The KaTeX &lt;code&gt;mhchem&lt;/code&gt; extension renders chemical equations:&lt;/p&gt;
+&lt;h2&gt;化学公式&lt;/h2&gt;
+&lt;p&gt;KaTeX 的 &lt;code&gt;mhchem&lt;/code&gt; 扩展可渲染化学方程式：&lt;/p&gt;
 &lt;p&gt;$$
 \ce{H2O + CO2 -&amp;gt; H2CO3}
 $$&lt;/p&gt;
-</content:encoded></item><item><title>Simple Guides for Mizuki</title><link>https://ayato233.github.io/posts/guide/</link><guid isPermaLink="true">https://ayato233.github.io/posts/guide/</guid><description>How to use this blog template.</description><pubDate>Mon, 01 Apr 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This blog template is built with &lt;a href=&quot;https://astro.build/&quot;&gt;Astro&lt;/a&gt;. For the things that are not mentioned in this guide, you may find the answers in the &lt;a href=&quot;https://docs.astro.build/&quot;&gt;Astro Docs&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Front-matter of Posts&lt;/h2&gt;
+</content:encoded></item><item><title>Mizuki 使用指南</title><link>https://ayato233.github.io/posts/guide/</link><guid isPermaLink="true">https://ayato233.github.io/posts/guide/</guid><description>如何使用这个博客模板。</description><pubDate>Mon, 01 Apr 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本博客模板基于 &lt;a href=&quot;https://astro.build/&quot;&gt;Astro&lt;/a&gt; 构建。本指南未提及的内容，你可以在 &lt;a href=&quot;https://docs.astro.build/&quot;&gt;Astro 文档&lt;/a&gt; 中找到答案。&lt;/p&gt;
+&lt;h2&gt;文章的 Front-matter&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;---
 title: My First Blog Post
 published: 2023-09-09
@@ -1243,73 +1240,73 @@ draft: false
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;Attribute&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
+&lt;th&gt;属性&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;title&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The title of the post.&lt;/td&gt;
+&lt;td&gt;文章标题。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;published&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The date the post was published.&lt;/td&gt;
+&lt;td&gt;文章发布日期。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;pinned&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Whether this post is pinned to the top of the post list.&lt;/td&gt;
+&lt;td&gt;该文章是否置顶到文章列表顶部。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;priority&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The priority of the pinned post. Smaller value means higher priority (0, 1, 2...).&lt;/td&gt;
+&lt;td&gt;置顶文章的优先级。数值越小优先级越高（0, 1, 2...）。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;description&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;A short description of the post. Displayed on index page.&lt;/td&gt;
+&lt;td&gt;文章的简短描述。显示在首页。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;image&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The cover image path of the post.&amp;lt;br/&amp;gt;1. Start with &lt;code&gt;http://&lt;/code&gt; or &lt;code&gt;https://&lt;/code&gt;: Use web image&amp;lt;br/&amp;gt;2. Start with &lt;code&gt;/&lt;/code&gt;: For image in &lt;code&gt;public&lt;/code&gt; dir&amp;lt;br/&amp;gt;3. With none of the prefixes: Relative to the markdown file&lt;/td&gt;
+&lt;td&gt;文章封面图片路径。&amp;lt;br/&amp;gt;1. 以 &lt;code&gt;http://&lt;/code&gt; 或 &lt;code&gt;https://&lt;/code&gt; 开头：使用网络图片&amp;lt;br/&amp;gt;2. 以 &lt;code&gt;/&lt;/code&gt; 开头：使用 &lt;code&gt;public&lt;/code&gt; 目录中的图片&amp;lt;br/&amp;gt;3. 无以上前缀：相对于 markdown 文件&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;tags&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The tags of the post.&lt;/td&gt;
+&lt;td&gt;文章标签。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;category&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The category of the post.&lt;/td&gt;
+&lt;td&gt;文章分类。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;licenseName&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The license name for the post content.&lt;/td&gt;
+&lt;td&gt;文章内容的许可名称。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;author&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The author of the post.&lt;/td&gt;
+&lt;td&gt;文章作者。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;sourceLink&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The source link or reference for the post content.&lt;/td&gt;
+&lt;td&gt;文章内容的来源链接或参考。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;draft&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;If this post is still a draft, which won&apos;t be displayed.&lt;/td&gt;
+&lt;td&gt;该文章是否为草稿（草稿不会显示）。&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2&gt;Where to Place the Post Files&lt;/h2&gt;
-&lt;p&gt;Your post files should be placed in &lt;code&gt;src/content/posts/&lt;/code&gt; directory. You can also create sub-directories to better organize your posts and assets.&lt;/p&gt;
+&lt;h2&gt;文章文件放置位置&lt;/h2&gt;
+&lt;p&gt;你的文章文件应放在 &lt;code&gt;src/content/posts/&lt;/code&gt; 目录中。你也可以创建子目录，以便更好地组织文章和资源。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;src/content/posts/
 ├── post-1.md
 └── post-2/
     ├── cover.webp
     └── index.md
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Markdown Mermaid</title><link>https://ayato233.github.io/posts/markdown-mermaid/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-mermaid/</guid><description>A simple example of a Markdown blog post with Mermaid.</description><pubDate>Sun, 01 Oct 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Complete Guide to Markdown with Mermaid Diagrams&lt;/h1&gt;
-&lt;p&gt;This article demonstrates how to create various complex diagrams using Mermaid in Markdown documents, including flowcharts, sequence diagrams, Gantt charts, class diagrams, and state diagrams.&lt;/p&gt;
-&lt;h2&gt;Flowchart Example&lt;/h2&gt;
-&lt;p&gt;Flowcharts are excellent for representing processes or algorithm steps.&lt;/p&gt;
+</content:encoded></item><item><title>Markdown Mermaid</title><link>https://ayato233.github.io/posts/markdown-mermaid/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-mermaid/</guid><description>一个使用 Mermaid 的 Markdown 博客文章示例。</description><pubDate>Sun, 01 Oct 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Markdown 与 Mermaid 图表完整指南&lt;/h1&gt;
+&lt;p&gt;本文演示如何使用 Mermaid 在 Markdown 文档中创建各种复杂图表，包括流程图、时序图、甘特图、类图和状态图。&lt;/p&gt;
+&lt;h2&gt;流程图示例&lt;/h2&gt;
+&lt;p&gt;流程图非常适合表示流程或算法步骤。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;graph TD
     A[Start] --&amp;gt; B{Condition Check}
     B --&amp;gt;|Yes| C[Process Step 1]
@@ -1328,8 +1325,8 @@ draft: false
     H --&amp;gt; J
     I --&amp;gt; J
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Sequence Diagram Example&lt;/h2&gt;
-&lt;p&gt;Sequence diagrams show interactions between objects over time.&lt;/p&gt;
+&lt;h2&gt;时序图示例&lt;/h2&gt;
+&lt;p&gt;时序图展示对象之间随时间的交互。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sequenceDiagram
     participant User
     participant WebApp
@@ -1354,8 +1351,8 @@ draft: false
         WebApp-&amp;gt;&amp;gt;User: Prompt Re-entry
     end
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Gantt Chart Example&lt;/h2&gt;
-&lt;p&gt;Gantt charts are perfect for displaying project schedules and timelines.&lt;/p&gt;
+&lt;h2&gt;甘特图示例&lt;/h2&gt;
+&lt;p&gt;甘特图非常适合展示项目进度和时间线。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;gantt
     title Website Development Project Timeline
     dateFormat  YYYY-MM-DD
@@ -1380,8 +1377,8 @@ draft: false
     Production Deployment     :d1, after c3, 3d
     Launch                    :milestone, after d1, 0d
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Class Diagram Example&lt;/h2&gt;
-&lt;p&gt;Class diagrams show the static structure of a system, including classes, attributes, methods, and their relationships.&lt;/p&gt;
+&lt;h2&gt;类图示例&lt;/h2&gt;
+&lt;p&gt;类图展示系统的静态结构，包括类、属性、方法及其关系。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;classDiagram
     class User {
         +String username
@@ -1422,8 +1419,8 @@ draft: false
     Article &quot;1&quot; -- &quot;*&quot; Comment : has
     Article &quot;1&quot; -- &quot;*&quot; Category : belongs to
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;State Diagram Example&lt;/h2&gt;
-&lt;p&gt;State diagrams show the sequence of states an object goes through during its life cycle.&lt;/p&gt;
+&lt;h2&gt;状态图示例&lt;/h2&gt;
+&lt;p&gt;状态图展示对象在其生命周期中经历的状态序列。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;stateDiagram-v2
     [*] --&amp;gt; Draft
     
@@ -1444,8 +1441,8 @@ draft: false
     
     Archived --&amp;gt; [*]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Pie Chart Example&lt;/h2&gt;
-&lt;p&gt;Pie charts are ideal for displaying proportions and percentage data.&lt;/p&gt;
+&lt;h2&gt;饼图示例&lt;/h2&gt;
+&lt;p&gt;饼图非常适合展示比例和百分比数据。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;pie title Website Traffic Sources Analysis
     &quot;Search Engines&quot; : 45.6
     &quot;Direct Access&quot; : 30.1
@@ -1453,11 +1450,11 @@ draft: false
     &quot;Referral Links&quot; : 6.4
     &quot;Other Sources&quot; : 2.6
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Mermaid is a powerful tool for creating various types of diagrams in Markdown documents. This article demonstrated how to use flowcharts, sequence diagrams, Gantt charts, class diagrams, state diagrams, and pie charts. These diagrams can help you express complex concepts, processes, and data structures more clearly.&lt;/p&gt;
-&lt;p&gt;To use Mermaid, simply specify the mermaid language in a code block and describe the diagram using concise text syntax. Mermaid will automatically convert these descriptions into beautiful visual diagrams.&lt;/p&gt;
-&lt;p&gt;Try using Mermaid diagrams in your next technical blog post or project documentation - they will make your content more professional and easier to understand!&lt;/p&gt;
-</content:encoded></item><item><title>Include Video in the Posts</title><link>https://ayato233.github.io/posts/video/</link><guid isPermaLink="true">https://ayato233.github.io/posts/video/</guid><description>This post demonstrates how to include embedded video in a blog post.</description><pubDate>Mon, 01 Aug 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.&lt;/p&gt;
+&lt;h2&gt;结论&lt;/h2&gt;
+&lt;p&gt;Mermaid 是在 Markdown 文档中创建各种图表的强大工具。本文演示了如何使用流程图、时序图、甘特图、类图、状态图和饼图。这些图表可以帮助你更清晰地表达复杂的概念、流程和数据结构。&lt;/p&gt;
+&lt;p&gt;要使用 Mermaid，只需在代码块中指定 mermaid 语言，并用简洁的文本语法描述图表即可。Mermaid 会自动将这些描述转换为精美的可视化图表。&lt;/p&gt;
+&lt;p&gt;在你的下一篇技术博客或项目文档中试试 Mermaid 图表吧——它们会让你的内容更专业、更容易理解！&lt;/p&gt;
+</content:encoded></item><item><title>在文章中嵌入视频</title><link>https://ayato233.github.io/posts/video/</link><guid isPermaLink="true">https://ayato233.github.io/posts/video/</guid><description>本文演示如何在博客文章中嵌入视频。</description><pubDate>Mon, 01 Aug 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;只需从 YouTube 或其他平台复制嵌入代码，然后粘贴到 markdown 文件中即可。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;---
 title: Include Video in the Post
 published: 2023-10-19

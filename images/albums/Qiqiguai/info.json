@@ -1,0 +1,104 @@
+{
+	"mode": "external",
+	"hidden": false,
+	"title": "奇奇怪怪",
+	"description": "一些奇奇怪怪的图片收藏，先以占位图填充，后续可替换成自己的图片。",
+	"date": "2026-08-06",
+	"location": "网络",
+	"tags": ["奇奇怪怪", "占位图"],
+	"layout": "masonry",
+	"columns": 3,
+	"cover": "https://picsum.photos/seed/qqg1/800/600",
+	"photos": [
+		{
+			"id": "qqg-1",
+			"src": "https://picsum.photos/seed/qqg1/800/600",
+			"alt": "占位图片 1",
+			"title": "奇怪一号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-2",
+			"src": "https://picsum.photos/seed/qqg2/800/600",
+			"alt": "占位图片 2",
+			"title": "奇怪二号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-3",
+			"src": "https://picsum.photos/seed/qqg3/800/600",
+			"alt": "占位图片 3",
+			"title": "奇怪三号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-4",
+			"src": "https://picsum.photos/seed/qqg4/800/600",
+			"alt": "占位图片 4",
+			"title": "奇怪四号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-5",
+			"src": "https://picsum.photos/seed/qqg5/800/600",
+			"alt": "占位图片 5",
+			"title": "奇怪五号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-6",
+			"src": "https://picsum.photos/seed/qqg6/800/600",
+			"alt": "占位图片 6",
+			"title": "奇怪六号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-7",
+			"src": "https://picsum.photos/seed/qqg7/800/600",
+			"alt": "占位图片 7",
+			"title": "奇怪七号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-8",
+			"src": "https://picsum.photos/seed/qqg8/800/600",
+			"alt": "占位图片 8",
+			"title": "奇怪八号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		},
+		{
+			"id": "qqg-9",
+			"src": "https://picsum.photos/seed/qqg9/800/600",
+			"alt": "占位图片 9",
+			"title": "奇怪九号",
+			"description": "一张奇奇怪怪的占位图片",
+			"tags": ["占位"],
+			"width": 800,
+			"height": 600
+		}
+	]
+}
