@@ -1,7 +1,7 @@
 ---
 import "../styles/anime.css";
 
-import { AnimeFilters, AnimeGrid } from "@components/features/anime";
+import { AnimeFilters, AnimeSortBar } from "@components/features/anime";
 import { PageHeader } from "@components/features/page-header";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 
@@ -62,6 +62,24 @@ if (
 const statusMap = getStatusMap();
 const showExtendedFilters = ANIME_MODE === "bangumi";
 const emptyMessage = i18n(I18nKey.animeEmpty);
+
+const sortOptions = [
+	{ value: "default", label: i18n(I18nKey.animeFilterAll) },
+	{ value: "rating", label: "评分" },
+	{ value: "progress", label: "进度" },
+	{ value: "year", label: "年份" },
+	{ value: "title", label: "名称" },
+];
+
+const animeData = {
+	list: animeList,
+	statusMap,
+	labels: {
+		year: i18n(I18nKey.animeYear),
+		studio: i18n(I18nKey.animeStudio),
+	},
+	hasRightSidebars,
+};
 ---
 
 <MainGridLayout
@@ -91,6 +109,10 @@ const emptyMessage = i18n(I18nKey.animeEmpty);
 						showExtendedFilters={showExtendedFilters}
 					/>
 				</div>
+
+				<div class="mb-4">
+					<AnimeSortBar sortByLabel="排序" sortOptions={sortOptions} />
+				</div>
 			</div>
 
 			<div class="mb-8">
@@ -106,12 +128,10 @@ const emptyMessage = i18n(I18nKey.animeEmpty);
 							</p>
 						</div>
 					) : (
-						<AnimeGrid
-							animeList={animeList}
-							statusMap={statusMap}
-							yearLabel={i18n(I18nKey.animeYear)}
-							studioLabel={i18n(I18nKey.animeStudio)}
-						/>
+						<div
+							id="anime-list-container"
+							class="anime-grid-container grid gap-4 md:gap-6"
+						></div>
 					)
 				}
 
@@ -123,388 +143,9 @@ const emptyMessage = i18n(I18nKey.animeEmpty);
 		</div>
 	</div>
 
-	<script is:inline define:vars={{ hasRightSidebars }}>
-		(function () {
-			const containerId = "anime-list-container";
-
-			function updateAnimeListLayout(layout, shouldAnimate = true) {
-				const animeListContainer = document.getElementById(containerId);
-				if (!animeListContainer) {
-					return;
-				}
-				animeListContainer.dataset.currentLayout = layout;
-
-				const animeItems = Array.from(
-					document.querySelectorAll("[data-anime-status]"),
-				);
-				const visibleItems = animeItems.filter(
-					(item) => item.offsetParent !== null,
-				);
-				const firstPositions = new Map();
-				if (shouldAnimate) {
-					visibleItems.forEach((item) => {
-						const rect = item.getBoundingClientRect();
-						firstPositions.set(item, {
-							left: rect.left,
-							top: rect.top,
-							width: rect.width,
-							height: rect.height,
-						});
-					});
-				}
-
-				const style = document.createElement("style");
-				style.innerHTML = `.anime-grid-container .group { transition: none !important; }`;
-				document.head.appendChild(style);
-				animeListContainer.classList.remove(
-					"anime-list-mode",
-					"anime-grid-mode",
-				);
-				animeListContainer.classList.remove(
-					"grid-cols-1",
-					"md:grid-cols-2",
-					"lg:grid-cols-3",
-				);
-				if (layout === "grid") {
-					animeListContainer.classList.add("anime-grid-mode");
-					if (hasRightSidebars) {
-						const rightSidebar = document.querySelector(
-							".right-sidebar-container",
-						);
-						if (rightSidebar) {
-							rightSidebar.style.display = "none";
-							rightSidebar.classList.add("hidden-in-grid-mode");
-						}
-					}
-					const mainGrid = document.getElementById("main-grid");
-					if (mainGrid) {
-						mainGrid.style.gridTemplateColumns = "17.5rem 1fr";
-						mainGrid.classList.add("two-column-layout");
-					}
-				} else {
-					animeListContainer.classList.add("anime-list-mode");
-					animeListContainer.classList.add(
-						"grid-cols-1",
-						"lg:grid-cols-2",
-					);
-					if (hasRightSidebars) {
-						const rightSidebar = document.querySelector(
-							".right-sidebar-container",
-						);
-						if (rightSidebar) {
-							rightSidebar.style.display = "";
-							rightSidebar.classList.remove(
-								"hidden-in-grid-mode",
-							);
-						}
-					}
-					const mainGrid = document.getElementById("main-grid");
-					if (mainGrid) {
-						mainGrid.style.gridTemplateColumns = "";
-						mainGrid.classList.remove("two-column-layout");
-					}
-				}
-
-				void animeListContainer.offsetHeight;
-				if (!shouldAnimate) {
-					if (style.parentNode) {
-						style.parentNode.removeChild(style);
-					}
-					return;
-				}
-
-				requestAnimationFrame(() => {
-					if (style.parentNode) {
-						style.parentNode.removeChild(style);
-					}
-
-					visibleItems.forEach((item) => {
-						const first = firstPositions.get(item);
-						if (!first) {
-							return;
-						}
-						const last = item.getBoundingClientRect();
-
-						const deltaX = Math.round(first.left - last.left);
-						const deltaY = Math.round(first.top - last.top);
-						const deltaW = first.width / last.width;
-						const deltaH = first.height / last.height;
-
-						if (
-							Math.abs(deltaX) < 1 &&
-							Math.abs(deltaY) < 1 &&
-							Math.abs(deltaW - 1) < 0.01 &&
-							Math.abs(deltaH - 1) < 0.01
-						) {
-							return;
-						}
-
-						item.style.willChange = "transform";
-						item.style.transition = "none";
-						item.style.transformOrigin = "top left";
-						item.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${deltaW}, ${deltaH})`;
-					});
-
-					void animeListContainer.offsetHeight;
-					requestAnimationFrame(() => {
-						visibleItems.forEach((item) => {
-							item.style.transition =
-								"transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)";
-							item.style.transform = "";
-						});
-						setTimeout(() => {
-							visibleItems.forEach((item) => {
-								item.style.transition = "";
-								item.style.transformOrigin = "";
-								item.style.transform = "";
-								item.style.willChange = "";
-							});
-						}, 500);
-					});
-				});
-			}
-
-			function isPostListLayoutEnabled() {
-				return document.documentElement.getAttribute("data-post-list-layout-enabled") !== "false";
-			}
-
-			function initAnimeLayout() {
-				const animeListContainer = document.getElementById(containerId);
-				if (!animeListContainer) {
-					return false;
-				}
-				const currentLayout =
-					(isPostListLayoutEnabled() ? localStorage.getItem("postListLayout") : null) || "list";
-				updateAnimeListLayout(currentLayout, false);
-				requestAnimationFrame(() => {
-					animeListContainer.classList.remove("opacity-0");
-				});
-				return true;
-			}
-
-			let retryCount = 0;
-			const maxRetries = 10;
-
-			function tryInit() {
-				if (initAnimeLayout()) {
-					return;
-				}
-				if (retryCount < maxRetries) {
-					retryCount++;
-					const delay = Math.min(
-						100 * Math.pow(1.5, retryCount),
-						1000,
-					);
-					setTimeout(tryInit, delay);
-				} else {
-					setTimeout(() => {
-						const animeListContainer =
-							document.getElementById(containerId);
-						if (animeListContainer) {
-							const currentLayout =
-								(isPostListLayoutEnabled() ? localStorage.getItem("postListLayout") : null) || "list";
-							updateAnimeListLayout(currentLayout, false);
-							animeListContainer.classList.remove("opacity-0");
-						}
-					}, 2000);
-				}
-			}
-
-			if (document.readyState === "loading") {
-				document.addEventListener("DOMContentLoaded", tryInit);
-			} else {
-				tryInit();
-			}
-
-			window.addEventListener("layoutChange", (event) => {
-				updateAnimeListLayout(event.detail.layout);
-			});
-		})();
+	<script is:inline define:vars={{ animeData }}>
+		window.ANIME_DATA = animeData;
 	</script>
 
-	<script is:inline>
-		function initAnimePagination() {
-			const PAGE_SIZE = 8;
-			const container = document.getElementById("anime-list-container");
-			if (!container) {
-				return;
-			}
-			const paginationEl = document.getElementById("anime-pagination");
-			const filterTags = document.querySelectorAll(".anime-filter-tag");
-			const items = Array.from(
-				container.querySelectorAll("[data-anime-status]"),
-			);
-			if (items.length === 0) {
-				if (paginationEl) {
-					paginationEl.style.display = "none";
-				}
-				return;
-			}
-
-			const state = { filter: "all", page: 1 };
-
-			function getFiltered() {
-				if (state.filter === "all") {
-					return items;
-				}
-				return items.filter(
-					(item) =>
-						item.getAttribute("data-anime-status") ===
-						state.filter,
-				);
-			}
-
-			function getTotalPages() {
-				return Math.max(1, Math.ceil(getFiltered().length / PAGE_SIZE));
-			}
-
-			function buildPageList(cur, last) {
-				const ADJ_DIST = 2;
-				const VISIBLE = ADJ_DIST * 2 + 1;
-				const HIDDEN = -1;
-				let count = 1;
-				let l = cur;
-				let r = cur;
-				while (0 < l - 1 && r + 1 <= last && count + 2 <= VISIBLE) {
-					count += 2;
-					l--;
-					r++;
-				}
-				while (0 < l - 1 && count < VISIBLE) {
-					count++;
-					l--;
-				}
-				while (r + 1 <= last && count < VISIBLE) {
-					count++;
-					r++;
-				}
-				const pages = [];
-				if (l > 1) {
-					pages.push(1);
-				}
-				if (l === 3) {
-					pages.push(2);
-				}
-				if (l > 3) {
-					pages.push(HIDDEN);
-				}
-				for (let i = l; i <= r; i++) {
-					pages.push(i);
-				}
-				if (r < last - 2) {
-					pages.push(HIDDEN);
-				}
-				if (r === last - 2) {
-					pages.push(last - 1);
-				}
-				if (r < last) {
-					pages.push(last);
-				}
-				return pages;
-			}
-
-			function renderList() {
-				const filtered = getFiltered();
-				const tp = getTotalPages();
-				if (state.page > tp) {
-					state.page = tp;
-				}
-				const start = (state.page - 1) * PAGE_SIZE;
-				const end = Math.min(start + PAGE_SIZE, filtered.length);
-				items.forEach((item) => {
-					const idx = filtered.indexOf(item);
-					item.classList.toggle(
-						"anime-hidden",
-						idx < start || idx >= end,
-					);
-				});
-				renderPagination();
-			}
-
-			function renderPagination() {
-				if (!paginationEl) {
-					return;
-				}
-				const tp = getTotalPages();
-				const cur = state.page;
-				const pages = buildPageList(cur, tp);
-				const chevronLeft =
-					'<svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M14.71 6.71a.996.996 0 0 0-1.41 0L8.71 11.3a.996.996 0 0 0 0 1.41l4.59 4.59a.996.996 0 1 0 1.41-1.41L10.83 12l4.58-4.59c.39-.39.38-1.03-.01-1.41z"/></svg>';
-				const chevronRight =
-					'<svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M9.29 6.71a.996.996 0 0 0 0 1.41L13.17 12l-3.88 3.88a.996.996 0 1 0 1.41 1.41l4.59-4.59a.996.996 0 0 0 0-1.41L10.7 6.7c-.38-.38-1.02-.38-1.41.01z"/></svg>';
-				let html = "";
-				html += `<button class="btn-card overflow-hidden rounded-lg text-(--primary) w-11 h-11 anime-page-btn" data-page="${cur - 1}" aria-label="上一页" ${cur <= 1 ? "disabled" : ""}>${chevronLeft}</button>`;
-				html += '<div class="bg-(--card-bg) flex flex-row rounded-lg items-center text-neutral-700 dark:text-neutral-300 font-bold">';
-				pages.forEach((p) => {
-					if (p === -1) {
-						html += '<span class="mx-1"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></span>';
-					} else if (p === cur) {
-						html += `<span class="h-11 w-11 rounded-lg bg-(--primary) flex items-center justify-center font-bold text-white dark:text-black/70">${p}</span>`;
-					} else {
-						html += `<button class="btn-card w-11 h-11 rounded-lg overflow-hidden active:scale-[0.85] anime-page-btn" data-page="${p}" aria-label="第 ${p} 页">${p}</button>`;
-					}
-				});
-				html += "</div>";
-				html += `<button class="btn-card overflow-hidden rounded-lg text-(--primary) w-11 h-11 anime-page-btn" data-page="${cur + 1}" aria-label="下一页" ${cur >= tp ? "disabled" : ""}>${chevronRight}</button>`;
-				paginationEl.innerHTML = html;
-				paginationEl
-					.querySelectorAll(".anime-page-btn")
-					.forEach((btn) => {
-						if (btn.hasAttribute("disabled")) {
-							return;
-						}
-						btn.addEventListener("click", () => {
-							const p = parseInt(
-								btn.getAttribute("data-page"),
-								10,
-							);
-							if (p >= 1 && p <= tp) {
-								state.page = p;
-								renderList();
-								container.scrollIntoView({
-									block: "start",
-								});
-							}
-						});
-					});
-			}
-
-			filterTags.forEach((tag) => {
-				tag.addEventListener("click", () => {
-					if (tag.classList.contains("anime-active")) {
-						return;
-					}
-					filterTags.forEach((t) =>
-						t.classList.remove("anime-active"),
-					);
-					tag.classList.add("anime-active");
-					state.filter = tag.getAttribute("data-status");
-					state.page = 1;
-					renderList();
-				});
-			});
-
-			renderList();
-		}
-
-		document.addEventListener("DOMContentLoaded", initAnimePagination);
-		function setupSwupListeners() {
-			if (window.swup) {
-				window.swup.hooks.on("content:replace", () =>
-					setTimeout(initAnimePagination, 150),
-				);
-				window.swup.hooks.on("page:view", () =>
-					setTimeout(initAnimePagination, 150),
-				);
-			}
-		}
-
-		if (typeof window !== "undefined") {
-			if (window.swup) {
-				setupSwupListeners();
-			} else {
-				document.addEventListener("swup:enable", setupSwupListeners);
-			}
-		}
-	</script>
+	<script is:inline src="/js/anime-pagination.js"></script>
 </MainGridLayout>
