@@ -59,3 +59,7 @@ src/data/bilibili-data.json
 *.psd~
 *.cmo3
 *.vtube.json
+
+# Dev server logs
+dev-server.log
+preview-server.log
