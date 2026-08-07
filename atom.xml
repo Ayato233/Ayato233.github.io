@@ -5,7 +5,7 @@
   <link href="https://ayato233.github.io/" rel="alternate" type="text/html"/>
   <link href="https://ayato233.github.io/atom.xml" rel="self" type="application/atom+xml"/>
   <id>https://ayato233.github.io/</id>
-  <updated>2026-08-07T22:15:59.469Z</updated>
+  <updated>2026-08-07T22:40:18.829Z</updated>
   <language>zh_CN</language>
   <entry>
     <title>Markdown 教程</title>
@@ -729,28 +729,6 @@ This is another regular paragraph.
       <name>Dovahkiin</name>
     </author>
     <category term="Examples"></category>
-  </entry>
-  <entry>
-    <title>寸头与颠倒的世界</title>
-    <link href="https://ayato233.github.io/posts/short-hair-patema/" rel="alternate" type="text/html"/>
-    <id>https://ayato233.github.io/posts/short-hair-patema/</id>
-    <published>2026-08-08T00:00:00.000Z</published>
-    <updated>2026-08-08T00:00:00.000Z</updated>
-    <summary></summary>
-    <content type="html"><![CDATA[<h1>寸头与颠倒的世界</h1>
-<p>理发师推子抵上后脑勺的那一瞬，我忽然有点期待。咔嚓声中，头发簌簌落下，落在围布上，像一场提前入秋的落叶。</p>
-<p>今年夏天格外难熬。空调开到最低，风扇整夜摇头，汗水还是顺着脖颈往下淌。终于，我下了狠心：剃个寸头。推子贴着头皮走过，凉意从每一寸皮肤里钻出来，整个人像是突然轻了好几斤。干爽，利落，没有一丝多余的牵挂。伸手摸一摸，刺刺的，像握着一把新刷子，有种说不出的新鲜感。</p>
-<p>傍晚窝在沙发上，随手点开了一部老片子——《颠倒的帕特玛》。当年第一次看还是学生时代，如今重看，仿佛也隔着一个颠倒的岁月。</p>
-<p>这部动画讲的是两个重力相反的世界。帕特玛在井底仰望天空，爱子在天上俯视深渊。对他们而言，对方的世界永远是"颠倒"的，脚下的地是彼此的天。可当他们真正相遇、十指相扣的那一刻，重力忽然不再是壁垒——原来所谓上下，不过是参照不同。</p>
-<p>多年前看，我只觉得想象力惊艳；如今再看，却品出另一层味道。帕特玛和爱子各自在自己的世界里习以为常，直到遇见另一种活法，才惊觉世界可以如此不同。就像今天的我，顶着寸头走在街上，风从耳畔穿过，似乎连看世界的角度都换了。</p>
-<p>洗头只需三分钟，起床不用梳头，戴耳机不被头发缠住。这些小到可以忽略的改变，凑在一起，就是一份久违的轻快。</p>
-<p>或许生活就是这样，偶尔给自己来一次"颠倒"：换个发型，换部电影，换一种看待日子的方式。世界还是那个世界，只是你的参照系变了。</p>
-<p>夜风吹过，寸头的凉意刚刚好。我想，明天也许会去看看那部电影的原作，或者，干脆再去理个发。</p>
-]]></content>
-    <author>
-      <name>Dovahkiin</name>
-    </author>
-    <category term="随想"></category>
   </entry>
   <entry>
     <title>我用 DeepSeek V4 Flash 搭建了博客</title>
