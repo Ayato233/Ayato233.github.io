@@ -3,7 +3,7 @@ title: 加密文章
 published: 2024-01-15
 description: 这是一篇用于测试文章加密功能的文章
 encrypted: true
-pinned: true
+pinned: false
 password: "123456"
 passwordHint: "123456"
 hideHomeContent: true
