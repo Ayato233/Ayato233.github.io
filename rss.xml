@@ -1,4 +1,385 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>My Blog</title><description>我的个人博客</description><link>https://ayato233.github.io/</link><language>zh_CN</language><item><title>Markdown 教程</title><link>https://ayato233.github.io/posts/markdown-tutorial/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-tutorial/</guid><description>一个 Markdown 博客文章示例。</description><pubDate>Mon, 20 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Markdown 教程&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>My Blog</title><description>我的个人博客</description><link>https://ayato233.github.io/</link><language>zh_CN</language><item><title>把个人站点搬上云的一天：部署、瘦身与迁移实录</title><link>https://ayato233.github.io/posts/site-deploy-and-slim-down/</link><guid isPermaLink="true">https://ayato233.github.io/posts/site-deploy-and-slim-down/</guid><description>今天一口气完成了主页导航站部署、博客瘦身与迁移 Netlify 的全流程，记录一下这一天的折腾与经验。</description><pubDate>Fri, 14 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;把个人站点搬上云的一天：部署、瘦身与迁移实录&lt;/h1&gt;
+&lt;p&gt;今天把「个人主页导航站」和「博客」两件事一起推进了，从本地代码一路折腾到云端上线，整个过程值得记录一笔。&lt;/p&gt;
+&lt;h2&gt;一、主页导航站：部署到 Cloudflare Pages&lt;/h2&gt;
+&lt;p&gt;之前一直放在本地跑的主页导航站（纯静态 HTML/CSS/JS，黑客风代码雨背景那个），今天终于正式部署上线了。&lt;/p&gt;
+&lt;p&gt;因为我的博客占用了 GitHub Pages 的根路径（&lt;code&gt;ayato233.github.io&lt;/code&gt;），GitHub Pages 用户级站点一个账号只能有一个，所以主页选择了 &lt;strong&gt;Cloudflare Pages&lt;/strong&gt;——连接 GitHub 仓库后，push 代码就会自动构建部署，全程零成本。&lt;/p&gt;
+&lt;p&gt;部署前还顺手做了一件事：&lt;strong&gt;把 git 历史清成了单条提交&lt;/strong&gt;。之前开发过程攒了 8 个零碎提交，里面混着不少过程性的信息，用 orphan 分支重建后只剩一条干净的初始提交，强迫症表示很舒适。&lt;code&gt;.gitignore&lt;/code&gt; 里不该出现的注释也一并清理了，规则挪到了本地的 &lt;code&gt;.git/info/exclude&lt;/code&gt;，仓库保持纯粹。&lt;/p&gt;
+&lt;h2&gt;二、博客瘦身：-35MB 的快乐&lt;/h2&gt;
+&lt;p&gt;博客一直挂在 GitHub Pages 上，国内访问慢。排查后发现除了服务器在海外，&lt;strong&gt;站点本身也太重&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;4 个本地 mp3 共 21MB —— 但播放器走的其实是 meting 远程歌单，这些文件&lt;strong&gt;根本没在用&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Live2D 看板娘（Pio）模型 6.4MB —— 决定整个移除&lt;/li&gt;
+&lt;li&gt;两个字体 ttf 共 14MB —— 转成 woff2 后省了 7.7MB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;动手过程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;删掉没用的 mp3，顺手把本地播放列表常量清空&lt;/li&gt;
+&lt;li&gt;看板娘从组件、配置、类型定义到 public 资源全部清理，全局搜索确认无残留&lt;/li&gt;
+&lt;li&gt;字体用 fontTools 转 woff2：&lt;code&gt;loli.ttf&lt;/code&gt; 10.3MB → 4.6MB，&lt;code&gt;ZenMaruGothic&lt;/code&gt; 3.6MB → 1.5MB&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;瘦身完本地构建验证通过，仓库从 65MB 降到约 30MB，线上不再需要下载 21MB 的音乐和 6.4MB 的模型，首屏加载明显变快。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一个有意思的发现&lt;/strong&gt;：音乐播放器本来就是点击才加载的（设置 audio.src 才拉取），所以&quot;点击才加载&quot;这件事系统已经做对了，真正的优化是直接删掉没用的资源。&lt;/p&gt;
+&lt;h2&gt;三、博客迁移：GitHub Pages → Netlify&lt;/h2&gt;
+&lt;p&gt;GitHub Pages 的服务器在美国，绕地球一圈的延迟怎么优化资源都救不回来，于是决定迁移到 Netlify——恰好旧博客 &lt;code&gt;smile32.netlify.app&lt;/code&gt; 之前就在 Netlify 上，账号还在，直接把构建配置指向现在的博客仓库，几分钟就完成了替换。&lt;/p&gt;
+&lt;p&gt;实测对比：Netlify、Vercel、Cloudflare Pages 三个平台在我网络下延迟其实非常接近（900ms~1.3s），差别不大。所以选平台不必纠结速度，看哪个顺手、有现成资源就用哪个。&lt;/p&gt;
+&lt;h2&gt;小记&lt;/h2&gt;
+&lt;p&gt;今天最大的感受：&lt;strong&gt;「不用」就是最好的优化&lt;/strong&gt;。删掉没在用的 21MB 音乐、移走不要的看板娘，比任何压缩技巧都来得直接有效。以及，云平台的自动部署（push 即上线）确实省心，改完代码提交，剩下的交给流水线。&lt;/p&gt;
+&lt;p&gt;愿以后的折腾都像今天一样，干净利落。&lt;/p&gt;
+</content:encoded></item><item><title>我用 DeepSeek V4 Flash 搭建了博客</title><link>https://ayato233.github.io/posts/ai-powered-blog/</link><guid isPermaLink="true">https://ayato233.github.io/posts/ai-powered-blog/</guid><description>今天购买了 opencodeGO 的订阅，用其中的 DeepSeek V4 Flash 大模型搭建出这个博客，不由感叹当今时代 AI 的强大。</description><pubDate>Thu, 06 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;我用 DeepSeek V4 Flash 搭建了博客&lt;/h1&gt;
+&lt;p&gt;今天，我做了一个让今天的自己有些激动的决定——购买了 &lt;strong&gt;opencodeGO&lt;/strong&gt; 的订阅服务，并尝试用它搭载的 &lt;strong&gt;DeepSeek V4 Flash&lt;/strong&gt; 大模型，亲手搭建出这个博客。&lt;/p&gt;
+&lt;p&gt;整个过程快到有些难以置信。过去想要搭一个属于自己的博客，需要折腾服务器、框架、主题、部署……每一步都可能踩坑，消耗掉整个周末。而现在，我只是把自己的想法告诉 AI，它就在几秒钟之内帮我规划、写代码、排错，甚至把整个站跑起来给你看。&lt;/p&gt;
+&lt;p&gt;这个博客从框架选型到页面渲染，从搜索功能到本地调试，几乎都是在这个对话里一点点完成的。我打字，它执行，我确认，它继续——像和一个极其高效又永远有耐心的伙伴协作。&lt;/p&gt;
+&lt;p&gt;最让我感叹的，不是某个具体功能有多炫，而是这件事本身的「普通」。它已经不再是什么高科技表演，而是每天都在发生的日常。AI 不再是遥不可及的科幻概念，它就这样安静地融入了写作、编程、创作这些再寻常不过的场景里。&lt;/p&gt;
+&lt;p&gt;用 AI 写的文字记录下用 AI 搭的站，这个巧合本身就很有意思。希望这个博客，能成为这个 AI 时代一个小小的、真诚的记录。&lt;/p&gt;
+&lt;p&gt;愿我们都活在更好的时代里。&lt;/p&gt;
+</content:encoded></item><item><title>图片画廊网格：语法与完整示例</title><link>https://ayato233.github.io/posts/image-grid-demo/</link><guid isPermaLink="true">https://ayato233.github.io/posts/image-grid-demo/</guid><description>图片画廊网格语法、参数、裁剪、响应式行为、说明文字和灯箱导航的完整指南。</description><pubDate>Mon, 13 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code&gt;:::grid&lt;/code&gt; 是博客的图片画廊容器指令。它将普通的 Markdown 图片排列成响应式网格，并保持一致的宽高比，自动启用灯箱查看。可用于文章配图、截图、作品集或小型相册。&lt;/p&gt;
+&lt;p&gt;同一画廊中的图片使用相同的卡片比例。默认情况下，居中裁剪会填满每张卡片并保持每一行整齐；点击图片可在灯箱中打开完整的原始图片。每个画廊都有独立的灯箱分组，不会与文章中的其他图片混合。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文既是功能文档，也是可视化测试页面。请在桌面、平板和移动宽度下查看示例，然后点击任意图片以验证灯箱分组。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;最简语法&lt;/h2&gt;
+&lt;p&gt;直接在 &lt;code&gt;:::grid&lt;/code&gt; 和结束的 &lt;code&gt;:::&lt;/code&gt; 之间编写 Markdown 图片：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid
+![Image description](./image-1.webp)
+
+![Image description](./image-2.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;每张图片必须独占一个段落，图片之间用空行分隔。画廊中只放图片；段落、列表和代码块请写在容器外面。&lt;/p&gt;
+&lt;p&gt;以下是最简语法的结果。未指定参数时，网格默认使用三列、&lt;code&gt;16/10&lt;/code&gt; 比例和 &lt;code&gt;cover&lt;/code&gt; 模式。&lt;/p&gt;
+&lt;p&gt;:::grid
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Minimal syntax result: first image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Minimal syntax result: second image&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;参数速览&lt;/h2&gt;
+&lt;p&gt;在起始指令后用花括号编写所有参数：&lt;code&gt;:::grid{parameter=&quot;value&quot;}&lt;/code&gt;。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;允许值&lt;/th&gt;
+&lt;th&gt;默认值&lt;/th&gt;
+&lt;th&gt;用途&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;columns&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;1&lt;/code&gt; 到 &lt;code&gt;6&lt;/code&gt; 的整数&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;3&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;桌面上每行的列数。无效值回退到 &lt;code&gt;3&lt;/code&gt;。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;aspect&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;正比例，如 &lt;code&gt;16/9&lt;/code&gt;、&lt;code&gt;3/4&lt;/code&gt; 或 &lt;code&gt;1/1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;16/10&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;显示的卡片比例，而非原始图片比例。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;fit&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;cover&lt;/code&gt;、&lt;code&gt;contain&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;cover&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;图片适配模式。&lt;code&gt;cover&lt;/code&gt; 裁剪以填满；&lt;code&gt;contain&lt;/code&gt; 保留完整图片，可能留出空白。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;完整示例：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
+![First image](./image-1.webp &quot;Optional caption&quot;)
+
+![Second image](./image-2.webp &quot;Optional caption&quot;)
+
+![Third image](./image-3.webp &quot;Optional caption&quot;)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以下结果使用了上述三列横版语法。对比卡片比例、列数，以及标题优先于替代文本作为说明文字的方式：&lt;/p&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Parameter example: first landscape image&quot; title=&quot;Landscape caption 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Parameter example: second landscape image&quot; title=&quot;Landscape caption 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-3.webp&quot; alt=&quot;Parameter example: third landscape image&quot; title=&quot;Landscape caption 3&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;说明文字与替代文本&lt;/h2&gt;
+&lt;p&gt;图片的替代文本既作为无障碍替代文字，也作为默认说明文字。当图片有可选标题时，标题会作为说明文字显示：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;![Text used for accessibility](./image.webp &quot;Caption shown below the image&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同一行中，说明文字与每张卡片的底部对齐。换行的说明文字不会导致其他说明文字停留在不同的高度。&lt;code&gt;3:4&lt;/code&gt; 和 &lt;code&gt;16:9&lt;/code&gt; 这样的比例文本可以直接写在正文、标题和替代文本中，无需转义。&lt;/p&gt;
+&lt;p&gt;此示例演示了默认的替代文本说明、显式标题说明，以及较长说明的底部对齐：&lt;/p&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;1/1&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-1.webp&quot; alt=&quot;This image has no title, so its alt text is the caption&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-2.webp&quot; alt=&quot;Second square image with accessible alt text&quot; title=&quot;This title is displayed as the caption&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-3.webp&quot; alt=&quot;Accessible description of a 3:4 poster&quot; title=&quot;This is a longer caption for checking that every caption remains aligned to the bottom of its card when it wraps&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;布局与裁剪&lt;/h2&gt;
+&lt;p&gt;桌面布局使用 &lt;code&gt;columns&lt;/code&gt; 指定的列数。低于 &lt;code&gt;768px&lt;/code&gt; 时，网格最多使用两列；低于 &lt;code&gt;480px&lt;/code&gt; 时切换为单列。卡片容器固定 &lt;code&gt;aspect&lt;/code&gt; 比例并裁剪圆角，而图片填满卡片，不带有主题默认的图片边距。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选择 &lt;code&gt;cover&lt;/code&gt;：推荐的默认模式。图片从中心裁剪以填满卡片，使画廊看起来更一致。&lt;/li&gt;
+&lt;li&gt;选择 &lt;code&gt;contain&lt;/code&gt;：显示完整原始图片，不裁剪。当其比例与卡片不同时，主题背景仍可见；用于不能裁剪的图片。&lt;/li&gt;
+&lt;li&gt;要在不留空白的情况下保留完整图片，可将 &lt;code&gt;aspect&lt;/code&gt; 设为接近原始图片比例，或将图片放入独立网格。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以下示例将相同的竖向图片放入 &lt;code&gt;16/9&lt;/code&gt; 卡片中，分别使用 &lt;code&gt;cover&lt;/code&gt; 和 &lt;code&gt;contain&lt;/code&gt;。第一种会裁剪；第二种保留完整图片并留下背景空白。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
+![Image description](./image-1.webp &quot;Optional caption&quot;)
+
+![Image description](./image-2.webp &quot;Optional caption&quot;)
+:::
+
+:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+![Image description](./image-1.webp &quot;Optional caption&quot;)
+
+![Image description](./image-2.webp &quot;Optional caption&quot;)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;First cover result&quot; title=&quot;Cover: center crop&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Second cover result&quot; title=&quot;Cover: fill the card&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Third cover result&quot; title=&quot;Cover: a more consistent layout&quot; /&gt;
+:::&lt;/p&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;First contain result&quot; title=&quot;Contain: preserve the complete original&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Second contain result&quot; title=&quot;Contain: empty space may appear&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Third contain result&quot; title=&quot;Contain: suitable for edge details&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;默认配置&lt;/h2&gt;
+&lt;p&gt;不指定属性时，默认是三列、&lt;code&gt;16/10&lt;/code&gt; 比例和 &lt;code&gt;cover&lt;/code&gt; 裁剪。这三张竖向图片用于验证默认裁剪和说明文字。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid
+![Image description](./image-1.webp)
+
+![Image description](./image-2.webp)
+
+![Image description](./image-3.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;Default configuration: portrait image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Default configuration: portrait image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Default configuration: portrait image three&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;三列竖向：3:4&lt;/h2&gt;
+&lt;p&gt;使用 &lt;code&gt;aspect=&quot;3/4&quot;&lt;/code&gt; 时，三张竖向图片会填满比例一致的竖向卡片。如果原始图片比例不同，&lt;code&gt;cover&lt;/code&gt; 会从中心裁剪其边缘。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
+![Portrait image description](./portrait-1.webp)
+
+![Portrait image description](./portrait-2.webp)
+
+![Portrait image description](./portrait-3.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;3:4 test image one&quot; title=&quot;Portrait 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;3:4 test image two&quot; title=&quot;Portrait 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;3:4 test image three&quot; title=&quot;Portrait 3&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;三列横版：16:9&lt;/h2&gt;
+&lt;p&gt;这组示例展示了三列布局中常见的视频封面比例。当横版图片接近卡片比例时，裁剪很少。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot;}
+![Landscape image description](./landscape-1.webp)
+
+![Landscape image description](./landscape-2.webp)
+
+![Landscape image description](./landscape-3.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-1.webp&quot; alt=&quot;16:9 test image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-2.webp&quot; alt=&quot;16:9 test image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-3.webp&quot; alt=&quot;16:9 test image three&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;两列正方形：1:1&lt;/h2&gt;
+&lt;p&gt;当需要更大的预览卡片时，两列效果很好。第三张图片会移到下一行。最后一行保持其网格轨道宽度，而不是拉伸图片填满整行。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;2&quot; aspect=&quot;1/1&quot;}
+![Square image description](./square-1.webp)
+
+![Square image description](./square-2.webp)
+
+![Square image description](./square-3.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;2&quot; aspect=&quot;1/1&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-1.webp&quot; alt=&quot;1:1 test image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-2.webp&quot; alt=&quot;1:1 test image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-3.webp&quot; alt=&quot;1:1 test image three&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;四列 &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;fit=&quot;contain&quot;&lt;/code&gt; 不会裁剪原始图片。当图片比例与卡片比例不同时，主题背景仍可见。这是有意为之，并非布局问题。它同时验证了四列网格和独立灯箱分组互不干扰。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;4&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+![Image description](./image-1.webp)
+
+![Image description](./image-2.webp)
+
+![Image description](./image-3.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;4&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;Contain: portrait image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Contain: portrait image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Contain: portrait image three&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;单列细节图&lt;/h2&gt;
+&lt;p&gt;当图片需要更大的阅读尺寸时，单列很合适。它在桌面、平板和移动端都保持单列，原始图片仍可在灯箱中查看。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot;}
+![Image description](./detail.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-1.webp&quot; alt=&quot;Single-column test image&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;稀疏五列行&lt;/h2&gt;
+&lt;p&gt;五列用于验证更高的支持列数。只有三张图片时，最后一行保持左对齐，而不是拉伸图片。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;5&quot; aspect=&quot;1/1&quot;}
+![Thumbnail description](./thumb-1.webp)
+
+![Thumbnail description](./thumb-2.webp)
+
+![Thumbnail description](./thumb-3.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;5&quot; aspect=&quot;1/1&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-1.webp&quot; alt=&quot;Five-column test image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-2.webp&quot; alt=&quot;Five-column test image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-3.webp&quot; alt=&quot;Five-column test image three&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;六列混合图片&lt;/h2&gt;
+&lt;p&gt;六列是当前的最大值。混合横版和竖向图片可验证 &lt;code&gt;cover&lt;/code&gt; 裁剪、窄卡片上的说明文字，以及密集的桌面布局。对于可读的文章内容，通常两到四列更合适。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;6&quot; aspect=&quot;1/1&quot;}
+![Image description](./image-1.webp)
+
+![Image description](./image-2.webp)
+
+![Image description](./image-3.webp)
+
+![Image description](./image-4.webp)
+
+![Image description](./image-5.webp)
+
+![Image description](./image-6.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;6&quot; aspect=&quot;1/1&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;Six-column test image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Six-column test image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Six-column test image three&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-1.webp&quot; alt=&quot;Six-column test image four&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-2.webp&quot; alt=&quot;Six-column test image five&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-3.webp&quot; alt=&quot;Six-column test image six&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;四列正方形：1:1&lt;/h2&gt;
+&lt;p&gt;四张比例相同的方形图片是典型的四列布局。桌面端四张图片排成一行；平板端折叠为两列，移动端为单列。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;4&quot; aspect=&quot;1/1&quot;}
+![Square image description](./square-1.webp)
+
+![Square image description](./square-2.webp)
+
+![Square image description](./square-3.webp)
+
+![Square image description](./square-4.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;4&quot; aspect=&quot;1/1&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-1.webp&quot; alt=&quot;Square image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-2.webp&quot; alt=&quot;Square image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-3.webp&quot; alt=&quot;Square image three&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-4.webp&quot; alt=&quot;Square image four&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;六列横版：16:9&lt;/h2&gt;
+&lt;p&gt;六列横版适合缩略图预览、作品集和截图索引。即使原始比例略有差异，&lt;code&gt;cover&lt;/code&gt; 也会一致地填满每张 &lt;code&gt;16/9&lt;/code&gt; 卡片。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;6&quot; aspect=&quot;16/9&quot;}
+![Landscape image description](./landscape-1.webp)
+
+![Landscape image description](./landscape-2.webp)
+
+![Landscape image description](./landscape-3.webp)
+
+![Landscape image description](./landscape-4.webp)
+
+![Landscape image description](./landscape-5.webp)
+
+![Landscape image description](./landscape-6.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;6&quot; aspect=&quot;16/9&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Landscape image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Landscape image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-3.webp&quot; alt=&quot;Landscape image three&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-4.webp&quot; alt=&quot;Landscape image four&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-5.webp&quot; alt=&quot;Landscape image five&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-6.webp&quot; alt=&quot;Landscape image six&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;三列竖向：3:4&lt;/h2&gt;
+&lt;p&gt;这组六张竖向图片展示了人物、海报或手机截图的常见布局。图片排列为两行三列，说明文字底部对齐。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
+![Portrait image description](./portrait-1.webp)
+
+![Portrait image description](./portrait-2.webp)
+
+![Portrait image description](./portrait-3.webp)
+
+![Portrait image description](./portrait-4.webp)
+
+![Portrait image description](./portrait-5.webp)
+
+![Portrait image description](./portrait-6.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-1.webp&quot; alt=&quot;Portrait image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-2.webp&quot; alt=&quot;Portrait image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-3.webp&quot; alt=&quot;Portrait image three&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-4.webp&quot; alt=&quot;Portrait image four&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-5.webp&quot; alt=&quot;Portrait image five&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-6.webp&quot; alt=&quot;Portrait image six&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;边缘关键内容：&lt;code&gt;cover&lt;/code&gt; 与灯箱&lt;/h2&gt;
+&lt;p&gt;这些图片在边缘附近包含重要文字或细节。&lt;code&gt;cover&lt;/code&gt; 保持网格整齐，但可能会裁剪这些边缘；点击图片可在灯箱中查看未裁剪的原始图。对边缘敏感的图片请使用清晰的说明文字，或使用下方的 &lt;code&gt;contain&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
+![Edge-critical content](./critical-1.webp &quot;Open the lightbox to view the complete edge content&quot;)
+
+![Edge-critical content](./critical-2.webp &quot;Open the lightbox to view the complete edge content&quot;)
+
+![Edge-critical content](./critical-3.webp &quot;Open the lightbox to view the complete edge content&quot;)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-1.webp&quot; alt=&quot;First edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-2.webp&quot; alt=&quot;Second edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-3.webp&quot; alt=&quot;Third edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;极端比例 &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;对于横幅、长截图和其他极端图片比例，&lt;code&gt;contain&lt;/code&gt; 会显示完整原始图片。与 &lt;code&gt;cover&lt;/code&gt; 不同，它可能会留下主题背景空白，但绝不会裁剪内容。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+![Complete screenshot description](./wide-1.webp)
+
+![Complete screenshot description](./wide-2.webp)
+
+![Complete screenshot description](./wide-3.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-1.webp&quot; alt=&quot;Extreme-ratio image one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-2.webp&quot; alt=&quot;Extreme-ratio image two&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-3.webp&quot; alt=&quot;Extreme-ratio image three&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;透明图片&lt;/h2&gt;
+&lt;p&gt;透明图片会露出卡片的主题背景。这个单列 &lt;code&gt;contain&lt;/code&gt; 示例便于检查透明区域、原始边缘和灯箱行为。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+![Transparent image description](./transparent.webp)
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
+&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/transparent-1.webp&quot; alt=&quot;Transparent-background test image&quot; /&gt;
+:::&lt;/p&gt;
+&lt;h2&gt;灯箱导航&lt;/h2&gt;
+&lt;p&gt;点击网格中的任意图片即可打开 Fancybox 灯箱。在那里你可以缩放、旋转、进入全屏、查看缩略图，并使用方向键导航。导航仅限于当前的 &lt;code&gt;:::grid&lt;/code&gt; 容器：例如，点击&quot;16:9 test image one&quot;只会打开该部分的另外两张横版图片。&lt;/p&gt;
+&lt;p&gt;同一篇文章中的普通 Markdown 图片会继续单独处理，不会加入任何网格画廊。&lt;/p&gt;
+&lt;h2&gt;检查清单&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;每个网格中的图片尺寸一致，说明文字位于卡片下方。&lt;/li&gt;
+&lt;li&gt;图片悬停时轻微缩放；点击后可缩放、旋转，并可用键盘导航。&lt;/li&gt;
+&lt;li&gt;点击&quot;16:9 test image one&quot;时，灯箱只会浏览该部分的另外两张横版图片。&lt;/li&gt;
+&lt;li&gt;低于 &lt;code&gt;768px&lt;/code&gt; 时，网格最多使用两列；低于 &lt;code&gt;480px&lt;/code&gt; 时使用单列。&lt;/li&gt;
+&lt;li&gt;&quot;四列 &lt;code&gt;contain&lt;/code&gt;&quot;中的竖向图片完整可见，带空白且不裁剪。&lt;/li&gt;
+&lt;li&gt;五列和六列网格在宽屏上保持指定的列数，然后根据响应式规则折叠为两列或单列。&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded></item><item><title>Markdown 教程</title><link>https://ayato233.github.io/posts/markdown-tutorial/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-tutorial/</guid><description>一个 Markdown 博客文章示例。</description><pubDate>Mon, 20 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Markdown 教程&lt;/h1&gt;
 &lt;p&gt;本 markdown 示例展示了如何编写 markdown 文件。本文档整合了核心语法与扩展语法（GFM）。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#block-elements&quot;&gt;Block Elements&lt;/a&gt;
@@ -708,387 +1089,6 @@ This is another regular paragraph.
 &lt;strong&gt;No Work&lt;/strong&gt;
 &amp;lt;/div&amp;gt;&lt;/p&gt;
 &lt;hr /&gt;
-</content:encoded></item><item><title>把个人站点搬上云的一天：部署、瘦身与迁移实录</title><link>https://ayato233.github.io/posts/site-deploy-and-slim-down/</link><guid isPermaLink="true">https://ayato233.github.io/posts/site-deploy-and-slim-down/</guid><description>今天一口气完成了主页导航站部署、博客瘦身与迁移 Netlify 的全流程，记录一下这一天的折腾与经验。</description><pubDate>Fri, 14 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;把个人站点搬上云的一天：部署、瘦身与迁移实录&lt;/h1&gt;
-&lt;p&gt;今天把「个人主页导航站」和「博客」两件事一起推进了，从本地代码一路折腾到云端上线，整个过程值得记录一笔。&lt;/p&gt;
-&lt;h2&gt;一、主页导航站：部署到 Cloudflare Pages&lt;/h2&gt;
-&lt;p&gt;之前一直放在本地跑的主页导航站（纯静态 HTML/CSS/JS，黑客风代码雨背景那个），今天终于正式部署上线了。&lt;/p&gt;
-&lt;p&gt;因为我的博客占用了 GitHub Pages 的根路径（&lt;code&gt;ayato233.github.io&lt;/code&gt;），GitHub Pages 用户级站点一个账号只能有一个，所以主页选择了 &lt;strong&gt;Cloudflare Pages&lt;/strong&gt;——连接 GitHub 仓库后，push 代码就会自动构建部署，全程零成本。&lt;/p&gt;
-&lt;p&gt;部署前还顺手做了一件事：&lt;strong&gt;把 git 历史清成了单条提交&lt;/strong&gt;。之前开发过程攒了 8 个零碎提交，里面混着不少过程性的信息，用 orphan 分支重建后只剩一条干净的初始提交，强迫症表示很舒适。&lt;code&gt;.gitignore&lt;/code&gt; 里不该出现的注释也一并清理了，规则挪到了本地的 &lt;code&gt;.git/info/exclude&lt;/code&gt;，仓库保持纯粹。&lt;/p&gt;
-&lt;h2&gt;二、博客瘦身：-35MB 的快乐&lt;/h2&gt;
-&lt;p&gt;博客一直挂在 GitHub Pages 上，国内访问慢。排查后发现除了服务器在海外，&lt;strong&gt;站点本身也太重&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;4 个本地 mp3 共 21MB —— 但播放器走的其实是 meting 远程歌单，这些文件&lt;strong&gt;根本没在用&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Live2D 看板娘（Pio）模型 6.4MB —— 决定整个移除&lt;/li&gt;
-&lt;li&gt;两个字体 ttf 共 14MB —— 转成 woff2 后省了 7.7MB&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;动手过程：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;删掉没用的 mp3，顺手把本地播放列表常量清空&lt;/li&gt;
-&lt;li&gt;看板娘从组件、配置、类型定义到 public 资源全部清理，全局搜索确认无残留&lt;/li&gt;
-&lt;li&gt;字体用 fontTools 转 woff2：&lt;code&gt;loli.ttf&lt;/code&gt; 10.3MB → 4.6MB，&lt;code&gt;ZenMaruGothic&lt;/code&gt; 3.6MB → 1.5MB&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;瘦身完本地构建验证通过，仓库从 65MB 降到约 30MB，线上不再需要下载 21MB 的音乐和 6.4MB 的模型，首屏加载明显变快。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一个有意思的发现&lt;/strong&gt;：音乐播放器本来就是点击才加载的（设置 audio.src 才拉取），所以&quot;点击才加载&quot;这件事系统已经做对了，真正的优化是直接删掉没用的资源。&lt;/p&gt;
-&lt;h2&gt;三、博客迁移：GitHub Pages → Netlify&lt;/h2&gt;
-&lt;p&gt;GitHub Pages 的服务器在美国，绕地球一圈的延迟怎么优化资源都救不回来，于是决定迁移到 Netlify——恰好旧博客 &lt;code&gt;smile32.netlify.app&lt;/code&gt; 之前就在 Netlify 上，账号还在，直接把构建配置指向现在的博客仓库，几分钟就完成了替换。&lt;/p&gt;
-&lt;p&gt;实测对比：Netlify、Vercel、Cloudflare Pages 三个平台在我网络下延迟其实非常接近（900ms~1.3s），差别不大。所以选平台不必纠结速度，看哪个顺手、有现成资源就用哪个。&lt;/p&gt;
-&lt;h2&gt;小记&lt;/h2&gt;
-&lt;p&gt;今天最大的感受：&lt;strong&gt;「不用」就是最好的优化&lt;/strong&gt;。删掉没在用的 21MB 音乐、移走不要的看板娘，比任何压缩技巧都来得直接有效。以及，云平台的自动部署（push 即上线）确实省心，改完代码提交，剩下的交给流水线。&lt;/p&gt;
-&lt;p&gt;愿以后的折腾都像今天一样，干净利落。&lt;/p&gt;
-</content:encoded></item><item><title>我用 DeepSeek V4 Flash 搭建了博客</title><link>https://ayato233.github.io/posts/ai-powered-blog/</link><guid isPermaLink="true">https://ayato233.github.io/posts/ai-powered-blog/</guid><description>今天购买了 opencodeGO 的订阅，用其中的 DeepSeek V4 Flash 大模型搭建出这个博客，不由感叹当今时代 AI 的强大。</description><pubDate>Thu, 06 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;我用 DeepSeek V4 Flash 搭建了博客&lt;/h1&gt;
-&lt;p&gt;今天，我做了一个让今天的自己有些激动的决定——购买了 &lt;strong&gt;opencodeGO&lt;/strong&gt; 的订阅服务，并尝试用它搭载的 &lt;strong&gt;DeepSeek V4 Flash&lt;/strong&gt; 大模型，亲手搭建出这个博客。&lt;/p&gt;
-&lt;p&gt;整个过程快到有些难以置信。过去想要搭一个属于自己的博客，需要折腾服务器、框架、主题、部署……每一步都可能踩坑，消耗掉整个周末。而现在，我只是把自己的想法告诉 AI，它就在几秒钟之内帮我规划、写代码、排错，甚至把整个站跑起来给你看。&lt;/p&gt;
-&lt;p&gt;这个博客从框架选型到页面渲染，从搜索功能到本地调试，几乎都是在这个对话里一点点完成的。我打字，它执行，我确认，它继续——像和一个极其高效又永远有耐心的伙伴协作。&lt;/p&gt;
-&lt;p&gt;最让我感叹的，不是某个具体功能有多炫，而是这件事本身的「普通」。它已经不再是什么高科技表演，而是每天都在发生的日常。AI 不再是遥不可及的科幻概念，它就这样安静地融入了写作、编程、创作这些再寻常不过的场景里。&lt;/p&gt;
-&lt;p&gt;用 AI 写的文字记录下用 AI 搭的站，这个巧合本身就很有意思。希望这个博客，能成为这个 AI 时代一个小小的、真诚的记录。&lt;/p&gt;
-&lt;p&gt;愿我们都活在更好的时代里。&lt;/p&gt;
-</content:encoded></item><item><title>图片画廊网格：语法与完整示例</title><link>https://ayato233.github.io/posts/image-grid-demo/</link><guid isPermaLink="true">https://ayato233.github.io/posts/image-grid-demo/</guid><description>图片画廊网格语法、参数、裁剪、响应式行为、说明文字和灯箱导航的完整指南。</description><pubDate>Mon, 13 Jul 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code&gt;:::grid&lt;/code&gt; 是博客的图片画廊容器指令。它将普通的 Markdown 图片排列成响应式网格，并保持一致的宽高比，自动启用灯箱查看。可用于文章配图、截图、作品集或小型相册。&lt;/p&gt;
-&lt;p&gt;同一画廊中的图片使用相同的卡片比例。默认情况下，居中裁剪会填满每张卡片并保持每一行整齐；点击图片可在灯箱中打开完整的原始图片。每个画廊都有独立的灯箱分组，不会与文章中的其他图片混合。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;本文既是功能文档，也是可视化测试页面。请在桌面、平板和移动宽度下查看示例，然后点击任意图片以验证灯箱分组。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2&gt;最简语法&lt;/h2&gt;
-&lt;p&gt;直接在 &lt;code&gt;:::grid&lt;/code&gt; 和结束的 &lt;code&gt;:::&lt;/code&gt; 之间编写 Markdown 图片：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid
-![Image description](./image-1.webp)
-
-![Image description](./image-2.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;每张图片必须独占一个段落，图片之间用空行分隔。画廊中只放图片；段落、列表和代码块请写在容器外面。&lt;/p&gt;
-&lt;p&gt;以下是最简语法的结果。未指定参数时，网格默认使用三列、&lt;code&gt;16/10&lt;/code&gt; 比例和 &lt;code&gt;cover&lt;/code&gt; 模式。&lt;/p&gt;
-&lt;p&gt;:::grid
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Minimal syntax result: first image&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Minimal syntax result: second image&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;参数速览&lt;/h2&gt;
-&lt;p&gt;在起始指令后用花括号编写所有参数：&lt;code&gt;:::grid{parameter=&quot;value&quot;}&lt;/code&gt;。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;参数&lt;/th&gt;
-&lt;th&gt;允许值&lt;/th&gt;
-&lt;th&gt;默认值&lt;/th&gt;
-&lt;th&gt;用途&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;columns&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;1&lt;/code&gt; 到 &lt;code&gt;6&lt;/code&gt; 的整数&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;3&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;桌面上每行的列数。无效值回退到 &lt;code&gt;3&lt;/code&gt;。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;aspect&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;正比例，如 &lt;code&gt;16/9&lt;/code&gt;、&lt;code&gt;3/4&lt;/code&gt; 或 &lt;code&gt;1/1&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;16/10&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;显示的卡片比例，而非原始图片比例。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;fit&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;cover&lt;/code&gt;、&lt;code&gt;contain&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;cover&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;图片适配模式。&lt;code&gt;cover&lt;/code&gt; 裁剪以填满；&lt;code&gt;contain&lt;/code&gt; 保留完整图片，可能留出空白。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;完整示例：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
-![First image](./image-1.webp &quot;Optional caption&quot;)
-
-![Second image](./image-2.webp &quot;Optional caption&quot;)
-
-![Third image](./image-3.webp &quot;Optional caption&quot;)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以下结果使用了上述三列横版语法。对比卡片比例、列数，以及标题优先于替代文本作为说明文字的方式：&lt;/p&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Parameter example: first landscape image&quot; title=&quot;Landscape caption 1&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Parameter example: second landscape image&quot; title=&quot;Landscape caption 2&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-3.webp&quot; alt=&quot;Parameter example: third landscape image&quot; title=&quot;Landscape caption 3&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;说明文字与替代文本&lt;/h2&gt;
-&lt;p&gt;图片的替代文本既作为无障碍替代文字，也作为默认说明文字。当图片有可选标题时，标题会作为说明文字显示：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;![Text used for accessibility](./image.webp &quot;Caption shown below the image&quot;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;同一行中，说明文字与每张卡片的底部对齐。换行的说明文字不会导致其他说明文字停留在不同的高度。&lt;code&gt;3:4&lt;/code&gt; 和 &lt;code&gt;16:9&lt;/code&gt; 这样的比例文本可以直接写在正文、标题和替代文本中，无需转义。&lt;/p&gt;
-&lt;p&gt;此示例演示了默认的替代文本说明、显式标题说明，以及较长说明的底部对齐：&lt;/p&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;1/1&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-1.webp&quot; alt=&quot;This image has no title, so its alt text is the caption&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-2.webp&quot; alt=&quot;Second square image with accessible alt text&quot; title=&quot;This title is displayed as the caption&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-3.webp&quot; alt=&quot;Accessible description of a 3:4 poster&quot; title=&quot;This is a longer caption for checking that every caption remains aligned to the bottom of its card when it wraps&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;布局与裁剪&lt;/h2&gt;
-&lt;p&gt;桌面布局使用 &lt;code&gt;columns&lt;/code&gt; 指定的列数。低于 &lt;code&gt;768px&lt;/code&gt; 时，网格最多使用两列；低于 &lt;code&gt;480px&lt;/code&gt; 时切换为单列。卡片容器固定 &lt;code&gt;aspect&lt;/code&gt; 比例并裁剪圆角，而图片填满卡片，不带有主题默认的图片边距。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;选择 &lt;code&gt;cover&lt;/code&gt;：推荐的默认模式。图片从中心裁剪以填满卡片，使画廊看起来更一致。&lt;/li&gt;
-&lt;li&gt;选择 &lt;code&gt;contain&lt;/code&gt;：显示完整原始图片，不裁剪。当其比例与卡片不同时，主题背景仍可见；用于不能裁剪的图片。&lt;/li&gt;
-&lt;li&gt;要在不留空白的情况下保留完整图片，可将 &lt;code&gt;aspect&lt;/code&gt; 设为接近原始图片比例，或将图片放入独立网格。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;以下示例将相同的竖向图片放入 &lt;code&gt;16/9&lt;/code&gt; 卡片中，分别使用 &lt;code&gt;cover&lt;/code&gt; 和 &lt;code&gt;contain&lt;/code&gt;。第一种会裁剪；第二种保留完整图片并留下背景空白。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
-![Image description](./image-1.webp &quot;Optional caption&quot;)
-
-![Image description](./image-2.webp &quot;Optional caption&quot;)
-:::
-
-:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-![Image description](./image-1.webp &quot;Optional caption&quot;)
-
-![Image description](./image-2.webp &quot;Optional caption&quot;)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;First cover result&quot; title=&quot;Cover: center crop&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Second cover result&quot; title=&quot;Cover: fill the card&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Third cover result&quot; title=&quot;Cover: a more consistent layout&quot; /&gt;
-:::&lt;/p&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;First contain result&quot; title=&quot;Contain: preserve the complete original&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Second contain result&quot; title=&quot;Contain: empty space may appear&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Third contain result&quot; title=&quot;Contain: suitable for edge details&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;默认配置&lt;/h2&gt;
-&lt;p&gt;不指定属性时，默认是三列、&lt;code&gt;16/10&lt;/code&gt; 比例和 &lt;code&gt;cover&lt;/code&gt; 裁剪。这三张竖向图片用于验证默认裁剪和说明文字。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid
-![Image description](./image-1.webp)
-
-![Image description](./image-2.webp)
-
-![Image description](./image-3.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;Default configuration: portrait image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Default configuration: portrait image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Default configuration: portrait image three&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;三列竖向：3:4&lt;/h2&gt;
-&lt;p&gt;使用 &lt;code&gt;aspect=&quot;3/4&quot;&lt;/code&gt; 时，三张竖向图片会填满比例一致的竖向卡片。如果原始图片比例不同，&lt;code&gt;cover&lt;/code&gt; 会从中心裁剪其边缘。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
-![Portrait image description](./portrait-1.webp)
-
-![Portrait image description](./portrait-2.webp)
-
-![Portrait image description](./portrait-3.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;3:4 test image one&quot; title=&quot;Portrait 1&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;3:4 test image two&quot; title=&quot;Portrait 2&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;3:4 test image three&quot; title=&quot;Portrait 3&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;三列横版：16:9&lt;/h2&gt;
-&lt;p&gt;这组示例展示了三列布局中常见的视频封面比例。当横版图片接近卡片比例时，裁剪很少。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot;}
-![Landscape image description](./landscape-1.webp)
-
-![Landscape image description](./landscape-2.webp)
-
-![Landscape image description](./landscape-3.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-1.webp&quot; alt=&quot;16:9 test image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-2.webp&quot; alt=&quot;16:9 test image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-3.webp&quot; alt=&quot;16:9 test image three&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;两列正方形：1:1&lt;/h2&gt;
-&lt;p&gt;当需要更大的预览卡片时，两列效果很好。第三张图片会移到下一行。最后一行保持其网格轨道宽度，而不是拉伸图片填满整行。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;2&quot; aspect=&quot;1/1&quot;}
-![Square image description](./square-1.webp)
-
-![Square image description](./square-2.webp)
-
-![Square image description](./square-3.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;2&quot; aspect=&quot;1/1&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-1.webp&quot; alt=&quot;1:1 test image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-2.webp&quot; alt=&quot;1:1 test image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-3.webp&quot; alt=&quot;1:1 test image three&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;四列 &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;fit=&quot;contain&quot;&lt;/code&gt; 不会裁剪原始图片。当图片比例与卡片比例不同时，主题背景仍可见。这是有意为之，并非布局问题。它同时验证了四列网格和独立灯箱分组互不干扰。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;4&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-![Image description](./image-1.webp)
-
-![Image description](./image-2.webp)
-
-![Image description](./image-3.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;4&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;Contain: portrait image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Contain: portrait image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Contain: portrait image three&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;单列细节图&lt;/h2&gt;
-&lt;p&gt;当图片需要更大的阅读尺寸时，单列很合适。它在桌面、平板和移动端都保持单列，原始图片仍可在灯箱中查看。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot;}
-![Image description](./detail.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-1.webp&quot; alt=&quot;Single-column test image&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;稀疏五列行&lt;/h2&gt;
-&lt;p&gt;五列用于验证更高的支持列数。只有三张图片时，最后一行保持左对齐，而不是拉伸图片。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;5&quot; aspect=&quot;1/1&quot;}
-![Thumbnail description](./thumb-1.webp)
-
-![Thumbnail description](./thumb-2.webp)
-
-![Thumbnail description](./thumb-3.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;5&quot; aspect=&quot;1/1&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-1.webp&quot; alt=&quot;Five-column test image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-2.webp&quot; alt=&quot;Five-column test image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/mixed-square-3.webp&quot; alt=&quot;Five-column test image three&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;六列混合图片&lt;/h2&gt;
-&lt;p&gt;六列是当前的最大值。混合横版和竖向图片可验证 &lt;code&gt;cover&lt;/code&gt; 裁剪、窄卡片上的说明文字，以及密集的桌面布局。对于可读的文章内容，通常两到四列更合适。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;6&quot; aspect=&quot;1/1&quot;}
-![Image description](./image-1.webp)
-
-![Image description](./image-2.webp)
-
-![Image description](./image-3.webp)
-
-![Image description](./image-4.webp)
-
-![Image description](./image-5.webp)
-
-![Image description](./image-6.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;6&quot; aspect=&quot;1/1&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-1.webp&quot; alt=&quot;Six-column test image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-2.webp&quot; alt=&quot;Six-column test image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/default-portrait-3.webp&quot; alt=&quot;Six-column test image three&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-1.webp&quot; alt=&quot;Six-column test image four&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-2.webp&quot; alt=&quot;Six-column test image five&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/feature-landscape-3.webp&quot; alt=&quot;Six-column test image six&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;四列正方形：1:1&lt;/h2&gt;
-&lt;p&gt;四张比例相同的方形图片是典型的四列布局。桌面端四张图片排成一行；平板端折叠为两列，移动端为单列。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;4&quot; aspect=&quot;1/1&quot;}
-![Square image description](./square-1.webp)
-
-![Square image description](./square-2.webp)
-
-![Square image description](./square-3.webp)
-
-![Square image description](./square-4.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;4&quot; aspect=&quot;1/1&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-1.webp&quot; alt=&quot;Square image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-2.webp&quot; alt=&quot;Square image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-3.webp&quot; alt=&quot;Square image three&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/square-4.webp&quot; alt=&quot;Square image four&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;六列横版：16:9&lt;/h2&gt;
-&lt;p&gt;六列横版适合缩略图预览、作品集和截图索引。即使原始比例略有差异，&lt;code&gt;cover&lt;/code&gt; 也会一致地填满每张 &lt;code&gt;16/9&lt;/code&gt; 卡片。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;6&quot; aspect=&quot;16/9&quot;}
-![Landscape image description](./landscape-1.webp)
-
-![Landscape image description](./landscape-2.webp)
-
-![Landscape image description](./landscape-3.webp)
-
-![Landscape image description](./landscape-4.webp)
-
-![Landscape image description](./landscape-5.webp)
-
-![Landscape image description](./landscape-6.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;6&quot; aspect=&quot;16/9&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-1.webp&quot; alt=&quot;Landscape image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-2.webp&quot; alt=&quot;Landscape image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-3.webp&quot; alt=&quot;Landscape image three&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-4.webp&quot; alt=&quot;Landscape image four&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-5.webp&quot; alt=&quot;Landscape image five&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/landscape-6.webp&quot; alt=&quot;Landscape image six&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;三列竖向：3:4&lt;/h2&gt;
-&lt;p&gt;这组六张竖向图片展示了人物、海报或手机截图的常见布局。图片排列为两行三列，说明文字底部对齐。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
-![Portrait image description](./portrait-1.webp)
-
-![Portrait image description](./portrait-2.webp)
-
-![Portrait image description](./portrait-3.webp)
-
-![Portrait image description](./portrait-4.webp)
-
-![Portrait image description](./portrait-5.webp)
-
-![Portrait image description](./portrait-6.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;3/4&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-1.webp&quot; alt=&quot;Portrait image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-2.webp&quot; alt=&quot;Portrait image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-3.webp&quot; alt=&quot;Portrait image three&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-4.webp&quot; alt=&quot;Portrait image four&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-5.webp&quot; alt=&quot;Portrait image five&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/portrait-6.webp&quot; alt=&quot;Portrait image six&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;边缘关键内容：&lt;code&gt;cover&lt;/code&gt; 与灯箱&lt;/h2&gt;
-&lt;p&gt;这些图片在边缘附近包含重要文字或细节。&lt;code&gt;cover&lt;/code&gt; 保持网格整齐，但可能会裁剪这些边缘；点击图片可在灯箱中查看未裁剪的原始图。对边缘敏感的图片请使用清晰的说明文字，或使用下方的 &lt;code&gt;contain&lt;/code&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
-![Edge-critical content](./critical-1.webp &quot;Open the lightbox to view the complete edge content&quot;)
-
-![Edge-critical content](./critical-2.webp &quot;Open the lightbox to view the complete edge content&quot;)
-
-![Edge-critical content](./critical-3.webp &quot;Open the lightbox to view the complete edge content&quot;)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;cover&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-1.webp&quot; alt=&quot;First edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-2.webp&quot; alt=&quot;Second edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/critical-3.webp&quot; alt=&quot;Third edge-critical image&quot; title=&quot;Open the lightbox to view the complete edge content&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;极端比例 &lt;code&gt;contain&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;对于横幅、长截图和其他极端图片比例，&lt;code&gt;contain&lt;/code&gt; 会显示完整原始图片。与 &lt;code&gt;cover&lt;/code&gt; 不同，它可能会留下主题背景空白，但绝不会裁剪内容。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-![Complete screenshot description](./wide-1.webp)
-
-![Complete screenshot description](./wide-2.webp)
-
-![Complete screenshot description](./wide-3.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;3&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-1.webp&quot; alt=&quot;Extreme-ratio image one&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-2.webp&quot; alt=&quot;Extreme-ratio image two&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/extreme-3.webp&quot; alt=&quot;Extreme-ratio image three&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;透明图片&lt;/h2&gt;
-&lt;p&gt;透明图片会露出卡片的主题背景。这个单列 &lt;code&gt;contain&lt;/code&gt; 示例便于检查透明区域、原始边缘和灯箱行为。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-![Transparent image description](./transparent.webp)
-:::
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;:::grid{columns=&quot;1&quot; aspect=&quot;16/9&quot; fit=&quot;contain&quot;}
-&lt;img src=&quot;https://ayato233.github.io/images/demos/image-grid-demo/transparent-1.webp&quot; alt=&quot;Transparent-background test image&quot; /&gt;
-:::&lt;/p&gt;
-&lt;h2&gt;灯箱导航&lt;/h2&gt;
-&lt;p&gt;点击网格中的任意图片即可打开 Fancybox 灯箱。在那里你可以缩放、旋转、进入全屏、查看缩略图，并使用方向键导航。导航仅限于当前的 &lt;code&gt;:::grid&lt;/code&gt; 容器：例如，点击&quot;16:9 test image one&quot;只会打开该部分的另外两张横版图片。&lt;/p&gt;
-&lt;p&gt;同一篇文章中的普通 Markdown 图片会继续单独处理，不会加入任何网格画廊。&lt;/p&gt;
-&lt;h2&gt;检查清单&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;每个网格中的图片尺寸一致，说明文字位于卡片下方。&lt;/li&gt;
-&lt;li&gt;图片悬停时轻微缩放；点击后可缩放、旋转，并可用键盘导航。&lt;/li&gt;
-&lt;li&gt;点击&quot;16:9 test image one&quot;时，灯箱只会浏览该部分的另外两张横版图片。&lt;/li&gt;
-&lt;li&gt;低于 &lt;code&gt;768px&lt;/code&gt; 时，网格最多使用两列；低于 &lt;code&gt;480px&lt;/code&gt; 时使用单列。&lt;/li&gt;
-&lt;li&gt;&quot;四列 &lt;code&gt;contain&lt;/code&gt;&quot;中的竖向图片完整可见，带空白且不裁剪。&lt;/li&gt;
-&lt;li&gt;五列和六列网格在宽屏上保持指定的列数，然后根据响应式规则折叠为两列或单列。&lt;/li&gt;
-&lt;/ol&gt;
 </content:encoded></item><item><title>Markdown 扩展功能</title><link>https://ayato233.github.io/posts/markdown-extended/</link><guid isPermaLink="true">https://ayato233.github.io/posts/markdown-extended/</guid><description>Mizuki 中的 GitHub 卡片、提示框、代码组、Wiki 链接、图片网格、PlantUML 等增强 Markdown 功能。</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub 仓库卡片&lt;/h2&gt;
 &lt;p&gt;你可以添加链接到 GitHub 仓库的动态卡片，页面加载时会从 GitHub API 拉取仓库信息。&lt;/p&gt;
 &lt;p&gt;::github{repo=&quot;LyraVoid/Mizuki&quot;}&lt;/p&gt;
