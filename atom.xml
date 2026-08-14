@@ -5,7 +5,7 @@
   <link href="https://ayato233.github.io/" rel="alternate" type="text/html"/>
   <link href="https://ayato233.github.io/atom.xml" rel="self" type="application/atom+xml"/>
   <id>https://ayato233.github.io/</id>
-  <updated>2026-08-14T11:24:41.916Z</updated>
+  <updated>2026-08-14T11:56:20.384Z</updated>
   <language>zh_CN</language>
   <entry>
     <title>Markdown 教程</title>
@@ -729,6 +729,46 @@ This is another regular paragraph.
       <name>Dovahkiin</name>
     </author>
     <category term="Examples"></category>
+  </entry>
+  <entry>
+    <title>把个人站点搬上云的一天：部署、瘦身与迁移实录</title>
+    <link href="https://ayato233.github.io/posts/site-deploy-and-slim-down/" rel="alternate" type="text/html"/>
+    <id>https://ayato233.github.io/posts/site-deploy-and-slim-down/</id>
+    <published>2026-08-14T00:00:00.000Z</published>
+    <updated>2026-08-14T00:00:00.000Z</updated>
+    <summary>今天一口气完成了主页导航站部署、博客瘦身与迁移 Netlify 的全流程，记录一下这一天的折腾与经验。</summary>
+    <content type="html"><![CDATA[<h1>把个人站点搬上云的一天：部署、瘦身与迁移实录</h1>
+<p>今天把「个人主页导航站」和「博客」两件事一起推进了，从本地代码一路折腾到云端上线，整个过程值得记录一笔。</p>
+<h2>一、主页导航站：部署到 Cloudflare Pages</h2>
+<p>之前一直放在本地跑的主页导航站（纯静态 HTML/CSS/JS，黑客风代码雨背景那个），今天终于正式部署上线了。</p>
+<p>因为我的博客占用了 GitHub Pages 的根路径（<code>ayato233.github.io</code>），GitHub Pages 用户级站点一个账号只能有一个，所以主页选择了 <strong>Cloudflare Pages</strong>——连接 GitHub 仓库后，push 代码就会自动构建部署，全程零成本。</p>
+<p>部署前还顺手做了一件事：<strong>把 git 历史清成了单条提交</strong>。之前开发过程攒了 8 个零碎提交，里面混着不少过程性的信息，用 orphan 分支重建后只剩一条干净的初始提交，强迫症表示很舒适。<code>.gitignore</code> 里不该出现的注释也一并清理了，规则挪到了本地的 <code>.git/info/exclude</code>，仓库保持纯粹。</p>
+<h2>二、博客瘦身：-35MB 的快乐</h2>
+<p>博客一直挂在 GitHub Pages 上，国内访问慢。排查后发现除了服务器在海外，<strong>站点本身也太重</strong>：</p>
+<ul>
+<li>4 个本地 mp3 共 21MB —— 但播放器走的其实是 meting 远程歌单，这些文件<strong>根本没在用</strong></li>
+<li>Live2D 看板娘（Pio）模型 6.4MB —— 决定整个移除</li>
+<li>两个字体 ttf 共 14MB —— 转成 woff2 后省了 7.7MB</li>
+</ul>
+<p>动手过程：</p>
+<ol>
+<li>删掉没用的 mp3，顺手把本地播放列表常量清空</li>
+<li>看板娘从组件、配置、类型定义到 public 资源全部清理，全局搜索确认无残留</li>
+<li>字体用 fontTools 转 woff2：<code>loli.ttf</code> 10.3MB → 4.6MB，<code>ZenMaruGothic</code> 3.6MB → 1.5MB</li>
+</ol>
+<p>瘦身完本地构建验证通过，仓库从 65MB 降到约 30MB，线上不再需要下载 21MB 的音乐和 6.4MB 的模型，首屏加载明显变快。</p>
+<p><strong>一个有意思的发现</strong>：音乐播放器本来就是点击才加载的（设置 audio.src 才拉取），所以"点击才加载"这件事系统已经做对了，真正的优化是直接删掉没用的资源。</p>
+<h2>三、博客迁移：GitHub Pages → Netlify</h2>
+<p>GitHub Pages 的服务器在美国，绕地球一圈的延迟怎么优化资源都救不回来，于是决定迁移到 Netlify——恰好旧博客 <code>smile32.netlify.app</code> 之前就在 Netlify 上，账号还在，直接把构建配置指向现在的博客仓库，几分钟就完成了替换。</p>
+<p>实测对比：Netlify、Vercel、Cloudflare Pages 三个平台在我网络下延迟其实非常接近（900ms~1.3s），差别不大。所以选平台不必纠结速度，看哪个顺手、有现成资源就用哪个。</p>
+<h2>小记</h2>
+<p>今天最大的感受：<strong>「不用」就是最好的优化</strong>。删掉没在用的 21MB 音乐、移走不要的看板娘，比任何压缩技巧都来得直接有效。以及，云平台的自动部署（push 即上线）确实省心，改完代码提交，剩下的交给流水线。</p>
+<p>愿以后的折腾都像今天一样，干净利落。</p>
+]]></content>
+    <author>
+      <name>Dovahkiin</name>
+    </author>
+    <category term="随笔"></category>
   </entry>
   <entry>
     <title>我用 DeepSeek V4 Flash 搭建了博客</title>
