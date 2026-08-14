@@ -63,7 +63,7 @@ export default defineConfig({
 			options: {
 				variants: [
 					{
-						src: ["./src/assets/fonts/ZenMaruGothic-Medium.ttf"],
+						src: ["./src/assets/fonts/ZenMaruGothic-Medium.woff2"],
 						weight: "500",
 						style: "normal",
 					},
@@ -82,7 +82,7 @@ export default defineConfig({
 			options: {
 				variants: [
 					{
-						src: ["./src/assets/fonts/loli.ttf"],
+						src: ["./src/assets/fonts/loli.woff2"],
 						weight: "400",
 						style: "normal",
 					},
