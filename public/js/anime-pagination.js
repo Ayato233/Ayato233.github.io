@@ -194,7 +194,7 @@
 			item.cover +
 			'" alt="' +
 			item.title +
-			'" loading="lazy" class="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" />' +
+			'" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'https://images.weserv.nl/?url=\'+encodeURIComponent(this.src);" class="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" />' +
 			'<div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"><div class="absolute inset-0 flex items-center justify-center"><div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center"><svg class="w-6 h-6 text-gray-800 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div></div>' +
 			"</a>" +
 			'<div class="absolute top-2 left-2 px-2 py-1 rounded-md text-xs font-medium ' +
