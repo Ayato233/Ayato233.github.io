@@ -77,8 +77,7 @@ const isBannerTitleSwitchable =
 	(siteConfig.banner?.homeText?.switchable ?? false);
 const hasBannerSettings = isWavesSwitchable || isBannerTitleSwitchable;
 
-const isSakuraSwitchable =
-	sakuraConfig.enable && (sakuraConfig.switchable ?? false);
+const isSakuraSwitchable = sakuraConfig.switchable ?? false;
 
 const showModeValue = siteConfig.wallpaperMode.showModeSwitchOnMobile;
 let isMobile = $state(false);

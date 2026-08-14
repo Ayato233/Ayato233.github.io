@@ -5,6 +5,7 @@
 
 import type { SakuraConfig } from "../../types/config";
 import { initSakura, stopSakura } from "../../utils/sakura-manager";
+import { getStoredSakuraEnabled } from "../../utils/setting-utils";
 
 /**
  * Sakura 特效处理器类
@@ -19,7 +20,7 @@ export class SakuraEffectHandler {
 	 */
 	init(widgetConfigs: any): void {
 		const sakuraConfig = widgetConfigs?.sakura;
-		if (!sakuraConfig || !sakuraConfig.enable) {
+		if (!sakuraConfig || !getStoredSakuraEnabled()) {
 			return;
 		}
 
@@ -92,7 +93,7 @@ export function setupSakuraOnDOMReady(widgetConfigs: any): void {
 			const detail = (e as CustomEvent).detail;
 			if (detail.enabled) {
 				const config = handler.getConfig() || widgetConfigs?.sakura;
-				if (config && config.enable) {
+				if (config) {
 					initSakura({ ...config, enable: true });
 					(window as any).sakuraInitialized = true;
 				}
