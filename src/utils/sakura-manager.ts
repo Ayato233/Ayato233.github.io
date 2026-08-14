@@ -205,7 +205,7 @@ export class SakuraManager {
 
 	// 初始化樱花特效
 	async init(): Promise<void> {
-		if (!this.config.enable || this.isRunning || this.isInitializing) {
+		if (this.isRunning || this.isInitializing) {
 			return;
 		}
 		this.isInitializing = true;
@@ -387,9 +387,7 @@ export function initSakura(config: SakuraConfig): void {
 		globalSakuraManager.updateConfig(config);
 	} else {
 		globalSakuraManager = new SakuraManager(config);
-		if (config.enable) {
-			globalSakuraManager.init();
-		}
+		globalSakuraManager.init();
 	}
 }
 
