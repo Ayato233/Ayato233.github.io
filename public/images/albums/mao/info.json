@@ -1,0 +1,150 @@
+{
+	"mode": "external",
+	"hidden": false,
+	"title": "小猫猫",
+	"description": "小猫猫，可爱滴捏",
+	"date": "2025-03-20",
+	"location": "河北廊坊",
+	"tags": ["猫", "宠物"],
+	"layout": "masonry",
+	"columns": 3,
+	"cover": "/images/albums/mao/1.jpg",
+	"photos": [
+		{
+			"id": "mao-2",
+			"src": "/images/albums/mao/2.jpg",
+			"title": "爆单妖娆的睡姿",
+			"description": "可爱的猫猫",
+			"date": "2025-03-20",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-3",
+			"src": "/images/albums/mao/3.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-4",
+			"src": "/images/albums/mao/4.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-5",
+			"src": "/images/albums/mao/5.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-7",
+			"src": "/images/albums/mao/7.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-8",
+			"src": "/images/albums/mao/8.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-9",
+			"src": "/images/albums/mao/9.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-10",
+			"src": "/images/albums/mao/10.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-11",
+			"src": "/images/albums/mao/11.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-12",
+			"src": "/images/albums/mao/12.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-13",
+			"src": "/images/albums/mao/13.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-14",
+			"src": "/images/albums/mao/14.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-15",
+			"src": "/images/albums/mao/15.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-17",
+			"src": "/images/albums/mao/17.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-18",
+			"src": "/images/albums/mao/18.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-19",
+			"src": "/images/albums/mao/19.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		},
+		{
+			"id": "mao-20",
+			"src": "/images/albums/mao/20.jpg",
+			"title": "猫",
+			"description": "可爱捏",
+			"date": "2025-03-22",
+			"location": "河北廊坊"
+		}
+	]
+}
