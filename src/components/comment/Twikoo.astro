@@ -78,10 +78,97 @@ const config = {
 				commentEl.innerHTML = "";
 				const dynamicConfig = createTwikooConfig();
 				await twikoo.init(dynamicConfig);
+				setupBounceEffect();
 			} catch (error) {
 				console.error("[Twikoo] 初始化失败:", error);
 			}
 		}
+
+		// 逐字弹跳效果：把输入框文字渲染到 overlay，每个字带弹跳动画
+		function setupBounceEffect() {
+			const wrap = document.querySelector(".el-textarea.tk-input");
+			if (!wrap || wrap.querySelector(".tk-input-overlay")) {
+				return;
+			}
+			const textarea = wrap.querySelector("textarea");
+			if (!textarea) {
+				return;
+			}
+
+			const overlay = document.createElement("div");
+			overlay.className = "tk-input-overlay";
+			wrap.appendChild(overlay);
+
+			// 精确复制 textarea 的计算样式，保证 overlay 与输入文字完全重合
+			const cs = getComputedStyle(textarea);
+			overlay.style.cssText = [
+				"position:absolute",
+				"top:0",
+				"left:0",
+				"width:100%",
+				"height:100%",
+				"overflow:hidden",
+				"pointer-events:none",
+				"white-space:pre-wrap",
+				"word-break:break-word",
+				"box-sizing:border-box",
+				"padding:" + cs.paddingTop + " " + cs.paddingRight + " " + cs.paddingBottom + " " + cs.paddingLeft,
+				"transform:translate(" + cs.borderLeftWidth + "," + cs.borderTopWidth + ")",
+				"font-family:" + cs.fontFamily,
+				"font-size:" + cs.fontSize,
+				"font-weight:" + cs.fontWeight,
+				"font-style:" + cs.fontStyle,
+				"line-height:" + cs.lineHeight,
+				"letter-spacing:" + cs.letterSpacing,
+				"text-align:" + cs.textAlign,
+				"color:" + getComputedStyle(document.documentElement).getPropertyValue("--dsw-text-2") || "#444",
+			].join(";") + ";";
+
+			// 让 overlay 与 textarea 滚动同步
+			textarea.addEventListener("scroll", () => {
+				overlay.scrollTop = textarea.scrollTop;
+				overlay.scrollLeft = textarea.scrollLeft;
+			});
+
+			function renderChars() {
+				const text = textarea.value;
+				const frag = document.createDocumentFragment();
+				const chars = text.split("");
+				chars.forEach((ch, i) => {
+					const span = document.createElement("span");
+					span.className = "tk-char";
+					if (i === chars.length - 1 && ch.trim() !== "") {
+						span.classList.add("tk-char-new");
+					}
+					span.textContent = ch === "\n" ? "\n" : ch;
+					frag.appendChild(span);
+				});
+				overlay.textContent = "";
+				overlay.appendChild(frag);
+			}
+
+			textarea.addEventListener("input", renderChars);
+			// textarea 内容变化（含 Vue 重渲染、粘贴等）也同步
+			new MutationObserver(renderChars).observe(textarea, {
+				attributes: true,
+				attributeFilter: ["value"],
+			});
+			renderChars();
+		}
+
+		// 兜底：Twikoo 异步渲染输入框，用 MutationObserver 等待其出现
+		let bounceRetryTimer = null;
+		function waitForInputAndSetup() {
+			if (document.querySelector(".el-textarea.tk-input")) {
+				setupBounceEffect();
+				return;
+			}
+			if (bounceRetryTimer) {
+				clearTimeout(bounceRetryTimer);
+			}
+			bounceRetryTimer = setTimeout(waitForInputAndSetup, 500);
+		}
+		waitForInputAndSetup();
 
 		function cleanup() {
 			if (observer) {
@@ -151,8 +238,52 @@ const config = {
 	})();
 </script>
 
-<style>
+<style is:global>
 	.twikoo-container {
 		min-height: 200px;
+	}
+
+	/* ── 打字逐字弹跳效果（仅评论区） ── */
+	.twikoo-container .el-textarea.tk-input {
+		position: relative;
+	}
+
+	.twikoo-container .el-textarea.tk-input textarea {
+		color: transparent !important;
+		-webkit-text-fill-color: transparent !important;
+		caret-color: var(--dsw-text-2, #444);
+		z-index: 1;
+	}
+
+	.twikoo-container .tk-input-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		pointer-events: none;
+		white-space: pre-wrap;
+		word-break: break-word;
+		z-index: 2;
+	}
+
+	.twikoo-container .tk-input-overlay .tk-char {
+		display: inline-block;
+		animation: tk-char-bounce 0.35s ease;
+	}
+
+	.twikoo-container .tk-input-overlay .tk-char-new {
+		animation: tk-char-bounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	@keyframes tk-char-bounce {
+		0% {
+			transform: translateY(0) scale(1);
+		}
+		30% {
+			transform: translateY(-6px) scale(1.12);
+		}
+		100% {
+			transform: translateY(0) scale(1);
+		}
 	}
 </style>
