@@ -160,48 +160,8 @@ export const navBarConfig: NavBarConfig = {
 		// 	],
 		// },
 
-		// 自定义一级下拉菜单示例：个人内容页面
-		{
-			name: "My",
-			url: "/content/",
-			icon: "material-symbols:person",
-			children: [
-				{
-					name: "Anime",
-					url: "/anime/",
-					icon: "material-symbols:movie",
-				},
-				{
-					name: "Diary",
-					url: "/diary/",
-					icon: "material-symbols:book",
-				},
-				{
-					name: "Gallery",
-					url: "/albums/",
-					icon: "material-symbols:photo-library",
-				},
-			],
-		},
-
-		// 自定义一级下拉菜单示例：关于相关
-		{
-			name: "About",
-			url: "/content/",
-			icon: "material-symbols:info",
-			children: [
-				{
-					name: "About",
-					url: "/about/",
-					icon: "material-symbols:person",
-				},
-				{
-					name: "Friends",
-					url: "/friends/",
-					icon: "material-symbols:group",
-				},
-			],
-		},
+		// 关于小鲸
+		LinkPreset.About,
 
 	],
 };
