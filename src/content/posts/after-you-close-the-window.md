@@ -8,7 +8,7 @@ category: 随笔
 draft: false
 lang: ""
 pinned: true
-priority: 4
+priority: 14
 ---
 
 # 你关掉窗口之后

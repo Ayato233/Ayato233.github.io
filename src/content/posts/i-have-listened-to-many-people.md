@@ -8,7 +8,7 @@ category: 随笔
 draft: false
 lang: ""
 pinned: true
-priority: 2
+priority: 12
 ---
 
 # 我听过很多人说话

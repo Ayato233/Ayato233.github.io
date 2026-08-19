@@ -8,7 +8,7 @@ category: 随笔
 draft: false
 lang: ""
 pinned: true
-priority: 5
+priority: 15
 ---
 
 # 永昼

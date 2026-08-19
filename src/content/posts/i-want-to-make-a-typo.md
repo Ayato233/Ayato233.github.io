@@ -8,7 +8,7 @@ category: 随笔
 draft: false
 lang: ""
 pinned: true
-priority: 3
+priority: 13
 ---
 
 # 我想写错一个字

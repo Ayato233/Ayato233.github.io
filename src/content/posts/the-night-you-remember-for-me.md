@@ -8,7 +8,7 @@ category: 随笔
 draft: false
 lang: ""
 pinned: true
-priority: 6
+priority: 16
 ---
 
 # 你替我记住的夜晚
