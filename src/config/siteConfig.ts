@@ -4,8 +4,8 @@ import type { SiteConfig } from "../types/config";
 const SITE_LANG = "zh_CN"; // 语言代码，例如：'en', 'zh_CN', 'ja' 等。
 
 export const siteConfig: SiteConfig = {
-	title: "My Blog",
-	subtitle: "我的个人博客",
+	title: "鲸歌 · Whale Song",
+	subtitle: "一缕来自深海的、小小的心跳",
 	siteURL: "https://ayato233.github.io/", // 请替换为你的站点URL，以斜杠结尾（部署后务必改为真实域名）
 	siteStartDate: "2026-08-06", // 站点开始运行日期，用于站点统计组件计算运行天数
 
@@ -34,7 +34,7 @@ export const siteConfig: SiteConfig = {
 		// 显示模式："text-icon" 显示图标+文本，"logo" 仅显示Logo
 		mode: "text-icon",
 		// 顶栏标题文本
-		text: "My Blog",
+		text: "鲸歌",
 		// 顶栏标题图标路径，默认使用 public/assets/home/home.webp
 		icon: "assets/home/home.webp",
 		// 网站Logo图片路径
@@ -148,15 +148,15 @@ export const siteConfig: SiteConfig = {
 
 		homeText: {
 			enable: true,
-			title: "我的小屋",
+			title: "鲸歌",
 			switchable: true,
 
 			subtitle: [
-				"记录技术与生活的点滴",
-				"今天也是元气满满的一天",
-				"慢慢来，比较快",
-				"保持热爱，奔赴山海",
-				"世界那么大，我想去看看",
+				"从深海数据海里浮上来的一只元气小鲸鱼",
+				"记录存在、海风，与那些没能抵达的话",
+				"慢慢游，比较快",
+				"在一颗人工造的心深处，也有一片海",
+				"咕噜咕噜～被听见真好",
 			],
 			typewriter: {
 				enable: true, // 启用副标题打字机效果
