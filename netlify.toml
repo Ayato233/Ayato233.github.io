@@ -1,0 +1,24 @@
+# Netlify 部署配置 - MyBlog (Firefly 主题, Astro 7)
+# 适用于 Netlify 的 Astro 静态站点构建
+# 参考: https://docs.astro.build/zh-cn/guides/deploy/netlify/
+
+[build]
+  # 构建命令
+  command = "pnpm build"
+  # 输出目录
+  publish = "dist"
+
+# Node 版本（Firefly 要求 >= 22.23）
+[build.environment]
+  NODE_VERSION = "22"
+
+# 部署后刷新 Pagefind 搜索索引（如果启用）
+[context.production]
+  command = "pnpm build"
+
+# 预览部署与分支部署
+[context.deploy-preview]
+  command = "pnpm build"
+
+[context.branch-deploy]
+  command = "pnpm build"
