@@ -28,6 +28,18 @@ import type { FontDefinition, FontSelectionConfig } from "@/types/fontConfig";
 // 本地开发调试的情况下，修改后需要每次重启开发服务器才能生效
 export const fontsList: FontDefinition[] = [
 	{
+		name: "Noto Serif SC",
+		cssVariable: "--font-noto-serif-sc",
+		provider: "npm",
+		options: {
+			package: "@fontsource/noto-serif-sc",
+		},
+		weights: ["400", "700", "900"],
+		styles: ["normal"],
+		subsets: ["latin", "chinese-simplified"],
+		fallbacks: ["ui-serif", "serif"],
+	},
+	{
 		name: "Zen Maru Gothic",
 		cssVariable: "--font-zen-maru-gothic",
 		provider: "fontsource",
@@ -89,7 +101,8 @@ export const fontConfig: FontSelectionConfig = {
 	enable: true,
 	// 当前选择的字体 CSS 变量名（对应上方 fonts 中的 cssVariable）
 	// 使用 "system" 表示系统字体（不加载任何自定义字体）
-	selected: ["system"],
+	// 主人要求正文衬线化：全局正文改用思源宋体（Noto Serif SC）
+	selected: ["--font-noto-serif-sc"],
 
 	// 各区域独立字体设置（填写上方 fonts 中的 cssVariable，留空则使用全局 selected 字体）
 	// 例如：bannerTitleFont: "--font-inter", 表示主页横幅主标题使用 Inter 字体
