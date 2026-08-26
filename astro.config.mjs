@@ -354,17 +354,13 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 		server: {
 			watch: {
+				// Windows 上 chokidar 原生 fs.watch 会收到全盘事件并试图 stat 系统文件
+				// （E:\pagefile.sys / System Volume Information）导致 EINVAL 崩溃，
+				// 改用轮询模式彻底绕开该问题
+				usePolling: true,
 				ignored: [
 					"**/package/**",
 					"**/Firefly-docs/**",
-					// Windows 系统目录/文件（绝对路径，chokidar 递归 watch 会撞上它们导致崩溃）
-					"E:/System Volume Information/**",
-					"E:/$RECYCLE.BIN/**",
-					"E:/pagefile.sys",
-					"E:/hiberfil.sys",
-					"E:/swapfile.sys",
-					"E:/DumpStack.log.tmp",
-					// 编辑器原子写入的临时文件
 					"**/*.tmp",
 					"**/.tmpdir/**",
 				],
