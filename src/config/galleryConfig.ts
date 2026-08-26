@@ -24,6 +24,21 @@ export const galleryConfig: GalleryConfig = {
 			tags: ["崩坏星穹铁道", "流萤"],
 		},
 		{
+			id: "fufu",
+			name: "芙芙",
+			description: "芙宁娜（Furina）图集——枫丹的水神，歌剧院的主角。",
+			location: "原神 · 枫丹",
+			date: "2026-08-26",
+			tags: ["原神", "芙宁娜"],
+		},
+		{
+			id: "genshin",
+			name: "原神",
+			description: "原神游戏截图与风景记录。",
+			date: "2026-08-26",
+			tags: ["原神"],
+		},
+		{
 			id: "encrypted-test",
 			name: "加密相册示例",
 			description:
