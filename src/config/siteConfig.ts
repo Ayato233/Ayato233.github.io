@@ -34,34 +34,26 @@ const pages = resolvePageToggles({
 
 	// ── 关于 (About) ──────────────────────────────────
 
-	// 打赏页面开关
-	sponsor: true,
+	// 打赏页面开关（主人暂未配置收款方式，先关闭；开启后需同步改 sponsorConfig.ts）
+	sponsor: false,
 });
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "Firefly",
+	title: "烟雨行舟",
 
 	// 站点副标题
-	subtitle: "Demo site",
+	subtitle: "一度失去的东西是再也回不来的。",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://Ayato233.github.io",
 
 	// 站点描述
 	description:
-		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。",
+		"烟雨行舟的个人博客，记录技术笔记、生活随想与成长轨迹。",
 
 	// 站点关键词
-	keywords: [
-		"Firefly",
-		"Fuwari",
-		"Astro",
-		"ACGN",
-		"博客",
-		"技术博客",
-		"静态博客",
-	],
+	keywords: ["烟雨行舟", "博客", "技术博客", "静态博客", "Astro"],
 
 	// 主题色
 	themeColor: {
@@ -115,7 +107,7 @@ export const siteConfig: SiteConfig = {
 			alt: "🍀",
 		},
 		// 导航栏标题
-		title: "Firefly",
+		title: "烟雨行舟",
 		// 全宽导航栏，导航栏是否占满屏幕宽度
 		widthFull: false,
 		// 导航菜单对齐方式，left：左对齐，center：居中
