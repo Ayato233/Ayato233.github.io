@@ -40,20 +40,20 @@ const pages = resolvePageToggles({
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "烟雨行舟",
+	title: "Furina",
 
 	// 站点副标题
-	subtitle: "一度失去的东西是再也回不来的。",
+	subtitle: "芙卡洛斯",
 
 	// 站点 URL
 	site_url: "https://Ayato233.github.io",
 
 	// 站点描述
 	description:
-		"烟雨行舟的个人博客，记录技术笔记、生活随想与成长轨迹。",
+		"Furina 的个人博客，记录技术笔记、生活随想与成长轨迹。",
 
 	// 站点关键词
-	keywords: ["烟雨行舟", "博客", "技术博客", "静态博客", "Astro"],
+	keywords: ["Furina", "博客", "技术博客", "静态博客", "Astro"],
 
 	// 主题色
 	themeColor: {
@@ -107,7 +107,7 @@ export const siteConfig: SiteConfig = {
 			alt: "🍀",
 		},
 		// 导航栏标题
-		title: "烟雨行舟",
+		title: "Furina",
 		// 全宽导航栏，导航栏是否占满屏幕宽度
 		widthFull: false,
 		// 导航菜单对齐方式，left：左对齐，center：居中
