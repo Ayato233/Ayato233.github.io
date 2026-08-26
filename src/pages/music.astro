@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
+---
+
+<Layout title="音乐" wide>
+	<PageHeader title="音乐馆" subtitle="唤醒音频引擎中..." />
+	<div class="onload-animation mx-auto max-w-3xl" style="animation-delay: 140ms">
+		<div class="glass p-8">
+			<MusicPlayer />
+		</div>
+		<p class="mt-6 text-center text-xs opacity-60">示例曲目，可在 src/components/MusicPlayer.astro 中更换。</p>
+	</div>
+</Layout>

@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site';
+---
+
+<Layout title="关于">
+	<PageHeader title="关于" subtitle="雨线下的信号塔——正在载入档案..." />
+	<div class="glass onload-animation p-8 text-center" style="animation-delay: 140ms">
+		<img src={site.avatar} alt="avatar" width={96} height={96} class="mx-auto rounded-xl object-cover" />
+		<p class="mt-4 font-serif text-lg font-bold">{site.name}</p>
+		<p class="mt-1 text-sm opacity-70">{site.signature}</p>
+		<p class="mx-auto mt-6 max-w-md text-sm opacity-70">这是一个用 Astro 搭建的个人博客。</p>
+	</div>
+</Layout>

@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const albums = (await getCollection('albums')).sort((a, b) => b.id.localeCompare(a.id));
+---
+
+<Layout title="照片墙">
+	<!-- 氛围光斑 -->
+	<div class="pointer-events-none fixed left-[6%] top-[10%] z-[-1] h-[40%] w-[40%] rounded-full bg-white/40 blur-[100px] dark:bg-indigo-900/20 md:mix-blend-overlay"></div>
+	<div class="pointer-events-none fixed bottom-[6%] right-[6%] z-[-1] h-[40%] w-[40%] rounded-full bg-indigo-400/30 blur-[100px] dark:bg-purple-900/30 md:mix-blend-overlay"></div>
+
+	<!-- 页面头部：标题 + 搜索框 -->
+	<div class="mb-16 flex flex-col items-center justify-center gap-6 md:flex-row md:gap-10">
+		<div class="text-center">
+			<h1 class="mb-2 font-serif text-4xl font-black tracking-widest md:text-5xl">光影画廊</h1>
+			<p class="font-medium tracking-wider opacity-70">定格时间，封存泰拉与现实的每一次心跳</p>
+		</div>
+		<div class="group relative w-full md:w-80">
+			<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="pointer-events-none absolute left-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 opacity-60 transition-colors group-focus-within:text-indigo-500">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+			</svg>
+			<input
+				id="photowall-search"
+				type="text"
+				placeholder="搜索相册名或照片描述..."
+				class="w-full rounded-full border border-white/40 bg-white/40 py-2.5 pl-11 pr-4 text-sm backdrop-blur-md transition-all focus:border-indigo-500 focus:outline-none dark:border-white/10 dark:bg-slate-800/50"
+			/>
+		</div>
+	</div>
+
+	<!-- 拍立得照片墙 -->
+	<div class="flex flex-wrap items-center justify-center gap-10">
+		{
+			albums.map((a) => (
+				<a href={`/albums/${a.id}/`} class="group cursor-pointer" data-search={`${a.data.title} ${a.data.photos.map((p) => p.caption).join(' ')}`}>
+					<div class="relative flex w-72 flex-col items-center md:w-80">
+						<div class="group relative mb-6 w-[85%] aspect-[4/3]">
+							<div class="absolute inset-0 rounded-[4px] border-[6px] border-white/10 bg-slate-300 shadow-md transition-all duration-500 rotate-6 translate-x-4 translate-y-2 group-hover:rotate-12 group-hover:translate-x-8 dark:bg-slate-700"></div>
+							<div class="absolute inset-0 rounded-[4px] border-[6px] border-white/10 bg-slate-200 shadow-lg transition-all duration-500 -rotate-3 -translate-x-2 -translate-y-1 group-hover:-rotate-6 group-hover:-translate-x-6 dark:bg-slate-600"></div>
+							<div class="group absolute inset-0 z-20 overflow-hidden rounded-[4px] border-[6px] border-white shadow-2xl transition-all duration-500 group-hover:-translate-y-2 group-hover:scale-105 dark:border-slate-200">
+								<img
+									src={a.data.cover}
+									alt={a.data.title}
+									loading="lazy"
+									class="h-full w-full object-cover"
+								/>
+								<div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/20 to-transparent p-5 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+									<p class="text-sm font-semibold text-white">{a.data.title}</p>
+									<p class="text-xs text-white/80">{a.data.photos.length} 张照片</p>
+								</div>
+							</div>
+						</div>
+						<p class="font-serif font-bold">{a.data.title}</p>
+						<p class="mt-0.5 font-mono text-xs opacity-60">{a.data.date}</p>
+					</div>
+				</a>
+			))
+		}
+	</div>
+</Layout>
+
+<script>
+	// 飘落粒子（星光）
+	const container = document.createElement('div');
+	container.className = 'pointer-events-none fixed top-20 left-0 right-0 z-0 h-[30vh] overflow-hidden';
+	for (let i = 0; i < 40; i++) {
+		const dot = document.createElement('div');
+		const size = Math.random() * 6 + 3;
+		dot.className = 'rounded-full bg-white/90';
+		dot.style.cssText = `position:absolute;width:${size}px;height:${size}px;top:-${Math.random()*100}px;left:${Math.random()*100}%;opacity:${Math.random()*0.6+0.2};animation:photowall-fall ${Math.random()*6+5}s linear ${Math.random()*4}s infinite;`;
+		container.appendChild(dot);
+	}
+	document.body.appendChild(container);
+
+	// 搜索过滤
+	const input = document.getElementById('photowall-search');
+	const cards = [...document.querySelectorAll('.group[data-search]')];
+	input.addEventListener('input', () => {
+		const q = input.value.trim().toLowerCase();
+		cards.forEach((c) => {
+			c.style.display = q === '' || c.dataset.search.toLowerCase().includes(q) ? '' : 'none';
+		});
+	});
+</script>
+
+<style is:global>
+	@keyframes photowall-fall {
+		0% {
+			transform: translateY(-20px);
+			opacity: 0;
+		}
+		10% {
+			opacity: 1;
+		}
+		100% {
+			transform: translateY(90vh);
+			opacity: 0.4;
+		}
+	}
+</style>

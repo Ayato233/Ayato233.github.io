@@ -1,0 +1,94 @@
+---
+---
+
+<!-- 绿色萤火虫粒子（fireflyBreathe 呼吸 + float1-4 漂浮） -->
+<div class="pointer-events-none fixed inset-0 z-10 overflow-hidden mix-blend-screen">
+	<style>
+		@keyframes fireflyBreathe {
+			0%,
+			100% {
+				opacity: 0;
+				transform: scale(0.3);
+			}
+			50% {
+				opacity: 1;
+				transform: scale(1.2);
+				box-shadow:
+					0 0 10px 3px rgba(100, 255, 150, 0.8),
+					0 0 20px 6px rgba(50, 255, 100, 0.4);
+			}
+		}
+		@keyframes float1 {
+			0%, 100% { transform: translate(0, 0); }
+			33% { transform: translate(10vw, -15vh); }
+			66% { transform: translate(-5vw, -20vh); }
+		}
+		@keyframes float2 {
+			0%, 100% { transform: translate(0, 0); }
+			33% { transform: translate(-12vw, 10vh); }
+			66% { transform: translate(8vw, -8vh); }
+		}
+		@keyframes float3 {
+			0%, 100% { transform: translate(0, 0); }
+			33% { transform: translate(6vw, 14vh); }
+			66% { transform: translate(-10vw, 4vh); }
+		}
+		@keyframes float4 {
+			0%, 100% { transform: translate(0, 0); }
+			33% { transform: translate(-6vw, -12vh); }
+			66% { transform: translate(12vw, 6vh); }
+		}
+		.firefly {
+			position: absolute;
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: rgba(120, 255, 160, 0.9);
+			animation:
+				fireflyBreathe 2.4s ease-in-out infinite,
+				var(--float) 14s ease-in-out infinite;
+		}
+	</style>
+	{
+		Array.from({ length: 24 }).map((_, i) => (
+			<div
+				class="firefly"
+				style={`left:${Math.random() * 100}%; top:${Math.random() * 90}%; animation-delay:${(Math.random() * 3).toFixed(2)}s,${(Math.random() * 6).toFixed(2)}s; --float:${['float1', 'float2', 'float3', 'float4'][i % 4]};`}
+			/>
+		))
+	}
+</div>
+
+<!-- 底部反弹：摇摆野草 + 渐变 -->
+<div class="pointer-events-none fixed bottom-0 left-0 z-10 h-32 w-full overflow-hidden">
+	<style>
+		@keyframes swayWildGrass {
+			0% { transform: rotate(-5deg); }
+			100% { transform: rotate(15deg); }
+		}
+		.wild-grass {
+			position: absolute;
+			bottom: 0;
+			width: 8px;
+			height: 100%;
+			transform-origin: bottom center;
+			border-radius: 8px 8px 0 0;
+			background: linear-gradient(to top, rgba(20, 40, 30, 0.5), rgba(80, 140, 90, 0.15));
+			animation: swayWildGrass 3.5s ease-in-out infinite alternate;
+		}
+		.bottom-fade {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(to top, rgba(0, 0, 0, 0.18), transparent);
+		}
+	</style>
+	<div class="bottom-fade"></div>
+	{
+		Array.from({ length: 14 }).map((_, i) => (
+			<div
+				class="wild-grass"
+				style={`left:${(i / 14) * 100 + Math.random() * 2}%; height:${70 + Math.random() * 30}%; animation-delay:${(Math.random() * 2).toFixed(1)}s;`}
+			/>
+		))
+	}
+</div>

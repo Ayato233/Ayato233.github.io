@@ -1,0 +1,16 @@
+---
+interface Props {
+	title: string;
+	subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<div class="onload-animation mb-8" style="animation-delay: 60ms">
+	<a href="/" class="mb-4 inline-flex items-center gap-1 text-xs opacity-60 transition-opacity hover:opacity-100">
+		<span>←</span> 返回上一级
+	</a>
+	<h1 class="font-serif text-2xl font-black">{title}</h1>
+	{subtitle && <p class="mt-2 text-sm opacity-60">{subtitle}</p>}
+</div>

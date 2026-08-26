@@ -1,0 +1,127 @@
+---
+import '../styles/global.css';
+import '../styles/markdown.css';
+import { ClientRouter } from 'astro:transitions';
+import ThemeSwitch from '../components/ThemeSwitch.astro';
+import Clock from '../components/Clock.astro';
+import Uptime from '../components/Uptime.astro';
+import FxLayer from '../components/FxLayer.astro';
+import CatWidget from '../components/CatWidget.astro';
+import { site, nav } from '../data/site';
+
+interface Props {
+	title?: string;
+	description?: string;
+	wide?: boolean;
+}
+
+const { title = site.name, description = site.signature, wide = false } = Astro.props;
+const pageTitle = title === site.name ? title : `${title} · ${site.name}`;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<title>{pageTitle}</title>
+		<ClientRouter />
+		<script is:inline>
+			(function () {
+				var t = localStorage.getItem('theme');
+				var dark = t ? t === 'dark' : true;
+				document.documentElement.classList.toggle('dark', dark);
+			})();
+		</script>
+	</head>
+	<body class="min-h-screen antialiased">
+		<div class="bg-wallpaper" aria-hidden="true" transition:persist></div>
+
+		<header class="fixed left-0 right-0 top-0 z-50 hidden w-full border-b border-white/20 bg-white/40 backdrop-blur-xl dark:border-white/5 dark:bg-slate-900/50 shadow-sm md:block" transition:persist>
+			<div class="mx-auto flex h-16 w-[90%] max-w-6xl items-center justify-between px-4 sm:px-[30px]">
+				<a
+					href="/"
+					class="font-serif text-xl font-black tracking-tighter text-slate-800 transition-all duration-300 hover:text-indigo-600 dark:text-white dark:hover:text-indigo-400"
+				>
+					雨线下<span class="mx-1 text-indigo-500">の</span>信号塔
+				</a>
+				<nav class="flex gap-8 text-sm font-bold">
+					{
+						nav.map((n) => {
+							const active = currentPath === (n.href === '/' ? '/' : n.href.replace(/\/$/, ''));
+							return (
+								<a
+									href={n.href}
+									data-nav={n.href}
+									class={`relative py-1 transition-colors ${
+										active
+											? 'text-indigo-600 dark:text-indigo-400'
+											: 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400'
+									}`}
+								>
+									{n.label}
+									{active && (
+										<span class="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 animate-pulse rounded-full bg-indigo-500"></span>
+									)}
+								</a>
+							);
+						})
+					}
+				</nav>
+			</div>
+		</header>
+
+		<main class={wide ? 'mx-auto max-w-6xl px-4 pt-24 pb-8 sm:px-6' : 'mx-auto max-w-5xl px-4 pt-24 pb-8 sm:px-6'}>
+			<slot />
+		</main>
+
+		<footer class="pb-8" transition:persist>
+			<div class="glass mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+				<div class="flex items-center gap-3">
+					<Clock />
+					<span class="hidden h-3 w-px bg-current opacity-30 sm:block"></span>
+					<div class="flex items-center gap-1 text-xs opacity-80">
+						<span>系统已稳定运行</span>
+						<Uptime />
+					</div>
+				</div>
+				<a href="https://icp.gov.moe/?keyword={site.icp}" class="text-xs text-accent transition-opacity hover:opacity-80">{site.icp}</a>
+			</div>
+		</footer>
+
+		<FxLayer />
+		<CatWidget transition:persist />
+		<div class="fixed bottom-6 left-6 z-50" transition:persist>
+			<ThemeSwitch />
+		</div>
+	</body>
+</html>
+
+<script>
+	// 更新导航栏 active 高亮（ClientRouter 局部刷新时 persist 的 header 不重渲染，需手动维护）
+	function syncActive() {
+		const path = location.pathname.replace(/\/$/, '') || '/';
+		document.querySelectorAll('header nav a').forEach((a) => {
+			const href = a.getAttribute('href').replace(/\/$/, '') || '/';
+			const active = path === href;
+			const on = active
+				? 'text-indigo-600 dark:text-indigo-400'
+				: 'text-slate-700 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400';
+			a.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'text-slate-700', 'hover:text-indigo-600', 'dark:text-slate-200', 'dark:hover:text-indigo-400');
+			on.split(' ').forEach((c) => c && a.classList.add(c));
+			let dot = a.querySelector('span.animate-pulse');
+			if (active && !dot) {
+				dot = document.createElement('span');
+				dot.className = 'absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 animate-pulse rounded-full bg-indigo-500';
+				a.appendChild(dot);
+			} else if (!active && dot) {
+				dot.remove();
+			}
+		});
+	}
+	document.addEventListener('astro:page-load', syncActive);
+	syncActive();
+</script>

@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { formatDate } from '../../utils/date';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts');
+	return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+	post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const allPosts = (await getCollection('posts')).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const idx = allPosts.findIndex((p) => p.id === post.id);
+const prev = allPosts[idx - 1];
+const next = allPosts[idx + 1];
+---
+
+<Layout title={post.data.title} description={post.data.summary}>
+	<article class="py-12">
+		<header class="mb-10 text-center">
+			{
+				post.data.cover && (
+					<img src={post.data.cover} alt="" class="mb-8 h-60 w-full rounded-xl object-cover" />
+				)
+			}
+			<h1 class="font-serif text-2xl font-black leading-snug">{post.data.title}</h1>
+			<div class="mt-4 flex items-center justify-center gap-4 text-xs text-light-ink-dim dark:text-ink-dim">
+				<span class="rounded-full bg-accent/15 px-2.5 py-0.5 font-semibold text-accent">{post.data.category}</span>
+				<time>{formatDate(post.data.date)}</time>
+			</div>
+			{
+				post.data.tags.length > 0 && (
+					<div class="mt-3 flex flex-wrap justify-center gap-2">
+						{post.data.tags.map((t) => (
+							<span class="rounded-full border border-black/10 dark:border-white/10 px-2.5 py-0.5 font-mono text-xs text-light-ink-dim dark:text-ink-dim">
+								#{t}
+							</span>
+						))}
+					</div>
+				)
+			}
+		</header>
+
+		<div class="glass onload-animation markdown p-6 sm:p-8" style="animation-delay: 140ms">
+			<Content />
+		</div>
+
+		<nav class="mt-16 flex items-center justify-between gap-4 border-t border-black/10 dark:border-white/10 pt-6 text-sm">
+			{
+				next ? (
+					<a href={`/posts/${next.id}/`} class="max-w-[45%] text-left hover:text-accent transition-colors">
+						<div class="text-xs text-light-ink-dim dark:text-ink-dim">← 下一篇</div>
+						<div class="mt-1 line-clamp-1">{next.data.title}</div>
+					</a>
+				) : (
+					<span></span>
+				)
+			}
+			{
+				prev && (
+					<a href={`/posts/${prev.id}/`} class="max-w-[45%] text-right hover:text-accent transition-colors">
+						<div class="text-xs text-light-ink-dim dark:text-ink-dim">上一篇 →</div>
+						<div class="mt-1 line-clamp-1">{prev.data.title}</div>
+					</a>
+				)
+			}
+		</nav>
+	</article>
+</Layout>

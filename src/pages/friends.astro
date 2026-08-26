@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const friends = [
+	{
+		name: '罗德岛 PRTS',
+		desc: '记录泰拉大陆的各项数据与前文明遗迹，愿源石的阴霾早日散去。',
+		img: '/cover.jpg',
+		url: '#',
+		online: true,
+	},
+	{
+		name: 'MyBlog',
+		desc: '雨线下的信号塔——一个科研爱好者的碎碎念。',
+		img: '/avatar.jpg',
+		url: '/',
+		online: false,
+	},
+];
+---
+
+<Layout title="友链">
+	<PageHeader title="云端引力" subtitle="那些散落在赛博宇宙各处的有趣灵魂与神经节点。" />
+
+	<div class="onload-animation grid grid-cols-1 gap-5 md:grid-cols-2" style="animation-delay: 140ms">
+		{
+			friends.map((f) => (
+				<a href={f.url} class="glass glass-hover p-5">
+					<div class="flex items-start gap-4">
+						<img src={f.img} alt={f.name} width={56} height={56} class="rounded-xl object-cover" />
+						<div class="min-w-0">
+							<div class="flex items-center gap-2">
+								<h2 class="font-serif font-bold">{f.name}</h2>
+								<span class="rounded-full px-2 py-0.5 text-[10px] {f.online ? 'bg-accent/20 text-accent' : 'bg-white/10 opacity-60'}">{f.online ? 'Online' : 'Offline'}</span>
+							</div>
+							<p class="mt-1 text-xs opacity-70">{f.desc}</p>
+						</div>
+					</div>
+				</a>
+			))
+		}
+	</div>
+
+	<div class="glass onload-animation mt-8 p-6" style="animation-delay: 220ms">
+		<h2 class="font-serif text-lg font-bold">✨ 建立神经连接</h2>
+		<p class="mt-2 text-sm opacity-70">欢迎各位大佬交换友链！请一键复制下方格式，并在底部留言板申请：</p>
+		<pre class="mt-3 whitespace-pre-wrap rounded-lg bg-black/30 p-4 font-mono text-xs leading-relaxed">名称：雨线下的信号塔
+简介：品尝这个世界
+链接：https://myblog.example.com
+头像：https://myblog.example.com/avatar.jpg</pre>
+		<a href="#" class="mt-4 inline-block rounded-lg bg-accent px-4 py-2 text-sm text-white transition-opacity hover:opacity-90">前往留言区申请 👇</a>
+	</div>
+
+	<!-- Gitalk 评论占位 -->
+	<div class="glass onload-animation mt-6 p-6 text-center text-sm opacity-60" style="animation-delay: 300ms">
+		<p>（Gitalk 留言板在此，配置 Gitalk 后替换）</p>
+	</div>
+</Layout>

@@ -1,0 +1,23 @@
+---
+---
+
+<span id="uptime" class="font-mono">--</span>
+
+<script>
+	const KEY = 'first-visit';
+	let start = parseInt(localStorage.getItem(KEY), 10);
+	if (!start) {
+		start = Date.now();
+		localStorage.setItem(KEY, String(start));
+	}
+	const el = document.getElementById('uptime');
+	function tick() {
+		const s = Math.floor((Date.now() - start) / 1000);
+		const d = Math.floor(s / 86400);
+		const h = Math.floor((s % 86400) / 3600);
+		const m = Math.floor((s % 3600) / 60);
+		el.textContent = `${d} 天 ${h} 小时 ${m} 分`;
+	}
+	tick();
+	setInterval(tick, 60000);
+</script>
