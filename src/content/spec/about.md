@@ -1,27 +1,30 @@
-# 关于我 / About Me
+# 关于我
 
-你好！我是 **夏叶** ，一个在数字世界中默默无闻的一片叶子。
+你好呀，我是 **Dovahkiin**，一名记录技术学习与生活思考的博客作者。
 
-## 🛠️ 关于本站
+> 生活明朗，万物可爱。
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+## 🌱 关于我
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+- 出生于 2001 年，现居河北廊坊
+- 一名技术学习者，喜欢折腾各种工具与框架，把踩过的坑写下来分享
+- 性格上是一名 **提倡者（INFJ-T）**，喜欢深度思考，也热爱生活里的美好小事
+- 相信「源于热爱而去感受」——无论是学习、生活还是体验，都值得认真对待
 
+## 🔧 兴趣与技能
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+- **数码科技** - 手机、电脑软硬件，喜欢研究新设备与新工具
+- **游戏** - 原神玩家（UID: 100174425），也会玩黎明杀机、炉石传说等
+- **番剧** - 追番爱好者，喜欢《约定的梦幻岛》《咒术回战》《紫罗兰永恒花园》《鬼灭之刃》《JOJO的奇妙冒险》等
+- **音乐** - 喜欢许嵩、民谣与华语流行，网易云歌单常驻
 
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
+## 🔗 找到我
 
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
+- **GitHub**: [Ayato233](https://github.com/Ayato233)
+- **Gitee**: [Aizen233](https://gitee.com/Aizen233)
+- **主页导航站**: [Dovahkiin 的个人导航](https://homepage-3yy.pages.dev/)
+- **邮箱**: [2783885223@qq.com](mailto:2783885223@qq.com)
 
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
+## 📝 关于本站
 
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
-
----
-
-*感谢你的来访！希望在这里能找到对你有用的内容！*
-
+本博客基于 **Astro** 框架构建，使用 [Firefly](https://github.com/CuteLeaf/Firefly) 主题，记录我的技术学习笔记与生活随想。本站支持全文搜索、暗色模式、文章加密等特性，欢迎浏览与交流。

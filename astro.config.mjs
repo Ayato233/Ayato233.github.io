@@ -354,7 +354,16 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 		server: {
 			watch: {
-				ignored: ["**/package/**", "**/Firefly-docs/**"],
+				ignored: [
+					"**/package/**",
+					"**/Firefly-docs/**",
+					// Windows 系统目录，Vite 监听器碰它们会 EINVAL 崩溃
+					"**/System Volume Information/**",
+					"**/$RECYCLE.BIN/**",
+					"**/pagefile.sys",
+					"**/hiberfil.sys",
+					"**/swapfile.sys",
+				],
 			},
 		},
 		resolve: {
