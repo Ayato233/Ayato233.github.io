@@ -1,3 +1,7 @@
+// Windows 上 Node 原生 fs.watch 会收到全盘事件并触碰系统文件（E:\pagefile.sys 等）
+// 导致 EINVAL 崩溃，强制 chokidar 走轮询模式根治（必须在 watcher 初始化前设置）
+process.env.CHOKIDAR_USEPOLLING = "true";
+process.env.CHOKIDAR_INTERVAL = "300";
 import { setMaxListeners } from "node:events";
 import cloudflare from "@astrojs/cloudflare";
 import { unified } from "@astrojs/markdown-remark";
