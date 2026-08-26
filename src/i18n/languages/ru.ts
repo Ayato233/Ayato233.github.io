@@ -482,6 +482,7 @@ export const ru: Translation = {
 	[Key.galleryAlbums]: "альбомов",
 	[Key.galleryNoAlbums]: "Пока нет альбомов",
 	[Key.galleryBackToAlbums]: "Вернуться к альбомам",
+	[Key.galleryClickToOpen]: "Нажмите, чтобы открыть",
 	[Key.searchAlbums]: "Поиск альбомов...",
 
 	// Защита паролем

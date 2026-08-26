@@ -5,3 +5,23 @@
     column-count: auto !important;
   }
 }
+
+/* 相册列表：双列错落布局（瀑布流式） */
+.gallery-albums {
+  columns: 1;
+  column-gap: 2rem;
+}
+@media (min-width: 640px) {
+  .gallery-albums {
+    columns: 2;
+  }
+}
+.album-item {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 3rem;
+}
+/* 覆盖 transition.css 的 nth-child 默认延迟，改用基于索引的错落延迟 */
+.gallery-albums .album-item.onload-animation {
+  animation-delay: calc(var(--album-delay, 0) * 1ms) !important;
+}

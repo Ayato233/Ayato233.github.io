@@ -481,6 +481,7 @@ export const en: Translation = {
 	[Key.galleryAlbums]: "albums",
 	[Key.galleryNoAlbums]: "No albums yet",
 	[Key.galleryBackToAlbums]: "Back to albums",
+	[Key.galleryClickToOpen]: "Click to Open",
 	[Key.searchAlbums]: "Search albums...",
 
 	// Password Protection
