@@ -1,40 +1,93 @@
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { defineCollection } from "astro:content";
+import type { CollectionConfig } from "astro/content/config";
+import { glob } from "astro/loaders";
+import { type ZodType, z } from "astro/zod";
 
-const posts = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
+type PostData = {
+	title: string;
+	published: Date;
+	updated?: Date;
+	draft: boolean;
+	description: string;
+	image: string;
+	tags: string[];
+	category: string | null;
+	lang: string;
+	pinned: boolean;
+	author: string;
+	sourceLink: string;
+	licenseName: string;
+	licenseUrl: string;
+	comment: boolean;
+	password: string;
+	passwordHint: string;
+	prevTitle: string;
+	prevSlug: string;
+	nextTitle: string;
+	nextSlug: string;
+};
+
+type DynamicData = {
+	published: Date;
+	pinned: boolean;
+	location: string;
+};
+
+type ContentCollection<T> = CollectionConfig<
+	ZodType<T>,
+	ReturnType<typeof glob>
+>;
+
+const postsCollection: ContentCollection<PostData> = defineCollection({
+	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
 	schema: z.object({
 		title: z.string(),
-		date: z.coerce.date(),
-		cover: z.string().optional(),
-		category: z.string().default('文章'),
-		tags: z.array(z.string()).default([]),
-		summary: z.string().default(''),
+		published: z.date(),
+		updated: z.date().optional(),
+		draft: z.boolean().optional().default(false),
+		description: z.string().optional().default(""),
+		image: z.string().optional().default(""),
+		tags: z.array(z.string()).optional().default([]),
+		category: z.string().optional().nullable().default(""),
+		lang: z.string().optional().default(""),
+		pinned: z.boolean().optional().default(false),
+		author: z.string().optional().default(""),
+		sourceLink: z.string().optional().default(""),
+		licenseName: z.string().optional().default(""),
+		licenseUrl: z.string().optional().default(""),
+		comment: z.boolean().optional().default(true),
+		password: z.string().optional().default(""),
+		passwordHint: z.string().optional().default(""),
+
+		/* For internal use */
+		prevTitle: z.string().default(""),
+		prevSlug: z.string().default(""),
+		nextTitle: z.string().default(""),
+		nextSlug: z.string().default(""),
 	}),
 });
 
-const records = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/records' }),
+const specCollection: ContentCollection<Record<string, never>> =
+	defineCollection({
+		loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/spec" }),
+		schema: z.object({}),
+	});
+
+const dynamicCollection: ContentCollection<DynamicData> = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/dynamic" }),
 	schema: z.object({
-		title: z.string(),
-		date: z.coerce.date(),
-		cover: z.string().optional(),
+		published: z.date(),
+		pinned: z.boolean().optional().default(false),
+		location: z.string().optional().default(""),
 	}),
 });
 
-const albums = defineCollection({
-	loader: glob({ pattern: '**/*.json', base: './src/content/albums' }),
-	schema: z.object({
-		title: z.string(),
-		date: z.string(),
-		cover: z.string(),
-		photos: z.array(
-			z.object({
-				src: z.string(),
-				caption: z.string().optional(),
-			}),
-		),
-	}),
-});
-
-export const collections = { posts, records, albums };
+export const collections: {
+	dynamic: typeof dynamicCollection;
+	posts: typeof postsCollection;
+	spec: typeof specCollection;
+} = {
+	dynamic: dynamicCollection,
+	posts: postsCollection,
+	spec: specCollection,
+};

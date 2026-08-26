@@ -1,31 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import PageHeader from '../components/PageHeader.astro';
-import { getCollection } from 'astro:content';
-import { formatDate } from '../utils/date';
-
-const posts = (await getCollection('posts')).sort(
-	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+import ArchivePanel from "@components/controls/ArchivePanel.astro";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
 ---
 
-<Layout title="归档">
-	<PageHeader title="归档与探索" subtitle={`总计 ${posts.length} 篇记录`} />
-	<div class="onload-animation space-y-6" style="animation-delay: 140ms">
-		{
-			posts.map((p) => (
-				<div class="glass p-5">
-					<time class="font-mono text-xs opacity-60">{formatDate(p.data.date)}</time>
-					<a href={`/posts/${p.id}/`} class="mt-1 block font-serif font-bold transition-colors hover:text-accent">
-						{p.data.title}
-					</a>
-					<div class="mt-2 flex flex-wrap gap-2">
-						{p.data.tags.map((t) => (
-							<span class="rounded-full border border-white/15 px-2 py-0.5 font-mono text-[10px] opacity-70">#{t}</span>
-						))}
-					</div>
-				</div>
-			))
-		}
-	</div>
-</Layout>
+<MainGridLayout title={i18n(I18nKey.archive)}>
+  <ArchivePanel />
+</MainGridLayout>
