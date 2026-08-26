@@ -357,12 +357,16 @@ export default defineConfig({
 				ignored: [
 					"**/package/**",
 					"**/Firefly-docs/**",
-					// Windows 系统目录，Vite 监听器碰它们会 EINVAL 崩溃
-					"**/System Volume Information/**",
-					"**/$RECYCLE.BIN/**",
-					"**/pagefile.sys",
-					"**/hiberfil.sys",
-					"**/swapfile.sys",
+					// Windows 系统目录/文件（绝对路径，chokidar 递归 watch 会撞上它们导致崩溃）
+					"E:/System Volume Information/**",
+					"E:/$RECYCLE.BIN/**",
+					"E:/pagefile.sys",
+					"E:/hiberfil.sys",
+					"E:/swapfile.sys",
+					"E:/DumpStack.log.tmp",
+					// 编辑器原子写入的临时文件
+					"**/*.tmp",
+					"**/.tmpdir/**",
 				],
 			},
 		},
