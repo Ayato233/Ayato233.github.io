@@ -1,40 +1,25 @@
 /// <reference types="astro/client" />
 /// <reference path="../.astro/types.d.ts" />
 
-declare global {
-	interface ImportMetaEnv {
-		readonly MEILI_MASTER_KEY: string;
-		// 视图设置面板总开关，可在部署平台配置（true / 1 / on / yes 开启）
-		readonly PUBLIC_DISPLAY_SETTINGS?: string;
-	}
-
-	interface ITOCManager {
-		init: () => void;
-		render: () => void;
-		attach: () => void;
-		cleanup: () => void;
-	}
-
-	interface Window {
-		SidebarTOC: {
-			manager: ITOCManager | null;
-		};
-		FloatingTOC: {
-			btn: HTMLElement | null;
-			panel: HTMLElement | null;
-			manager: ITOCManager | null;
-			isPostPage: () => boolean;
-		};
-		toggleFloatingTOC: () => void;
-		tocInternalNavigation: boolean;
-		// swup is defined in global.d.ts
-		// biome-ignore lint/suspicious/noExplicitAny: External library without types
-		spine: any;
-		closeAnnouncement: () => void;
-		// __fireflyMusic type is defined in global.d.ts
-		semifullScrollHandler?: (() => void) | undefined;
-		initSemifullScrollDetection?: () => void;
-	}
+declare module "virtual:shirone-music-sidebar" {
+	const component:
+		| typeof import("@components/organisms/music/MusicSidebar.astro").default
+		| null;
+	export default component;
 }
 
-export {};
+declare module "*scripts/anime/providers/bangumi.mjs" {
+	export function fetchBangumiData(config: unknown): Promise<{
+		provider: "bangumi";
+		accountRef: string;
+		rawItems: unknown[];
+	}>;
+}
+
+declare module "*scripts/anime/providers/bilibili.mjs" {
+	export function fetchBilibiliData(config: unknown): Promise<{
+		provider: "bilibili";
+		accountRef: string;
+		rawItems: unknown[];
+	}>;
+}

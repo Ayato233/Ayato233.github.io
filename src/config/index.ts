@@ -1,72 +1,64 @@
-// 配置索引文件 - 统一导出所有配置
-// 这样组件可以一次性导入多个相关配置，减少重复的导入语句
+/**
+ * 配置统一出口（barrel）：消费方一律 `import { xxx } from "@/config"`。
+ *
+ * 约定（详见本目录 README.md）：
+ * - 值放在 `src/config/<domain>Config.ts`，类型放在 `src/types/<domain>Config.ts`；
+ * - 存在反向依赖的模块（如 i18n/translation.ts 依赖 siteConfig）只允许从
+ *   具体文件导入（`@/config/siteConfig`），禁止走本 barrel，避免循环依赖。
+ */
 
-// 类型导出
-export type {
-	AdConfig,
-	AnalyticsConfig,
-	AnnouncementConfig,
-	BackgroundWallpaperConfig,
-	BooknavFaviconConfig,
-	BooknavGroup,
-	BooknavItem,
-	BooknavPageConfig,
-	CommentConfig,
-	CoverImageConfig,
-	DisplaySettingsConfig,
-	DynamicConfig,
-	ExpressiveCodeConfig,
-	FooterConfig,
-	GalleryAlbum,
-	GalleryConfig,
-	LicenseConfig,
-	MermaidConfig,
-	MusicPlayerConfig,
-	NavBarConfig,
-	PlantUMLConfig,
-	ProfileConfig,
-	SakuraConfig,
-	SidebarLayoutConfig,
-	SiteConfig,
-	SponsorConfig,
-	SponsorItem,
-	SponsorMethod,
-	WidgetComponentConfig,
-	WidgetComponentType,
-	WidgetSpecificConfig,
-} from "../types/config";
-export type {
-	BuiltinFontProvider,
-	CustomFontProvider,
-	FontDefinition,
-	FontSelectionConfig,
-} from "../types/fontConfig"; // 字体类型定义
-export { analyticsConfig } from "./analyticsConfig"; // 统计分析配置
-export { announcementConfig } from "./announcementConfig"; // 公告配置
-// 样式配置
-export { backgroundWallpaper } from "./backgroundWallpaper"; // 背景壁纸配置
-export { booknavConfig, booknavPageConfig } from "./booknavConfig"; // 书签导航配置
-// 功能配置
-export { commentConfig } from "./commentConfig"; // 评论系统配置
-export { coverImageConfig } from "./coverImageConfig"; // 封面图配置
-export { displaySettingsConfig } from "./displaySettingsConfig"; // 显示设置面板开关配置
-export { dynamicConfig } from "./dynamicConfig"; // 动态页面配置
-export { sakuraConfig } from "./effectsConfig"; // 动画特效配置（樱花等）
-export { expressiveCodeConfig } from "./expressiveCodeConfig"; // 代码高亮配置
-export { fontConfig, fontsList } from "./fontConfig"; // 字体配置
-export { footerConfig } from "./footerConfig"; // 页脚配置
-export { friendsPageConfig, getEnabledFriends } from "./friendsConfig"; // 友链配置
-export { galleryConfig } from "./galleryConfig"; // 相册配置
-export { licenseConfig } from "./licenseConfig"; // 许可证配置
-// 组件配置
-export { mermaidConfig } from "./mermaidConfig"; // Mermaid 图表配置
-export { musicPlayerConfig } from "./musicConfig"; // 音乐播放器配置
-export { navBarConfig, navBarSearchConfig } from "./navBarConfig"; // 导航栏配置与搜索配置
-export { live2dWidgetConfig, spineModelConfig } from "./pioConfig"; // 看板娘配置
-export { plantumlConfig } from "./plantumlConfig"; // PlantUML 图表配置
-export { profileConfig } from "./profileConfig"; // 用户资料配置
-// 布局配置
-export { sidebarLayoutConfig } from "./sidebarConfig"; // 侧边栏布局配置
-// 核心配置
-export { siteConfig } from "./siteConfig"; // 站点基础配置
-export { sponsorConfig } from "./sponsorConfig"; // 打赏配置
+export {
+	animeConfig,
+	resolveAnimeOptions,
+	resolvedAnimeOptions,
+} from "./animeConfig";
+export { announcementConfig } from "./announcementConfig";
+export {
+	type ArticleDiscoveryOptions,
+	type ArticleShareOptions,
+	articleConfig,
+	normalizeDiscoveryCount,
+	resolveArticleDiscoveryOptions,
+	resolveArticleShareOptions,
+	resolveLastUpdatedNoticeOptions,
+} from "./articleConfig";
+export {
+	commentConfig,
+	type ResolvedCommentOptions,
+	resolveCommentOptions,
+} from "./commentConfig";
+export { devicesConfig } from "./devicesConfig";
+export { expressiveCodeConfig } from "./expressiveCodeConfig";
+export { fabConfig } from "./fabConfig";
+export {
+	fontConfig,
+	resolvedFontOptions,
+	resolveFontOptions,
+} from "./fontConfig";
+export { footerConfig } from "./footerConfig";
+export {
+	imageBloomConfig,
+	resolveImageBloomOptions,
+} from "./imageBloomConfig";
+export { licenseConfig } from "./licenseConfig";
+export { llmsConfig } from "./llmsConfig";
+export {
+	clampMusicVolume,
+	musicConfig,
+	type ResolvedMusicOptions,
+	resolveMusicOptions,
+} from "./musicConfig";
+export { LinkPresets, navBarConfig } from "./navBarConfig";
+export { POST_CARD_MIN_WIDTH, postListConfig } from "./postListConfig";
+export { profileConfig } from "./profileConfig";
+export { projectsConfig } from "./projectsConfig";
+export { sidebarConfig } from "./sidebarConfig";
+export {
+	getDefaultSpec,
+	getDefaultStyle,
+	resolveDisplaySettings,
+	resolveTextureOptions,
+	siteConfig,
+} from "./siteConfig";
+export { skillsConfig } from "./skillsConfig";
+export { timelineConfig } from "./timelineConfig";

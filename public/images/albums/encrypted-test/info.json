@@ -1,0 +1,47 @@
+{
+  "mode": "external",
+  "hidden": false,
+  "title": "加密相册示例",
+  "description": "这是一个加密相册的示例，设置了访问密码，只有输入正确的密码才能查看相册内容。",
+  "date": "2026-02-01",
+  "location": "崩坏：星穹铁道",
+  "tags": [
+    "加密相册",
+    "示例"
+  ],
+  "layout": "masonry",
+  "columns": 3,
+  "cover": "https://s41.ax1x.com/2026/05/13/peXsfit.webp",
+  "photos": [
+    {
+      "src": "https://s41.ax1x.com/2026/05/13/peXsfit.webp",
+      "id": "enc-0"
+    },
+    {
+      "src": "https://s41.ax1x.com/2026/05/13/peXyh79.jpg",
+      "id": "enc-1"
+    },
+    {
+      "src": "https://s41.ax1x.com/2026/05/13/peXshJP.webp",
+      "id": "enc-2"
+    },
+    {
+      "src": "https://s41.ax1x.com/2026/05/13/peXyWm4.jpg",
+      "id": "enc-3"
+    },
+    {
+      "src": "https://s41.ax1x.com/2026/05/13/peXsRII.webp",
+      "id": "enc-4"
+    },
+    {
+      "src": "https://s41.ax1x.com/2026/05/13/peXyf0J.jpg",
+      "id": "enc-5"
+    },
+    {
+      "src": "https://s41.ax1x.com/2026/05/13/peXs2dA.webp",
+      "id": "enc-6"
+    }
+  ],
+  "password": "123456",
+  "passwordHint": "示例密码123456"
+}

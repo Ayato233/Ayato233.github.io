@@ -1,23 +1,17 @@
-import type { AnnouncementConfig } from "../types/announcementConfig";
+import type { AnnouncementConfig } from "@/types/announcementConfig";
 
+/**
+ * 公告栏配置
+ * 组件显示由 sidebarConfig 统一控制
+ */
 export const announcementConfig: AnnouncementConfig = {
-	// 公告标题，留空则走i18n默认标题
-	title: "",
-
-	// 公告内容
-	content: "欢迎来到 Furina 的小站，这里记录技术笔记与生活随想。",
-
-	// 是否允许用户关闭公告
-	closable: true,
-
+	title: "", // 公告标题，填空使用 i18n 字符串 Key.announcement
+	content: "欢迎来到 Furina 的小站，这里记录技术笔记与生活随想。", // 公告内容
+	closable: true, // 允许用户关闭公告
 	link: {
-		// 启用链接
-		enable: true,
-		// 链接文本
-		text: "了解更多",
-		// 链接 URL
-		url: "/about/",
-		// 内部链接
-		external: false,
+		enable: true, // 启用链接
+		text: "了解更多", // 链接文本
+		url: "/about/", // 链接 URL
+		external: false, // 内部链接
 	},
 };

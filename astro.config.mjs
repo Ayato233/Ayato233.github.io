@@ -1,10 +1,6 @@
-// Windows 上 Node 原生 fs.watch 会收到全盘事件并触碰系统文件（E:\pagefile.sys 等）
-// 导致 EINVAL 崩溃，强制 chokidar 走轮询模式根治（必须在 watcher 初始化前设置）
-process.env.CHOKIDAR_USEPOLLING = "true";
-process.env.CHOKIDAR_INTERVAL = "300";
-import { setMaxListeners } from "node:events";
-import cloudflare from "@astrojs/cloudflare";
-import { unified } from "@astrojs/markdown-remark";
+import { existsSync } from "node:fs";
+import { basename, extname } from "node:path";
+import { fileURLToPath } from "node:url";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -15,196 +11,173 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
-import { pluginLanguageLogo } from "ec-lang-logo"; /* Language Logo */
-import { pluginCollapsible } from "expressive-code-collapsible"; /* Collapsible */
-import { pluginLanguageBadge } from "expressive-code-language-badge"; /* Language Badge */
-import katex from "katex";
-import "katex/dist/contrib/mhchem.mjs"; // 加载 mhchem 扩展
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeCallouts from "rehype-callouts";
-import rehypeCodeGroup from "rehype-code-group"; /* Tab 代码块 */
-import rehypeComponents from "rehype-components"; /* Render the custom directive content */
-import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
-import remarkAdmonitionToBlockquoteCallout from "remark-admonition-to-blockquote-callout";
-import remarkDirective from "remark-directive"; /* Handle directives */
-import remarkMath from "remark-math";
-import remarkSectionize from "remark-sectionize";
-import {
-	commentConfig,
-	dynamicConfig,
-	expressiveCodeConfig,
-	fontConfig,
-	fontsList,
-	mermaidConfig,
-	plantumlConfig,
-	siteConfig,
-} from "./src/config";
-import I18nKey from "./src/i18n/i18nKey";
-import { i18n } from "./src/i18n/translation";
-import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
-import { rehypeDiagramPanZoom } from "./src/plugins/rehype-diagram-panzoom.mjs";
-import rehypeEmailProtection from "./src/plugins/rehype-email-protection.mjs";
-import rehypeExternalLinks from "./src/plugins/rehype-external-links.mjs";
-import rehypeFigure from "./src/plugins/rehype-figure.mjs";
-import rehypeImageReferrerPolicy from "./src/plugins/rehype-image-referrerpolicy.mjs";
-import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
-import { rehypePlantuml } from "./src/plugins/rehype-plantuml.mjs";
-import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
-import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
-import { remarkImageGrid } from "./src/plugins/remark-image-grid.js";
-import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
-import { remarkPlantuml } from "./src/plugins/remark-plantuml.js";
-import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
-import { remarkWikiLink } from "./src/plugins/remark-wiki-link.js";
-import { collectUsedFontCssVars } from "./src/utils/fontHelper";
+import { expressiveCodeConfig } from "./src/config/expressiveCodeConfig.ts";
+import { resolvedFontOptions } from "./src/config/fontConfig.ts";
+import { musicConfig, resolveMusicOptions } from "./src/config/musicConfig.ts";
+import { sidebarConfig } from "./src/config/sidebarConfig.ts";
+import { siteConfig } from "./src/config/siteConfig.ts";
+import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
+import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
+import { getLocalFontVariants } from "./src/utils/font-options.ts";
+import { siteMarkdownProcessor } from "./src/utils/markdown-processor.mjs";
 
-if (process.env.NODE_ENV === "development") {
-	setMaxListeners(20);
+const musicWidgetEnabled =
+	sidebarConfig.enable &&
+	sidebarConfig.components.some(
+		(widget) => widget.type === "music" && widget.enable,
+	);
+const musicFeatureEnabled =
+	resolveMusicOptions(musicConfig) !== null && musicWidgetEnabled;
+const musicSidebarModuleId = "virtual:shirone-music-sidebar";
+const resolvedMusicSidebarModuleId = `\0${musicSidebarModuleId}`;
+
+const optionalMusicSidebarPlugin = {
+	name: "shirone-optional-music-sidebar",
+	enforce: "pre",
+	resolveId(source) {
+		return source === musicSidebarModuleId
+			? resolvedMusicSidebarModuleId
+			: null;
+	},
+	load(id) {
+		if (id !== resolvedMusicSidebarModuleId) return null;
+		return musicFeatureEnabled
+			? 'export { default } from "/src/components/organisms/music/MusicSidebar.astro";'
+			: "export default null;";
+	},
+	generateBundle(_options, bundle) {
+		if (!musicFeatureEnabled) {
+			for (const fileName of Object.keys(bundle)) {
+				if (
+					fileName.includes("MusicSidebarClient") ||
+					fileName.startsWith("_astro/music.") ||
+					fileName.includes("/music.")
+				) {
+					delete bundle[fileName];
+				}
+			}
+		}
+	},
+};
+
+const isBuildCommand = process.argv.includes("build");
+
+function resolveVariantSrc(file) {
+	if (isBuildCommand && resolvedFontOptions.subsetting?.enable) {
+		const ext = extname(file);
+		const baseName = basename(file, ext);
+		const subsetPath = `src/assets/fonts/.subset/${baseName}.subset.woff2`;
+		if (existsSync(subsetPath)) {
+			return `./${subsetPath}`;
+		}
+		throw new Error(
+			`[font-system] Missing required subset font: ${subsetPath}. ` +
+				`Font subsetting is enabled for production builds, but the subset file was not found. ` +
+				`Ensure 'pnpm.cmd fonts:subset' ran successfully before building.`,
+		);
+	}
+	return `./${file}`;
 }
 
-const adapter = process.env.CF_WORKERS
-	? cloudflare({
-			prerenderEnvironment: "node",
-		})
-	: undefined;
+const configuredFonts =
+	resolvedFontOptions.mode === "custom"
+		? ["body", "cjk", "mono"].flatMap((role) => {
+				const resolvedRole = resolvedFontOptions.roles[role];
+				if (!resolvedRole.family) return [];
+
+				const isCompositeSans = role === "body" || role === "cjk";
+				const fallbackOpts = isCompositeSans
+					? { fallbacks: [], optimizedFallbacks: false }
+					: {};
+
+				const localVariants = getLocalFontVariants(resolvedFontOptions, role);
+				if (localVariants.length > 0) {
+					return [
+						{
+							provider: fontProviders.local(),
+							name: resolvedRole.family,
+							cssVariable: resolvedRole.cssVariable,
+							options: {
+								variants: localVariants.map((variant) => ({
+									src: [resolveVariantSrc(variant.file)],
+									weight: variant.weight,
+									style: variant.style,
+									display: resolvedRole.display,
+									...(variant.subset ? { subset: variant.subset } : {}),
+									...(variant.unicodeRange
+										? { unicodeRange: variant.unicodeRange }
+										: {}),
+								})),
+							},
+							...fallbackOpts,
+						},
+					];
+				}
+
+				const fontsourceVariants = resolvedRole.variants.filter(
+					(v) => v.source === "fontsource",
+				);
+				if (fontsourceVariants.length > 0) {
+					return [
+						{
+							provider: fontProviders.fontsource(),
+							name: resolvedRole.family,
+							cssVariable: resolvedRole.cssVariable,
+							...fallbackOpts,
+						},
+					];
+				}
+
+				return [];
+			})
+		: [];
 
 // https://astro.build/config
 export default defineConfig({
-	site: siteConfig.site_url,
-
-	base: "/",
+	site: siteConfig.site,
+	base: siteConfig.base ?? "/",
 	trailingSlash: "always",
-
-	// 字体配置 - 只加载实际使用的字体，跳过未引用的以加快构建
-	fonts: (() => {
-		// 禁用字体功能时直接返回空数组，跳过 Astro Font API 集成
-		if (!fontConfig.enable) return [];
-
-		const used = collectUsedFontCssVars(fontConfig);
-		return fontsList
-			.filter((f) => used.has(f.cssVariable))
-			.map((f) => {
-				let provider;
-				switch (f.provider) {
-					case "google":
-						provider = fontProviders.google();
-						break;
-					case "fontsource":
-						provider = fontProviders.fontsource();
-						break;
-					case "local":
-						provider = fontProviders.local();
-						break;
-					case "bunny":
-						provider = fontProviders.bunny();
-						break;
-					case "fontshare":
-						provider = fontProviders.fontshare();
-						break;
-					case "npm":
-						provider = fontProviders.npm();
-						break;
-					default:
-						provider = f.provider;
-				}
-				return { ...f, provider };
-			});
-	})(),
-
-	adapter,
-
-	// 图像优化配置
-	image: {
-		// 组件可自行传入 layout/widths；这里只控制 Markdown 正文图片
-		layout: "none",
-	},
-
+	fonts: configuredFonts,
 	integrations: [
 		swup({
 			theme: false,
-			animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
-			// the default value `transition-` cause transition delay
-			// when the Tailwind class `transition-all` is used
-			containers: [
-				"#banner-overlay-container",
-				"#banner-dim-container",
-				"#swup-container",
-				"#left-sidebar-dynamic",
-				"#right-sidebar-dynamic",
-				"#floating-toc-wrapper",
-			],
-			smoothScrolling: false,
+			ignore: 'a[href="#"]',
+			animationClass: "transition-swup-",
+			containers: ["main", "#toc"],
+			smoothScrolling: true,
 			cache: true,
-			preload: {
-				hover: true,
-				visible: true,
-			},
+			preload: true,
 			accessibility: true,
-			updateHead: true,
+			updateHead: {
+				awaitAssets: false,
+				persistTags: "link[rel=stylesheet], style",
+			},
 			updateBodyClass: false,
 			globalInstance: true,
-			// 滚动相关配置优化
-			resolveUrl: (url) => url,
 			animateHistoryBrowsing: false,
-			skipPopStateHandling: (event) => {
-				// 跳过锚点链接的处理，让浏览器原生处理
-				return event.state?.url?.includes("#");
-			},
+			skipPopStateHandling: (event) => Boolean(event.state?.url?.includes("#")),
 		}),
 		icon({
 			include: {
-				"material-symbols": ["*"],
-				"fa7-brands": ["*"],
-				"fa7-regular": ["*"],
-				"fa7-solid": ["*"],
-				"simple-icons": ["*"],
-				mdi: ["*"],
-				mingcute: ["*"],
+				"preprocess: vitePreprocess(),": ["*"],
+				"fa6-brands": ["*"],
+				"fa6-regular": ["*"],
+				"fa6-solid": ["*"],
 			},
 		}),
 		expressiveCode({
-			themes: [expressiveCodeConfig.darkTheme, expressiveCodeConfig.lightTheme],
-			useDarkModeMediaQuery: false,
-			themeCssSelector: (theme) => `[data-theme='${theme.name}']`,
+			themes: [
+				expressiveCodeConfig.lightTheme ?? expressiveCodeConfig.theme,
+				expressiveCodeConfig.darkTheme ?? expressiveCodeConfig.theme,
+			],
 			plugins: [
-				// pluginLanguageBadge 配置 - 从expressiveCodeConfig读取设置
-				...(expressiveCodeConfig.pluginLanguageBadge?.enable === true
-					? [pluginLanguageBadge()]
-					: []),
-				// pluginLanguageLogo 配置 - 从expressiveCodeConfig读取设置
-				...(expressiveCodeConfig.pluginLanguageLogo?.enable === true
-					? [
-							pluginLanguageLogo({
-								color: expressiveCodeConfig.pluginLanguageLogo.color ?? "mono",
-								excludedLangs:
-									expressiveCodeConfig.pluginLanguageLogo.excludedLangs ?? [],
-							}),
-						]
-					: []),
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
-				// pluginCollapsible 配置 - 从expressiveCodeConfig读取设置，使用i18n文本
-				...(expressiveCodeConfig.pluginCollapsible?.enable === true
-					? [
-							pluginCollapsible({
-								lineThreshold:
-									expressiveCodeConfig.pluginCollapsible.lineThreshold || 15,
-								previewLines:
-									expressiveCodeConfig.pluginCollapsible.previewLines || 8,
-								defaultCollapsed:
-									expressiveCodeConfig.pluginCollapsible.defaultCollapsed ??
-									true,
-								expandButtonText: i18n(I18nKey.codeCollapsibleShowMore),
-								collapseButtonText: i18n(I18nKey.codeCollapsibleShowLess),
-								expandedAnnouncement: i18n(I18nKey.codeCollapsibleExpanded),
-								collapsedAnnouncement: i18n(I18nKey.codeCollapsibleCollapsed),
-							}),
-						]
-					: []),
+				pluginLanguageBadge(),
+				pluginCustomCopyButton(),
 			],
 			defaultProps: {
-				wrap: false,
+				wrap: true,
 				overridesByLang: {
 					shellsession: {
 						showLineNumbers: false,
@@ -212,181 +185,84 @@ export default defineConfig({
 				},
 			},
 			styleOverrides: {
+				codeBackground: "var(--codeblock-bg)",
 				borderRadius: "0.75rem",
+				borderColor: "none",
 				codeFontSize: "0.875rem",
-				codeFontFamily:
-					"var(--font-code, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace)",
+				codeFontFamily: "var(--m3e-font-mono-family)",
 				codeLineHeight: "1.5rem",
-				frames: {},
+				frames: {
+					editorBackground: "var(--codeblock-bg)",
+					terminalBackground: "var(--codeblock-bg)",
+					terminalTitlebarBackground: "var(--codeblock-topbar-bg)",
+					editorTabBarBackground: "var(--codeblock-topbar-bg)",
+					editorActiveTabBackground: "none",
+					editorActiveTabIndicatorBottomColor: "var(--primary)",
+					editorActiveTabIndicatorTopColor: "none",
+					editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
+					terminalTitlebarBorderBottomColor: "none",
+				},
 				textMarkers: {
 					delHue: 0,
 					insHue: 180,
 					markHue: 250,
 				},
-				languageBadge: {
-					fontSize: "0.75rem",
-					fontWeight: "bold",
-					borderRadius: "0.25rem",
-					opacity: "1",
-					borderWidth: "0px",
-					borderColor: "transparent",
-				},
 			},
 			frames: {
-				// 保留原生复制按钮，外观由 src/styles/expressive-code.css 覆盖成主题风格
-				showCopyToClipboardButton: true,
+				showCopyToClipboardButton: false,
 			},
 		}),
-		svelte(),
-		sitemap({
-			filter: (page) => {
-				// 根据页面开关配置过滤sitemap
-				const url = new URL(page);
-				const pathname = url.pathname;
-				if (pathname === "/dynamic/" && !siteConfig.pages.dynamic) {
-					return false;
-				}
-				if (pathname === "/gallery/" && !siteConfig.pages.gallery) {
-					return false;
-				}
-				if (pathname === "/friends/" && !siteConfig.pages.friends) {
-					return false;
-				}
-				if (pathname === "/guestbook/" && !siteConfig.pages.guestbook) {
-					return false;
-				}
-				if (pathname === "/booknav/" && !siteConfig.pages.booknav) {
-					return false;
-				}
-				if (pathname === "/bilibili/" && !siteConfig.pages.bilibili) {
-					return false;
-				}
-				if (pathname === "/bangumi/" && !siteConfig.pages.bangumi) {
-					return false;
-				}
-				if (pathname === "/vndb/" && !siteConfig.pages.vndb) {
-					return false;
-				}
-				if (pathname === "/myanimelist/" && !siteConfig.pages.mal) {
-					return false;
-				}
-				// 动态页评论嵌入页：评论关闭时重定向到 /404/，不应进 sitemap
-				if (
-					pathname === "/dynamic/comments/" &&
-					(dynamicConfig.showComment === false ||
-						!commentConfig.type ||
-						commentConfig.type === "none")
-				) {
-					return false;
-				}
-				if (pathname === "/sponsor/" && !siteConfig.pages.sponsor) {
-					return false;
-				}
-				return true;
+		svelte({
+			compilerOptions: {
+				// CSS-source hashing keeps SSR and client scope hashes stable after moves.
+				cssHash: ({ css, hash }) => `svelte-${hash(css)}`,
 			},
 		}),
-		mdx(),
+		sitemap(),
+		mdx({
+			syntaxHighlight: false,
+			optimize: true,
+		}),
 	],
 	markdown: {
-		processor: unified({
-			remarkPlugins: [
-				...(siteConfig.post.rehypeCallouts.enablePythonMarkdownAdmonitions !==
-				false
-					? [remarkAdmonitionToBlockquoteCallout]
-					: []),
-				remarkMath,
-				remarkReadingTime,
-				remarkWikiLink,
-				remarkImageGrid,
-				remarkExcerpt,
-				remarkDirective,
-				remarkSectionize,
-				parseDirectiveNode,
-				remarkMermaid,
-				[remarkPlantuml, plantumlConfig],
-			],
-			rehypePlugins: [
-				[rehypeKatex, { katex }],
-				[rehypeCallouts, { theme: siteConfig.post.rehypeCallouts.theme }],
-				rehypeSlug,
-				rehypeCodeGroup,
-				[rehypeMermaid, mermaidConfig],
-				rehypePlantuml,
-				rehypeDiagramPanZoom,
-				rehypeFigure,
-				[
-					rehypeImageReferrerPolicy,
-					{ domains: siteConfig.imageOptimization?.noReferrerDomains || [] },
-				],
-				[rehypeExternalLinks, { siteUrl: siteConfig.site_url }],
-				[rehypeEmailProtection, { method: "base64" }], // 邮箱保护插件，支持 'base64' 或 'rot13'
-				[
-					rehypeComponents,
-					{
-						components: {
-							github: GithubCardComponent,
-						},
-					},
-				],
-				[
-					rehypeAutolinkHeadings,
-					{
-						behavior: "append",
-						properties: {
-							className: ["anchor"],
-						},
-						content: {
-							type: "element",
-							tagName: "span",
-							properties: {
-								className: ["anchor-icon"],
-								"data-pagefind-ignore": true,
-							},
-							children: [
-								{
-									type: "text",
-									value: "#",
-								},
-							],
-						},
-					},
-				],
-			],
-		}),
+		processor: siteMarkdownProcessor,
 	},
 	vite: {
-		plugins: [tailwindcss()],
-		server: {
-			watch: {
-				// Windows 上 chokidar 原生 fs.watch 会收到全盘事件并试图 stat 系统文件
-				// （E:\pagefile.sys / System Volume Information）导致 EINVAL 崩溃，
-				// 改用轮询模式彻底绕开该问题
-				usePolling: true,
-				ignored: [
-					"**/package/**",
-					"**/Firefly-docs/**",
-					"**/*.tmp",
-					"**/.tmpdir/**",
-				],
-			},
-		},
 		resolve: {
-			alias: {
-				"@rehype-callouts-theme": `rehype-callouts/theme/${siteConfig.post.rehypeCallouts.theme}`,
-			},
+			alias: [
+				{
+					find: /^@iconify\/svelte$/,
+					replacement: fileURLToPath(
+						new URL(
+							"./src/components/atoms/display/Icon.svelte",
+							import.meta.url,
+						),
+					),
+				},
+			],
+		},
+		plugins: [optionalMusicSidebarPlugin, tailwindcss()],
+		optimizeDeps: {
+			include: [
+				"mermaid",
+				"@panzoom/panzoom",
+				"overlayscrollbars",
+				"@fancyapps/ui",
+			],
 		},
 		build: {
 			minify: "esbuild",
-			esbuildOptions: {
-				minify: true,
-				// 删除 debugger 语句；console.log / console.debug 无副作用，未使用返回值时会被 dead code elimination 移除，
-				// console.warn / console.error 保留，确保生产环境出错时仍有日志可查
-				drop: ["debugger"],
-				pure: ["console.log", "console.debug"],
-			},
+			cssCodeSplit: true,
+			cssMinify: "esbuild",
+			chunkSizeWarningLimit: 1000,
+			esbuild: isBuildCommand
+				? {
+						drop: ["debugger"],
+						pure: ["console.log", "console.debug"],
+					}
+				: undefined,
 			rollupOptions: {
 				onwarn(warning, warn) {
-					// temporarily suppress this warning
 					if (
 						warning.message.includes("is dynamically imported by") &&
 						warning.message.includes("but also statically imported by")
@@ -396,10 +272,6 @@ export default defineConfig({
 					warn(warning);
 				},
 			},
-			// CSS 优化
-			cssCodeSplit: true,
-			cssMinify: "esbuild",
-			assetsInlineLimit: 4096,
 		},
 	},
 });

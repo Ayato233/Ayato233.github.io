@@ -1,512 +1,374 @@
 ---
-import GoogleAnalytics from "@components/analytics/GoogleAnalytics.astro";
-import La51Analytics from "@components/analytics/La51Analytics.astro";
-import MicrosoftClarity from "@components/analytics/MicrosoftClarity.astro";
-import UmamiAnalytics from "@components/analytics/UmamiAnalytics.astro";
-import CodeGroupManager from "@components/features/CodeGroupManager.astro";
-import FancyboxManager from "@components/features/FancyboxManager.astro";
-import FontSetup from "@components/features/FontSetup.astro";
-import GithubCardManager from "@components/features/GithubCardManager.astro";
-import MusicManager from "@components/features/MusicManager.astro";
-import MusicPlayerView from "@components/features/MusicPlayerView.astro";
-import SakuraEffect from "@components/features/SakuraEffect.astro";
-import WavesEffect from "@components/features/WavesEffect.astro";
-import ConfigCarrier from "@components/layout/ConfigCarrier.astro";
-
+import { Font } from "astro:assets";
+import Snackbar from "@components/atoms/overlay/Snackbar.svelte";
+import ConfigCarrier from "@components/system/ConfigCarrier.astro";
 import {
-	analyticsConfig,
-	backgroundWallpaper,
-	displaySettingsConfig,
 	expressiveCodeConfig,
-	musicPlayerConfig,
 	profileConfig,
+	resolvedFontOptions,
+	resolveTextureOptions,
 	siteConfig,
 } from "@/config";
+import type { SidebarPage } from "@/types/sidebarConfig";
 import {
+	AUTO_MODE,
 	BANNER_HEIGHT,
+	BANNER_HEIGHT_EXTEND,
 	BANNER_HEIGHT_HOME,
-	PAGE_WIDTH,
-} from "@/constants/constants";
-import { defaultFavicons } from "@/constants/icon";
-import type { Favicon } from "@/types/config";
-import { isHomePage } from "@/utils/layout-utils";
-import { getAuthorAvatarUrl, getSiteLogo } from "@/utils/schema-image";
-import { buildSiteGraph, toAbsoluteUrl } from "@/utils/schema-utils";
-import { url } from "@/utils/url-utils";
-
-import "@/styles/main.css";
-import "@/styles/variables.styl";
-import "@rehype-callouts-theme";
+	DARK_MODE,
+	DEFAULT_THEME,
+	LIGHT_MODE,
+	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
+} from "../constants/constants";
+import { defaultFavicons } from "../constants/icon";
+import type { Favicon } from "../types/config";
+import { createFontRoleStyle } from "../utils/font-options";
+import { resolvePageWidth } from "../utils/responsive-utils";
+import { pathsEqual, url } from "../utils/url-utils";
+import "katex/dist/katex.css";
+import "overlayscrollbars/overlayscrollbars.css";
+import "../styles/main.css";
+import "../styles/font-faces.css";
+import textureStyles from "../styles/textures.css?raw";
 
 interface Props {
 	title?: string;
+	banner?: string;
 	description?: string;
 	lang?: string;
 	setOGTypeArticle?: boolean;
-	postSlug?: string;
-	postCoverImage?: string;
-	hasWallpaper?: boolean;
+	page?: SidebarPage;
 }
 
-let {
-	title,
-	description,
-	lang,
-	setOGTypeArticle,
-	postSlug,
-	postCoverImage,
-	hasWallpaper = false,
-} = Astro.props;
+let { title, description, lang, setOGTypeArticle, page } = Astro.props;
 
-// apply a class to the body element to decide the height of the banner, only used for initial page load
-// Swup can update the body for each page visit, but it's after the page transition, causing a delay for banner height change
-// so use Swup hooks instead to change the height immediately when a link is clicked
-const isHomePageCheck = isHomePage(Astro.url.pathname);
+const initialPage =
+	page ?? (pathsEqual(Astro.url.pathname, url("/")) ? "home" : undefined);
 
-// defines global css variables
-// why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
 const configHue = siteConfig.themeColor.hue;
+const lightTheme =
+	expressiveCodeConfig.lightTheme ?? expressiveCodeConfig.theme;
+const darkTheme = expressiveCodeConfig.darkTheme ?? expressiveCodeConfig.theme;
+const defaultWallpaperMode = siteConfig.wallpaperMode.defaultMode;
+const textureOptions = resolveTextureOptions();
+const defaultTexturePreset = textureOptions.defaultPreset;
+const defaultTextureOpacity = textureOptions.defaultOpacity;
+const textureEnabled = textureOptions.enable;
 
-// 获取导航栏透明模式配置（banner 模式专属）
-const navbarTransparentMode =
-	backgroundWallpaper.banner?.navbar?.transparentMode || "semi";
-// 判断是否应该显示顶部高光效果（只在full和semifull模式下显示）
-const shouldShowTopHighlight =
-	navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
-
-// 子菜单 / 浮动面板的毛玻璃模糊度：跟随 navbar.blur，但不受壁纸模式影响，
-// 且带一个最小值 —— 导航栏可以用 blur: 0 关掉毛玻璃，面板则始终保留毛玻璃。
-// 之所以不复用 #navbar 上的 --navbar-glass-blur：
-// setting-utils.ts 的 updateNavbarTransparency() 会在切到 overlay / none 模式时
-// 把它清成 0px；这里放到 :root 上，同时也能让不在导航栏 DOM 内的
-// .float-panel（#translate-panel、#mobile-toc-panel）继承到。
-const NAVBAR_PANEL_MIN_BLUR = 2;
-const navbarPanelBlur = Math.max(
-	backgroundWallpaper.banner?.navbar?.blur ?? 20,
-	NAVBAR_PANEL_MIN_BLUR,
-);
+const hasDesktopBanner = siteConfig.banner.src.desktop.length > 0;
+const hasMobileBanner = siteConfig.banner.src.mobile.length > 0;
 
 let pageTitle: string;
 if (title) {
 	pageTitle = `${title} - ${siteConfig.title}`;
 } else {
-	pageTitle = siteConfig.subtitle
-		? `${siteConfig.title} - ${siteConfig.subtitle}`
-		: siteConfig.title;
-}
-
-let ogImageUrl: string | undefined;
-if (siteConfig.post.generateOgImages && postSlug) {
-	ogImageUrl = new URL(`/og/${postSlug}.png`, Astro.site).toString();
-} else if (postCoverImage) {
-	ogImageUrl = postCoverImage; // 已由文章页算成绝对 URL
+	pageTitle = `${siteConfig.title} - ${siteConfig.subtitle}`;
 }
 
 const favicons: Favicon[] =
 	siteConfig.favicon.length > 0 ? siteConfig.favicon : defaultFavicons;
 
-// const siteLang = siteConfig.lang.replace('_', '-')
 if (!lang) {
 	lang = `${siteConfig.lang}`;
 }
 const siteLang = lang.replace("_", "-");
-
-// 首页站点级结构化数据用的作者头像 URL（Person.image），经 toAbsoluteImageUrl 三分解析
-const avatarUrl = await getAuthorAvatarUrl();
-// 作者个人页（/about/）绝对 URL，作为 Person.url
-const aboutUrl =
-	toAbsoluteUrl("/about/", siteConfig.site_url) ?? siteConfig.site_url;
-// 站点 publisher logo（Organization.logo），用于首页 @graph 的 Organization 节点
-const siteLogo = await getSiteLogo();
-
-// 使用固定的banner偏移量，position配置用于图片定位
+const fontRoleStyle = createFontRoleStyle(resolvedFontOptions);
+const customFontsEnabled = resolvedFontOptions.mode === "custom";
+const hasBodyFont =
+	customFontsEnabled && Boolean(resolvedFontOptions.roles.body.family);
+const hasCjkFont =
+	customFontsEnabled && Boolean(resolvedFontOptions.roles.cjk.family);
+const hasMonoFont =
+	customFontsEnabled && Boolean(resolvedFontOptions.roles.mono.family);
 ---
 
-<!doctype html>
-<html lang={siteLang} class="bg-(--page-bg) text-[14px] md:text-[16px]" data-wallpaper-mode={backgroundWallpaper.mode} data-has-wallpaper={hasWallpaper ? "" : undefined} data-tag-style={siteConfig.tagStyle ?? "pill"} data-category-style={siteConfig.categoryStyle ?? "rectangle"}>
-  <head>
-    <meta charset="UTF-8" />
-    <style is:inline>
-			@layer properties, theme, base, components, utilities;
-		</style>
-    {analyticsConfig?.googleAnalyticsId && (
-            <GoogleAnalytics analyticsId={analyticsConfig.googleAnalyticsId} />
-    )}
-    {analyticsConfig?.microsoftClarityId && (
-            <MicrosoftClarity clarityId={analyticsConfig.microsoftClarityId} />
-    )}
-        {analyticsConfig?.umamiAnalytics?.websiteId && (
-          <UmamiAnalytics
-          websiteId={analyticsConfig.umamiAnalytics.websiteId}
-          scriptUrl={analyticsConfig.umamiAnalytics.scriptUrl}
-          replaysScriptUrl={analyticsConfig.umamiAnalytics.replaysScriptUrl}
-          trackOutboundLinks={analyticsConfig.umamiAnalytics.trackOutboundLinks}
-          collectWebVitals={analyticsConfig.umamiAnalytics.collectWebVitals}
-          replays={analyticsConfig.umamiAnalytics.replays}
-          />
-        )}
-        {analyticsConfig?.la51Analytics?.Id && (
-            <La51Analytics
-            analyticsId={analyticsConfig.la51Analytics.Id}
-            sdkUrl={analyticsConfig.la51Analytics?.sdkUrl}
-            ck={analyticsConfig.la51Analytics?.ck}
-            autoTrack={analyticsConfig.la51Analytics?.autoTrack}
-            hashMode={analyticsConfig.la51Analytics?.hashMode}
-            screenRecord={analyticsConfig.la51Analytics?.screenRecord}
-            />
-    )}
+<!DOCTYPE html>
+<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
+	<head>
+		<style is:inline>@layer properties, theme, base, components, utilities;</style>
 
-    <title>{pageTitle}</title>
-    <meta
-      name="description"
-      content={description || siteConfig.description || pageTitle}
-    />
-    {
-      siteConfig.keywords && siteConfig.keywords.length > 0 && (
-        <meta name="keywords" content={siteConfig.keywords.join(", ")} />
-      )
-    }
-    <meta name="author" content={profileConfig.name} />
+		<title>{pageTitle}</title>
 
-    <link rel="canonical" href={Astro.url} />
-    <meta property="og:site_name" content={siteConfig.title} />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={pageTitle} />
-    <meta
-      property="og:description"
-      content={description || siteConfig.description || pageTitle}
-    />
-    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
-    {
-      setOGTypeArticle ? (
-        <meta property="og:type" content="article" />
-      ) : (
-        <meta property="og:type" content="website" />
-      )
-    }
+		<meta charset="UTF-8" />
+		<meta name="description" content={description || pageTitle}>
+		<meta name="author" content={profileConfig.name}>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta
-      name="twitter:description"
-      content={description || siteConfig.description || pageTitle}
-    />
+		<meta property="og:site_name" content={siteConfig.title}>
+		<meta property="og:url" content={Astro.url}>
+		<meta property="og:title" content={pageTitle}>
+		<meta property="og:description" content={description || pageTitle}>
+		{setOGTypeArticle ? (
+			<meta property="og:type" content="article" />
+		) : (
+			<meta property="og:type" content="website" />
+		)}
 
-    {
-      isHomePageCheck && (
-        <script
-          is:inline
-          type="application/ld+json"
-          set:html={JSON.stringify(
-            buildSiteGraph({
-              site: siteConfig.site_url,
-              siteConfig,
-              profileConfig,
-              lang: siteLang,
-              authorUrl: aboutUrl,
-              avatarUrl,
-              logo: siteLogo,
-            }),
-          )}
-        />
-      )
-    }
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content={Astro.url}>
+		<meta name="twitter:title" content={pageTitle}>
+		<meta name="twitter:description" content={description || pageTitle}>
 
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    {
-      favicons.map((favicon) => (
-        <link
-          rel="icon"
-          href={favicon.src.startsWith("/") ? url(favicon.src) : favicon.src}
-          sizes={favicon.sizes}
-          media={favicon.theme && `(prefers-color-scheme: ${favicon.theme})`}
-        />
-      ))
-    }
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		{fontRoleStyle && <style is:inline set:html={fontRoleStyle}></style>}
+		{textureEnabled && <style is:inline set:html={textureStyles}></style>}
+		{hasBodyFont && <Font cssVariable={resolvedFontOptions.roles.body.cssVariable as never} preload={resolvedFontOptions.roles.body.preload} />}
+		{hasCjkFont && <Font cssVariable={resolvedFontOptions.roles.cjk.cssVariable as never} preload={resolvedFontOptions.roles.cjk.preload} />}
+		{hasMonoFont && <Font cssVariable={resolvedFontOptions.roles.mono.cssVariable as never} preload={resolvedFontOptions.roles.mono.preload} />}
+				{favicons.map(favicon => (
+			<link rel="icon"
+				href={favicon.src.startsWith('/') ? url(favicon.src) : favicon.src}
+				sizes={favicon.sizes}
+				media={favicon.theme && `(prefers-color-scheme: ${favicon.theme})`}
+			/>
+		))}
 
-    <!-- 为特定域名的图片添加 referrerpolicy 以解决 403 问题 -->
-    <!-- 注：静态图片（ImageWrapper 组件、Markdown 正文图）已在构建期加好 referrerpolicy；
-         此脚本仅作为运行时兜底，处理动态注入的图片（解密内容、第三方评论/统计部件等）。 -->
-    {siteConfig.imageOptimization?.noReferrerDomains &&
-     siteConfig.imageOptimization.noReferrerDomains.length > 0 && (
-      <script
-        is:inline
-        define:vars={{
-          noReferrerDomains: JSON.stringify(
-            siteConfig.imageOptimization.noReferrerDomains
-          ),
-        }}
-      >
-        (function() {
-          const domains = JSON.parse(noReferrerDomains);
+		<script is:inline define:vars={{DEFAULT_THEME, LIGHT_MODE, DARK_MODE, AUTO_MODE, BANNER_HEIGHT_EXTEND, configHue, lightTheme, darkTheme, defaultWallpaperMode, defaultTexturePreset, defaultTextureOpacity, textureEnabled}}>
+			const theme = localStorage.getItem('theme') || DEFAULT_THEME;
+			let isDark = false;
+			switch (theme) {
+				case LIGHT_MODE:
+					document.documentElement.classList.remove('dark');
+					break
+				case DARK_MODE:
+					document.documentElement.classList.add('dark');
+					isDark = true;
+					break
+				case AUTO_MODE:
+					if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+						document.documentElement.classList.add('dark');
+						isDark = true;
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+			}
 
-          // 域名匹配函数，支持通配符
-          function matchesDomain(urlStr, patterns) {
-            try {
-              const urlObj = new URL(urlStr);
-              const hostname = urlObj.hostname;
+			document.documentElement.setAttribute('data-theme', isDark ? darkTheme : lightTheme);
+			const hue = localStorage.getItem('hue') || configHue;
+			document.documentElement.style.setProperty('--hue', hue);
+			if (localStorage.getItem('mc-motion') === 'reduced') {
+				document.documentElement.classList.add('motion-reduced');
+			}
+			const storedWallpaperMode = localStorage.getItem('wallpaper-mode');
+			const wallpaperMode = storedWallpaperMode === 'banner' || storedWallpaperMode === 'none'
+				? storedWallpaperMode
+				: defaultWallpaperMode;
+			document.documentElement.dataset.wallpaperMode = wallpaperMode;
 
-              return patterns.some(function(pattern) {
-                const regexPattern = pattern.replace(/\./g, '\\.').replace(/\*/g, '.*');
-                const regex = new RegExp('^' + regexPattern + '$');
-                return regex.test(hostname);
-              });
-            } catch (e) {
-              return false;
-            }
-          }
+			if (textureEnabled) {
+				const storedTexturePreset = localStorage.getItem('texture-preset');
+				const validPresets = ['none', 'starlight', 'cyber-dots', 'topography', 'geometric', 'sakura'];
+				const texturePreset = storedTexturePreset && validPresets.includes(storedTexturePreset)
+					? storedTexturePreset
+					: defaultTexturePreset;
+				document.documentElement.dataset.texturePreset = texturePreset;
+				const storedTextureOpacity = localStorage.getItem('texture-opacity');
+				const textureOpacity = storedTextureOpacity ? parseFloat(storedTextureOpacity) : defaultTextureOpacity;
+				if (!isNaN(textureOpacity)) {
+					document.documentElement.style.setProperty('--texture-opacity', String(textureOpacity));
+				}
+			}
 
-          // 处理单个图片元素
-          function processImage(img) {
-            if (!img.src || img.hasAttribute('referrerpolicy')) return;
+			let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
+			offset = offset - offset % 4;
+			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+		</script>
+		<style define:vars={{
+			configHue,
+			'page-width': resolvePageWidth(),
+		}}></style>
 
-            if (matchesDomain(img.src, domains)) {
-              img.setAttribute('referrerpolicy', 'no-referrer');
-            }
-          }
-
-          // 兜底扫描一次当前页面（构建期已处理的图片会因已有属性而快速跳过）
-          document.querySelectorAll('img').forEach(processImage);
-
-          // 使用 MutationObserver 监听动态加载/注入的图片
-          const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-              mutation.addedNodes.forEach(function(node) {
-                if (node.nodeName === 'IMG') {
-                  processImage(node);
-                }
-                if (node.querySelectorAll) {
-                  node.querySelectorAll('img').forEach(processImage);
-                }
-              });
-            });
-          });
-
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true
-          });
-        })();
-      </script>
-    )}
-
-    <!-- Set the theme before the page is rendered to avoid a flash -->
-    <script
-      is:inline
-      define:vars={{
-        PAGE_WIDTH,
-        configHue,
-        defaultMode: siteConfig.themeColor.defaultMode ?? "light",
-        defaultWallpaperMode: backgroundWallpaper.mode,
-        isWallpaperSwitchable:
-          displaySettingsConfig.wallpaperModeSwitchable,
-        darkTheme: expressiveCodeConfig.darkTheme,
-        lightTheme: expressiveCodeConfig.lightTheme,
-        baseUrl: import.meta.env.BASE_URL,
-        cardTransparentOpacity: backgroundWallpaper.overlay?.cardOpacity ?? 0.6,
-      }}
-    >
-      // 主题初始化 - 与setting-utils.ts保持一致
-      const LIGHT_MODE = "light";
-      const DARK_MODE = "dark";
-      const SYSTEM_MODE = "system";
-
-      // 获取存储的主题，如果没有则使用默认值
-      const theme = localStorage.getItem("theme") || defaultMode;
-
-      // 获取系统主题
-      function getSystemTheme() {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? DARK_MODE
-          : LIGHT_MODE;
-      }
-
-      // 解析主题（如果是system模式，则获取系统主题）
-      function resolveTheme(themeValue) {
-        if (themeValue === SYSTEM_MODE) {
-          return getSystemTheme();
-        }
-        return themeValue;
-      }
-
-      const resolvedTheme = resolveTheme(theme);
-      const isDark = resolvedTheme === DARK_MODE;
-
-      // 应用主题
-      if (isDark) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-
-      // Set the theme for Expressive Code
-      document.documentElement.setAttribute(
-        "data-theme",
-        isDark ? darkTheme : lightTheme
-      );
-
-      // Load the hue from local storage
-      const hue = localStorage.getItem("hue") || configHue;
-      document.documentElement.style.setProperty("--hue", hue);
-
-      // 设置卡片透明度（全屏透明模式下使用），优先使用用户自定义值
-      const storedCardOpacity = localStorage.getItem("overlayCardOpacity");
-      const parsedCardOpacity = storedCardOpacity === null ? NaN : Number.parseFloat(storedCardOpacity);
-      const resolvedCardOpacity = Number.isFinite(parsedCardOpacity)
-        ? Math.min(1, Math.max(0, parsedCardOpacity))
-        : cardTransparentOpacity;
-      document.documentElement.style.setProperty("--card-transparent-opacity", String(resolvedCardOpacity));
-
-      // 内容定位已由 --content-top 纯 CSS 决定（layout-base.css），无需 --banner-height-extend 变量/计算
-
-      // 初始化壁纸模式 - 在页面渲染前同步应用（其余布局由 CSS 属性选择器接管）
-      const wallpaperMode = isWallpaperSwitchable
-        ? localStorage.getItem("wallpaperMode") || defaultWallpaperMode
-        : defaultWallpaperMode;
-
-      // 设置data-wallpaper-mode属性
-      document.documentElement.setAttribute(
-        "data-wallpaper-mode",
-        wallpaperMode
-      );
-
-      // 初始化期间禁用 content-panel/wrapper 过渡，避免加载时布局/变量变化产生内容移动动画；
-      // load 后移除（仅首次设置，swup 切页重跑脚本时不再重复）。布局已由 CSS 接管，无需 rAF 校正
-      if (!window.__fireflyLayoutTransitionGuard) {
-        window.__fireflyLayoutTransitionGuard = true;
-        document.documentElement.setAttribute("data-layout-init", "");
-        const removeLayoutInit = () =>
-          document.documentElement.removeAttribute("data-layout-init");
-        if (document.readyState === "complete") {
-          requestAnimationFrame(removeLayoutInit);
-        } else {
-          window.addEventListener("load", removeLayoutInit, { once: true });
-        }
-      }
-
-      // 初始化水波纹动画状态 - 在 html 元素上设置属性，CSS 会立即生效
-      (function applyWavesEnabled() {
-        const wavesEnabled = localStorage.getItem("wavesEnabled");
-        if (wavesEnabled !== null) {
-          document.documentElement.setAttribute("data-waves-enabled", wavesEnabled);
-        }
-      })();
-
-      // 初始化渐变过渡状态 - 在 html 元素上设置属性，CSS 会立即生效
-      (function applyGradientEnabled() {
-        const gradientEnabled = localStorage.getItem("gradientEnabled");
-        if (gradientEnabled !== null) {
-          document.documentElement.setAttribute("data-gradient-enabled", gradientEnabled);
-        }
-      })();
-
-      // 初始化横幅标题显示状态 - 在 html 元素上设置属性，CSS 会立即生效
-      (function applyBannerTitleEnabled() {
-        const bannerTitleEnabled = localStorage.getItem("bannerTitleEnabled");
-        if (bannerTitleEnabled !== null) {
-          document.documentElement.setAttribute("data-banner-title-enabled", bannerTitleEnabled);
-        }
-      })();
-    </script>
-    <style
-      define:vars={{
-        configHue,
-        "page-width": `${siteConfig.pageWidth ?? PAGE_WIDTH}rem`,
-        "navbar-panel-blur": `${navbarPanelBlur}px`,
-        "banner-height-home": `${BANNER_HEIGHT_HOME}vh`,
-        "banner-height": `${BANNER_HEIGHT}vh`,
-      }}
-    ></style>
-    <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
-
-    <slot name="head" />
-
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={profileConfig.name}
-      href={`${Astro.site}rss.xml`}
-    />
-
-    <!-- Font Setup (Astro Font API) -->
-    <FontSetup />
-  </head>
-  <body
-    class="min-h-screen"
-    class:list={[
-      {
-        "is-home": isHomePageCheck,
-        "sticky-navbar": siteConfig.navbar.stickyNavbar ?? false,
-      },
-    ]}
-  >
-    <!-- 首帧前按运行时壁纸模式翻转卡片透明类（布局已由 data-wallpaper-mode 属性规则接管） -->
-    <script is:inline>
-      (function () {
-        const wm = document.documentElement.getAttribute("data-wallpaper-mode");
-        if (!wm) return;
-        document.body.classList.toggle(
-          "wallpaper-transparent",
-          wm === "overlay" || wm === "fullscreen",
-        );
-      })();
-    </script>
-
-    <div id="progress-bar"></div>
-
-    {/* 卡片样式：根据 localStorage 覆盖默认配置 */}
-    <script is:inline define:vars={{
-      defaultBorder: siteConfig.card?.border ?? false,
-      defaultFollowTheme: siteConfig.card?.followTheme ?? false,
-    }}>
-      (function() {
-        var stored = localStorage.getItem("cardBorderEnabled");
-        var border = stored !== null ? stored === "true" : defaultBorder;
-        if (border) document.documentElement.classList.add("enable-card-border");
-        else document.documentElement.classList.remove("enable-card-border");
-
-        stored = localStorage.getItem("cardFollowThemeEnabled");
-        var follow = stored !== null ? stored === "true" : defaultFollowTheme;
-        if (follow) document.body.classList.add("card-follow-theme-hue");
-        else document.body.classList.remove("card-follow-theme-hue");
-      })();
-    </script>
-
-    <!-- 页面顶部渐变高光效果 - 只在full和semifull模式下显示 -->
-    {shouldShowTopHighlight && <div class="top-gradient-highlight" />}
-    <ConfigCarrier />
-    <MusicManager />
-    <slot />
-
-    <!-- 播放器视图脚本：必须在 <slot /> 之后（解析到它时所有 widget 的 DOM 要已存在），
-         且在 MusicManager 之后（swup 重跑按文档顺序，window.__fireflyMusic 得先就位） -->
-    {(musicPlayerConfig.showInNavbar || musicPlayerConfig.showInSidebar !== false) && (
-      <MusicPlayerView />
-    )}
-
-
-    <!-- Sakura Effect -->
-    <SakuraEffect />
-
-    <!-- Water Waves Effect -->
-    <WavesEffect />
-
-    <!-- Fancybox Manager -->
-    <FancyboxManager />
-
-    <!-- Tab 代码块交互 -->
-    <CodeGroupManager />
-
-    <!-- GitHub 卡片客户端实时补全（forks/stars） -->
-    <GithubCardManager />
-  </body>
+		<slot name="head"></slot>
+		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
+		<link rel="alternate" type="application/atom+xml" title={profileConfig.name} href={`${Astro.site}atom.xml`}/>
+	</head>
+	<body
+		class="min-h-screen transition"
+		data-current-page={initialPage}
+		data-banner-visible="false"
+		data-banner-layout="compact"
+		data-banner-top-app-bar="false"
+		data-banner-has-desktop={String(hasDesktopBanner)}
+		data-banner-has-mobile={String(hasMobileBanner)}
+	>
+		<ConfigCarrier></ConfigCarrier>
+		{textureEnabled && (
+			<div
+				id="m3e-texture-canvas"
+				class="fixed inset-0 pointer-events-none -z-20 transition-opacity duration-500"
+				aria-hidden="true"
+			></div>
+		)}
+		<Snackbar client:only="svelte"></Snackbar>
+		<slot />
+		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+	</body>
 </html>
 
+<style lang="stylus" is:global>
+@import "../styles/variables.styl"
+</style>
+
+<style is:global define:vars={{
+	'banner-height-home': `${BANNER_HEIGHT_HOME}vh`,
+	'banner-height': `${BANNER_HEIGHT}vh`,
+	'banner-panel-overlap': `${MAIN_PANEL_OVERLAPS_BANNER_HEIGHT}rem`,
+}}>
+@reference "../styles/main.css";
+	@layer components {
+		:root {
+			--banner-stage-height: var(--banner-height-home);
+			--banner-content-top: calc(var(--banner-stage-height) - var(--banner-panel-overlap));
+		}
+		#main-layout {
+			top: 5.5rem;
+			transition: top var(--m3e-duration-long) var(--m3e-easing-standard);
+		}
+		body[data-banner-layout="banner"] #main-layout { top: var(--banner-content-top); }
+		body[data-banner-layout="banner"] #top-row { height: calc(var(--banner-stage-height) - 4.5rem); }
+		.navbar-hidden { opacity: 0; transform: translateY(-4rem); }
+	}
+	@media (min-width: 1024px) {
+		html[data-wallpaper-mode="banner"] body[data-banner-has-desktop="true"] #main-layout { top: var(--banner-content-top); }
+		html[data-wallpaper-mode="banner"] body[data-banner-has-desktop="true"] #top-row { height: calc(var(--banner-stage-height) - 4.5rem); }
+	}
+	@media (max-width: 1023.98px) {
+		:root { --banner-stage-height: max(70vh, 28rem); }
+		@media (max-width: 479.98px) { :root { --banner-panel-overlap: var(--m3e-space-2); } }
+		@media (min-width: 480px) and (max-width: 767.98px) { :root { --banner-panel-overlap: var(--m3e-space-2); } }
+		html[data-wallpaper-mode="banner"] body[data-current-page="home"][data-banner-has-mobile="true"] #main-layout { top: var(--banner-content-top); }
+		html[data-wallpaper-mode="banner"] body[data-current-page="home"][data-banner-has-mobile="true"] #top-row { height: calc(var(--banner-stage-height) - 4.5rem); }
+		body[data-banner-layout="compact"] #top-row { height: auto; }
+	}
+	@media (min-width: 480px) and (max-width: 767.98px) { :root { --banner-stage-height: max(75vh, 31.25rem); } }
+	@media (min-width: 768px) and (max-width: 1023.98px) { :root { --banner-stage-height: max(70vh, 31.25rem); } }
+</style>
 
 <script>
-  import { initLayout } from "@/utils/layout-init";
-  initLayout();
+import "../utils/code-collapse";
+import { initLastUpdatedNotices } from "../utils/last-updated-notice";
+import { initMermaidDiagrams } from "../utils/mermaid";
+import { OverlayScrollbars } from 'overlayscrollbars';
+import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
+import { WALLPAPER_MODE_CHANGE_EVENT, BANNER_HEIGHT, BANNER_HEIGHT_EXTEND } from "../constants/constants";
+
+function setClickOutsideToClose(panel: string, ignores: string[]) {
+	document.addEventListener('click', event => {
+		const panelDom = document.getElementById(panel);
+		const target = event.target;
+		if (!(target instanceof Node)) return;
+		for (const ignore of ignores) {
+			const element = document.getElementById(ignore);
+			if (element === target || element?.contains(target)) return;
+		}
+		if (panelDom) panelDom.classList.add('float-panel-closed');
+	});
+}
+setClickOutsideToClose('display-setting', ['display-setting', 'display-settings-switch']);
+setClickOutsideToClose('search-panel', ['search-panel', 'search-bar', 'search-switch']);
+
+function loadTheme() { setTheme(getStoredTheme()); }
+function loadHue() { setHue(getHue()); }
+
+function initCustomScrollbar() {
+	const katexElements = document.querySelectorAll('.katex-display') as NodeListOf<HTMLElement>;
+	const observer = new IntersectionObserver((entries, intersectionObserver) => {
+		entries.forEach(entry => {
+			if (!entry.isIntersecting) return;
+			const element = entry.target as HTMLElement;
+			if (!element.parentNode || element.hasAttribute('data-scrollbar-initialized')) return;
+			const container = document.createElement('div');
+			container.className = 'katex-display-container';
+			container.setAttribute('aria-label', 'scrollable container for formulas');
+			element.parentNode.insertBefore(container, element);
+			container.appendChild(element);
+			OverlayScrollbars(container, { scrollbars: { theme: 'scrollbar-base scrollbar-auto', autoHide: 'leave', autoHideDelay: 500, autoHideSuspend: false } });
+			element.setAttribute('data-scrollbar-initialized', 'true');
+			intersectionObserver.unobserve(element);
+		});
+	}, { root: null, rootMargin: '100px', threshold: 0.1 });
+	katexElements.forEach(element => observer.observe(element));
+}
+
+function init() {
+	loadTheme();
+	loadHue();
+	initCustomScrollbar();
+}
+init();
+initLastUpdatedNotices();
+initMermaidDiagrams();
+
+const setup = () => {
+	if (!window.swup || window.__shironeNavigationBound) return;
+	window.__shironeNavigationBound = true;
+	let scrollStarted = false;
+	let visitActive = false;
+	let finishTimer: number | undefined;
+	function finishVisit() {
+		if (!visitActive) return;
+		visitActive = false;
+		window.clearTimeout(finishTimer);
+		finishTimer = window.setTimeout(() => {
+			document.getElementById('page-height-extend')?.classList.add('hidden');
+		}, 200);
+	}
+	window.swup.hooks.on('link:click', () => document.documentElement.style.setProperty('--content-delay', '0ms'));
+	window.swup.hooks.on('content:replace', initCustomScrollbar);
+	window.swup.hooks.on('visit:start', () => {
+		window.clearTimeout(finishTimer);
+		visitActive = true;
+		scrollStarted = false;
+		document.getElementById('page-height-extend')?.classList.remove('hidden');
+	});
+	window.swup.hooks.on('visit:end', () => { if (!scrollStarted) finishVisit(); });
+	window.swup.hooks.on('visit:abort', finishVisit);
+	if (window.swup.hooks.exists('scroll:end')) {
+		window.swup.hooks.on('scroll:start', () => { if (visitActive) scrollStarted = true; });
+		window.swup.hooks.on('scroll:end', finishVisit);
+	}
+};
+if (window.swup?.hooks) setup();
+else document.addEventListener('swup:enable', setup, { once: true });
+
+const backToTopBtn = document.getElementById('back-to-top-btn');
+function scrollFunction() {
+	const scrollTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+	const backToTopThreshold = window.innerHeight * (BANNER_HEIGHT / 100);
+	backToTopBtn?.classList.toggle('hide', scrollTop <= backToTopThreshold);
+	const bannerVisible = document.body.dataset.bannerVisible === 'true';
+	const navbar = document.getElementById('navbar');
+	const bannerStage = document.getElementById('banner-wrapper');
+	const bannerBottom = bannerStage?.getBoundingClientRect().height ?? 0;
+	const overBanner = bannerVisible && scrollTop < Math.max(0, bannerBottom - 64);
+	document.body.dataset.bannerScrolled = String(!overBanner);
+	navbar?.classList.toggle('top-app-bar--transparent', overBanner);
+}
+window.addEventListener('scroll', scrollFunction, { passive: true });
+window.addEventListener('resize', () => {
+	let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
+	offset = offset - offset % 4;
+	document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+	scrollFunction();
+});
+new MutationObserver(scrollFunction).observe(document.body, { attributes: true, attributeFilter: ['data-banner-visible', 'data-banner-layout'] });
+window.addEventListener(WALLPAPER_MODE_CHANGE_EVENT, () => requestAnimationFrame(scrollFunction));
+document.addEventListener('swup:page:view', scrollFunction);
+scrollFunction();
+</script>
+
+<script>
+import { cleanupFancybox, initFancybox } from "../utils/fancybox-handler";
+import { applyStoredLayoutMode } from "../utils/layout-mode";
+
+const setup = () => {
+	initFancybox();
+	window.swup.hooks.on("visit:start", cleanupFancybox);
+	window.swup.hooks.on("content:replace", () => {
+		initFancybox();
+		applyStoredLayoutMode(document.getElementById("post-list"));
+	});
+};
+if (window.swup) setup();
+else document.addEventListener("swup:enable", setup);
 </script>

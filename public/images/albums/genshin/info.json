@@ -1,0 +1,254 @@
+{
+  "mode": "external",
+  "hidden": false,
+  "title": "原神",
+  "description": "原神游戏截图与风景记录。",
+  "date": "2026-08-26",
+  "location": "",
+  "tags": [
+    "原神"
+  ],
+  "layout": "masonry",
+  "columns": 3,
+  "cover": "/images/albums/genshin/thumbs/1.webp",
+  "photos": [
+    {
+      "id": "genshin-photo-1",
+      "src": "/images/albums/genshin/1.webp",
+      "thumbnail": "/images/albums/genshin/thumbs/1.webp",
+      "alt": "1",
+      "title": "1"
+    },
+    {
+      "id": "genshin-photo-2",
+      "src": "/images/albums/genshin/2.webp",
+      "thumbnail": "/images/albums/genshin/thumbs/2.webp",
+      "alt": "2",
+      "title": "2"
+    },
+    {
+      "id": "genshin-photo-3",
+      "src": "/images/albums/genshin/3.webp",
+      "thumbnail": "/images/albums/genshin/thumbs/3.webp",
+      "alt": "3",
+      "title": "3"
+    },
+    {
+      "id": "genshin-photo-4",
+      "src": "/images/albums/genshin/4.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/4.webp",
+      "alt": "4",
+      "title": "4"
+    },
+    {
+      "id": "genshin-photo-5",
+      "src": "/images/albums/genshin/4c6a55bec54c6a55bec5.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/4c6a55bec54c6a55bec5.webp",
+      "alt": "4c6a55bec54c6a55bec5",
+      "title": "4c6a55bec54c6a55bec5"
+    },
+    {
+      "id": "genshin-photo-6",
+      "src": "/images/albums/genshin/7ce01b327d7ce01b327d.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/7ce01b327d7ce01b327d.webp",
+      "alt": "7ce01b327d7ce01b327d",
+      "title": "7ce01b327d7ce01b327d"
+    },
+    {
+      "id": "genshin-photo-7",
+      "src": "/images/albums/genshin/208af765c1208af765c1.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/208af765c1208af765c1.webp",
+      "alt": "208af765c1208af765c1",
+      "title": "208af765c1208af765c1"
+    },
+    {
+      "id": "genshin-photo-8",
+      "src": "/images/albums/genshin/419c6be2b2419c6be2b2.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/419c6be2b2419c6be2b2.webp",
+      "alt": "419c6be2b2419c6be2b2",
+      "title": "419c6be2b2419c6be2b2"
+    },
+    {
+      "id": "genshin-photo-9",
+      "src": "/images/albums/genshin/796aaa603d2a5e1.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/796aaa603d2a5e1.webp",
+      "alt": "796aaa603d2a5e1",
+      "title": "796aaa603d2a5e1"
+    },
+    {
+      "id": "genshin-photo-10",
+      "src": "/images/albums/genshin/803cb51b0c803cb51b0c.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/803cb51b0c803cb51b0c.webp",
+      "alt": "803cb51b0c803cb51b0c",
+      "title": "803cb51b0c803cb51b0c"
+    },
+    {
+      "id": "genshin-photo-11",
+      "src": "/images/albums/genshin/01086d9d2101086d9d21.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/01086d9d2101086d9d21.webp",
+      "alt": "01086d9d2101086d9d21",
+      "title": "01086d9d2101086d9d21"
+    },
+    {
+      "id": "genshin-photo-12",
+      "src": "/images/albums/genshin/6600a184eb6600a184eb.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/6600a184eb6600a184eb.webp",
+      "alt": "6600a184eb6600a184eb",
+      "title": "6600a184eb6600a184eb"
+    },
+    {
+      "id": "genshin-photo-13",
+      "src": "/images/albums/genshin/14289264d614289264d6.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/14289264d614289264d6.webp",
+      "alt": "14289264d614289264d6",
+      "title": "14289264d614289264d6"
+    },
+    {
+      "id": "genshin-photo-14",
+      "src": "/images/albums/genshin/38947278f0kzE2p.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/38947278f0kzE2p.webp",
+      "alt": "38947278f0kzE2p",
+      "title": "38947278f0kzE2p"
+    },
+    {
+      "id": "genshin-photo-15",
+      "src": "/images/albums/genshin/84655195_p0.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/84655195_p0.webp",
+      "alt": "84655195_p0",
+      "title": "84655195_p0"
+    },
+    {
+      "id": "genshin-photo-16",
+      "src": "/images/albums/genshin/458336301f458336301f.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/458336301f458336301f.webp",
+      "alt": "458336301f458336301f",
+      "title": "458336301f458336301f"
+    },
+    {
+      "id": "genshin-photo-17",
+      "src": "/images/albums/genshin/1667754595274.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1667754595274.webp",
+      "alt": "1667754595274",
+      "title": "1667754595274"
+    },
+    {
+      "id": "genshin-photo-18",
+      "src": "/images/albums/genshin/1747514294145.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1747514294145.webp",
+      "alt": "1747514294145",
+      "title": "1747514294145"
+    },
+    {
+      "id": "genshin-photo-19",
+      "src": "/images/albums/genshin/1766532961749.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1766532961749.webp",
+      "alt": "1766532961749",
+      "title": "1766532961749"
+    },
+    {
+      "id": "genshin-photo-20",
+      "src": "/images/albums/genshin/1766532969326.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1766532969326.webp",
+      "alt": "1766532969326",
+      "title": "1766532969326"
+    },
+    {
+      "id": "genshin-photo-21",
+      "src": "/images/albums/genshin/1766952963976.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1766952963976.webp",
+      "alt": "1766952963976",
+      "title": "1766952963976"
+    },
+    {
+      "id": "genshin-photo-22",
+      "src": "/images/albums/genshin/1767454056645.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1767454056645.webp",
+      "alt": "1767454056645",
+      "title": "1767454056645"
+    },
+    {
+      "id": "genshin-photo-23",
+      "src": "/images/albums/genshin/1770321978811.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1770321978811.webp",
+      "alt": "1770321978811",
+      "title": "1770321978811"
+    },
+    {
+      "id": "genshin-photo-24",
+      "src": "/images/albums/genshin/1773442668634.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1773442668634.webp",
+      "alt": "1773442668634",
+      "title": "1773442668634"
+    },
+    {
+      "id": "genshin-photo-25",
+      "src": "/images/albums/genshin/1781545851462.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1781545851462.webp",
+      "alt": "1781545851462",
+      "title": "1781545851462"
+    },
+    {
+      "id": "genshin-photo-26",
+      "src": "/images/albums/genshin/1782425100948.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1782425100948.webp",
+      "alt": "1782425100948",
+      "title": "1782425100948"
+    },
+    {
+      "id": "genshin-photo-27",
+      "src": "/images/albums/genshin/1782607569570.png",
+      "thumbnail": "/images/albums/genshin/thumbs/1782607569570.webp",
+      "alt": "1782607569570",
+      "title": "1782607569570"
+    },
+    {
+      "id": "genshin-photo-28",
+      "src": "/images/albums/genshin/10937555951093755595.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/10937555951093755595.webp",
+      "alt": "10937555951093755595",
+      "title": "10937555951093755595"
+    },
+    {
+      "id": "genshin-photo-29",
+      "src": "/images/albums/genshin/%E8%8D%89%E7%A5%9E%E9%9B%AA%E7%B3%95_100836369.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/草神雪糕_100836369.webp",
+      "alt": "草神雪糕_100836369",
+      "title": "草神雪糕_100836369"
+    },
+    {
+      "id": "genshin-photo-30",
+      "src": "/images/albums/genshin/c1a5165c25c1a5165c25.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/c1a5165c25c1a5165c25.webp",
+      "alt": "c1a5165c25c1a5165c25",
+      "title": "c1a5165c25c1a5165c25"
+    },
+    {
+      "id": "genshin-photo-31",
+      "src": "/images/albums/genshin/e348bad116e348bad116.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/e348bad116e348bad116.webp",
+      "alt": "e348bad116e348bad116",
+      "title": "e348bad116e348bad116"
+    },
+    {
+      "id": "genshin-photo-32",
+      "src": "/images/albums/genshin/f2b5c125ccf2b5c125cc.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/f2b5c125ccf2b5c125cc.webp",
+      "alt": "f2b5c125ccf2b5c125cc",
+      "title": "f2b5c125ccf2b5c125cc"
+    },
+    {
+      "id": "genshin-photo-33",
+      "src": "/images/albums/genshin/f9010732f3f9010732f3.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/f9010732f3f9010732f3.webp",
+      "alt": "f9010732f3f9010732f3",
+      "title": "f9010732f3f9010732f3"
+    },
+    {
+      "id": "genshin-photo-34",
+      "src": "/images/albums/genshin/fd4c8608dcfd4c8608dc.jpg",
+      "thumbnail": "/images/albums/genshin/thumbs/fd4c8608dcfd4c8608dc.webp",
+      "alt": "fd4c8608dcfd4c8608dc",
+      "title": "fd4c8608dcfd4c8608dc"
+    }
+  ]
+}

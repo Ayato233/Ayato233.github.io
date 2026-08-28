@@ -1,226 +1,139 @@
-import { sidebarLayoutConfig } from "@/config";
+import { sidebarConfig } from "@/config/sidebarConfig";
+import { PAGE_WIDTH, PAGE_WIDTH_DUAL } from "../constants/constants";
 
 export interface ResponsiveSidebarConfig {
-	isBothSidebars: boolean;
-	hasLeftComponents: boolean;
-	hasRightComponents: boolean;
-	mobileShowSidebar: boolean;
-	tabletShowSidebar: boolean;
-	desktopShowSidebar: boolean;
-	position: "left" | "right" | "both";
-	tabletSidebar: "left" | "right";
+	arrangement: "single" | "dual";
+	side: "left" | "right";
+	hasPrimary: boolean;
+	hasSecondary: boolean;
 }
 
 /**
- * 获取响应式侧边栏配置
- *
- * 响应式布局（硬编码）：
- * - 768px及以下: 隐藏侧栏，显示底部mobileBottomComponents
- * - 769px-1279px: 根据position和tabletSidebar配置显示侧栏
- * - 1280px及以上: 根据position配置显示侧栏
+ * 解析侧栏配置：按 column 标签统计两栏各自的 enable widget。
+ * 响应式断点沿用站点现有约定：
+ * - 1024px 以下：单列（grid-cols-1），侧栏与内容上下堆叠；
+ * - 1024px 以上：两列（侧栏 --sidebar-width + 内容）；
+ * - dual 编排且副栏有 widget 时，1280px（xl）起升为三列。
  */
 export function getResponsiveSidebarConfig(): ResponsiveSidebarConfig {
-	const position = sidebarLayoutConfig.position;
-	const tabletSidebar = sidebarLayoutConfig.tabletSidebar ?? "left";
-
-	const isBothSidebars = sidebarLayoutConfig.enable && position === "both";
-
-	// position为right时，左侧组件不参与布局计算
-	const hasLeftComponents =
-		sidebarLayoutConfig.enable &&
-		position !== "right" &&
-		sidebarLayoutConfig.leftComponents.some((comp) => comp.enable);
-
-	// position为left时，右侧组件不参与布局计算（即使启用也会被CSS隐藏）
-	const hasRightComponents =
-		sidebarLayoutConfig.enable &&
-		position !== "left" &&
-		sidebarLayoutConfig.rightComponents.some((comp) => comp.enable);
-
-	// 响应式布局由 CSS 处理，这里仅用于判断是否有组件
-	const mobileShowSidebar = false; // 768px及以下不显示侧边栏
-	const tabletShowSidebar = sidebarLayoutConfig.enable; // 769px及以上显示
-	const desktopShowSidebar = sidebarLayoutConfig.enable; // 1280px及以上显示
-
+	const widgets = sidebarConfig.enable
+		? sidebarConfig.components.filter((widget) => widget.enable)
+		: [];
+	const inColumn = (column: "primary" | "secondary") =>
+		widgets.filter((widget) => (widget.column ?? "primary") === column);
 	return {
-		isBothSidebars,
-		hasLeftComponents,
-		hasRightComponents,
-		mobileShowSidebar,
-		tabletShowSidebar,
-		desktopShowSidebar,
-		position,
-		tabletSidebar,
+		arrangement: sidebarConfig.arrangement,
+		side: sidebarConfig.side,
+		hasPrimary: widgets.length > 0,
+		hasSecondary: inColumn("secondary").length > 0,
 	};
 }
 
-/**
- * 生成网格列数CSS类
- *
- * 响应式设计：
- * - 768px及以下: 单列布局（grid-cols-1），隐藏侧栏，显示底部组件
- * - 769px-1279px: 根据position和tabletSidebar配置决定2列布局方向
- * - 1280px及以上: 根据position配置决定2列或3列布局
- */
-export function generateGridClasses(config: ResponsiveSidebarConfig): {
-	gridCols: string;
-} {
-	let gridCols = "grid-cols-1";
-
-	if (
-		config.isBothSidebars &&
-		config.hasLeftComponents &&
-		config.hasRightComponents
-	) {
-		// 双侧边栏
-		if (config.tabletSidebar === "right") {
-			// 平板端显示右侧栏: 769-1279px [内容+右侧栏], 1280px+ [左+中+右]
-			gridCols =
-				"grid-cols-1 md:grid-cols-[1fr_17.5rem] xl:grid-cols-[17.5rem_1fr_17.5rem]";
-		} else {
-			// 平板端显示左侧栏（默认）: 769-1279px [左侧栏+内容], 1280px+ [左+中+右]
-			gridCols =
-				"grid-cols-1 md:grid-cols-[17.5rem_1fr] xl:grid-cols-[17.5rem_1fr_17.5rem]";
-		}
-	} else if (config.hasLeftComponents && !config.hasRightComponents) {
-		// 仅左侧边栏: 769px+显示左+中，768-以下单列
-		gridCols = "grid-cols-1 md:grid-cols-[17.5rem_1fr]";
-	} else if (!config.hasLeftComponents && config.hasRightComponents) {
-		// 仅右侧边栏: 769px+显示中+右，768-以下单列
-		gridCols = "grid-cols-1 md:grid-cols-[1fr_17.5rem]";
-	}
-
-	return { gridCols };
+/** dual 编排是否实际生效（副栏有 widget 才升级三列/加宽页框） */
+export function isDualColumn(config: ResponsiveSidebarConfig): boolean {
+	return config.arrangement === "dual" && config.hasSecondary;
 }
 
 /**
- * 生成左侧边栏容器CSS类
+ * 生成主网格列类。
+ * single：侧栏列 + 内容列（side 决定先后），1024px 以下单列；
+ * dual：xl 起三列（副栏 + 内容 + 主栏，side 决定主栏物理侧），
+ * lg→xl 之间与 single 同构（副栏隐藏，主栏照常）。
+ * 侧栏宽度走 --sidebar-width（variables.styl 单源），类名保持静态字面量
+ * （Tailwind 扫描器不解析模板字符串拼接的类名）。
  */
-export function generateSidebarClasses(
+export function generateGridClasses(config: ResponsiveSidebarConfig): string {
+	const hasSidebar = config.hasPrimary;
+	if (!hasSidebar) {
+		return "grid-cols-1";
+	}
+	if (isDualColumn(config)) {
+		return config.side === "left"
+			? "grid-cols-1 lg:grid-cols-[var(--sidebar-width)_1fr] xl:grid-cols-[var(--sidebar-width)_1fr_var(--sidebar-width)]"
+			: "grid-cols-1 lg:grid-cols-[1fr_var(--sidebar-width)] xl:grid-cols-[var(--sidebar-width)_1fr_var(--sidebar-width)]";
+	}
+	return config.side === "left"
+		? "grid-cols-1 lg:grid-cols-[var(--sidebar-width)_1fr]"
+		: "grid-cols-1 lg:grid-cols-[1fr_var(--sidebar-width)]";
+}
+
+/**
+ * 主栏容器类：1024px 以下侧栏位于内容之后（第二行，还原 Fuwari 原版顺序），
+ * 1024px 以上定位到对应列；dual 时主栏恒在 side 一侧（xl 不变）。
+ */
+export function generatePrimarySidebarClasses(
 	config: ResponsiveSidebarConfig,
 ): string {
-	const classes = [
+	const base = [
 		"mb-4",
-		"hidden",
-		"md:col-span-1",
-		"md:max-w-70",
-		"md:row-start-1",
-		"md:row-end-3",
-		"md:col-start-1",
+		"row-start-2",
+		"row-end-3",
+		"col-span-2",
+		"lg:row-start-1",
+		"lg:row-end-2",
+		"lg:col-span-1",
+		"lg:max-w-[var(--sidebar-width)]",
 		"onload-animation",
 	];
-
-	if (config.isBothSidebars && config.tabletSidebar === "right") {
-		// 双侧栏+平板端显示右侧栏：左侧栏仅在1280px+显示
-		classes.push("xl:block");
+	if (config.side === "left") {
+		base.push("lg:col-start-1");
+	} else if (isDualColumn(config)) {
+		base.push("lg:col-start-2", "xl:col-start-3");
 	} else {
-		// 默认：左侧栏769px+显示
-		classes.push("md:block");
+		base.push("lg:col-start-2");
 	}
-
-	return classes.join(" ");
+	return base.join(" ");
 }
 
 /**
- * 生成右侧边栏CSS类
+ * 副栏容器类：1280px（xl）以下整列隐藏（dual 自动退化为单栏），
+ * xl 起定位到主栏对面列，与主栏同宽。
  */
-export function generateRightSidebarClasses(
+export function generateSecondarySidebarClasses(
 	config: ResponsiveSidebarConfig,
 ): string {
-	const classes = ["mb-4", "hidden", "onload-animation"];
-
-	if (config.isBothSidebars && config.tabletSidebar === "right") {
-		// 双侧栏+平板端显示右侧栏：769px+显示右侧栏
-		classes.push(
-			"md:block",
-			"md:row-start-1",
-			"md:row-end-3",
-			"md:col-span-1",
-			"md:max-w-70",
-			"md:col-start-2", // 平板端在第2列
-			"xl:col-start-3", // 桌面端在第3列
-		);
-	} else if (config.isBothSidebars) {
-		// 双侧栏+平板端显示左侧栏（默认）：仅1280px+显示
-		classes.push(
-			"xl:block",
-			"xl:row-start-1",
-			"xl:row-end-3",
-			"xl:col-span-1",
-			"xl:max-w-70",
-			"xl:col-start-3",
-		);
-	} else if (config.position === "right") {
-		// 仅右侧栏模式（非双侧栏）：769px+显示，在第2列
-		classes.push(
-			"md:block",
-			"md:row-start-1",
-			"md:row-end-3",
-			"md:col-span-1",
-			"md:max-w-70",
-			"md:col-start-2",
-		);
-	} else {
-		// 其他情况：仅1280px+显示
-		classes.push(
-			"xl:block",
-			"xl:row-start-1",
-			"xl:row-end-3",
-			"xl:col-span-1",
-			"xl:max-w-70",
-			"xl:col-start-3",
-		);
-	}
-
-	return classes.join(" ");
+	const base = [
+		"hidden",
+		"xl:block",
+		"xl:row-start-1",
+		"xl:row-end-2",
+		"xl:col-span-1",
+		"xl:max-w-[var(--sidebar-width)]",
+		"onload-animation",
+	];
+	base.push(config.side === "left" ? "xl:col-start-3" : "xl:col-start-1");
+	return base.join(" ");
 }
 
 /**
- * 生成主内容区CSS类
+ * 主内容区类：1024px 以下全宽（第一行，内容在前），1024px 以上定位到内容列。
+ * dual 时内容恒居中列（xl:col-start-2）；single 时按 side 让位。
  */
 export function generateMainContentClasses(
 	config: ResponsiveSidebarConfig,
 ): string {
-	const classes = [
-		"transition-main",
-		// 768px及以下: 单列布局
-		"col-span-1",
+	const base = [
+		"transition-swup-fade",
+		"col-span-2",
+		"lg:col-span-1",
+		"overflow-hidden",
+		"min-w-0",
 	];
-
-	if (
-		config.isBothSidebars &&
-		config.hasLeftComponents &&
-		config.hasRightComponents
-	) {
-		if (config.tabletSidebar === "right") {
-			// 双侧栏+平板端右侧栏: 平板端内容在第1列，桌面端内容在第2列
-			classes.push("md:col-span-1");
-			classes.push("md:col-start-1");
-			classes.push("xl:col-span-1");
-			classes.push("xl:col-start-2");
-			classes.push("xl:col-end-3");
-		} else {
-			// 双侧栏+平板端左侧栏（默认）: 内容始终在第2列
-			classes.push("md:col-span-1");
-			classes.push("md:col-start-2");
-			classes.push("xl:col-span-1");
-			classes.push("xl:col-start-2");
-			classes.push("xl:col-end-3");
-		}
-	} else if (config.hasLeftComponents && !config.hasRightComponents) {
-		// 仅左侧边栏: 内容在第2列
-		classes.push("md:col-span-1");
-		classes.push("md:col-start-2");
-	} else if (!config.hasLeftComponents && config.hasRightComponents) {
-		// 仅右侧边栏: 内容在第1列
-		classes.push("md:col-span-1");
-		classes.push("md:col-start-1");
+	if (isDualColumn(config)) {
+		base.push("lg:col-start-2", "xl:col-start-2");
+	} else if (config.side === "left") {
+		base.push("lg:col-start-2");
 	} else {
-		classes.push("col-span-1");
+		base.push("lg:col-start-1");
 	}
+	return base.join(" ");
+}
 
-	classes.push("min-w-0");
-	classes.push("overflow-hidden");
-
-	return classes.join(" ");
+/**
+ * 页框宽度按侧栏编排自动解析：dual 升为三列时加宽一档（96rem），
+ * 其余维持 85rem。Layout.astro 注入为全局 --page-width。
+ */
+export function resolvePageWidth(): string {
+	const config = getResponsiveSidebarConfig();
+	return isDualColumn(config) ? `${PAGE_WIDTH_DUAL}rem` : `${PAGE_WIDTH}rem`;
 }

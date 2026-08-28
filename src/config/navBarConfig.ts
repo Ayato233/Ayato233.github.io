@@ -1,201 +1,136 @@
-import {
-	type NavBarConfig,
-	type NavBarLink,
-	type NavBarSearchConfig,
-	NavBarSearchMethod,
-} from "../types/navBarConfig";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import { devicesConfig } from "@/config/devicesConfig";
+import { projectsConfig } from "@/config/projectsConfig";
+import { skillsConfig } from "@/config/skillsConfig";
+import { timelineConfig } from "@/config/timelineConfig";
+import type { NavBarConfig, NavBarLink } from "@/types/navBarConfig";
 
-// ============================================================================
-// 导航栏配置 - 根据顺序动态生成导航栏链接
-// NavBar Configuration - Dynamically generate navigation bar links based on order
-// ============================================================================
-const getDynamicNavBarConfig = (): NavBarConfig => {
-	// 基础导航栏链接
-	const links: NavBarLink[] = [];
-
-	// 主页
-	links.push(LinkPresets.Home);
-
-	// 文章及其子菜单
-	links.push({
-		name: "文章",
-		url: "#",
-		icon: "material-symbols:article",
-		children: [
-			// 归档
-			LinkPresets.Archive,
-
-			// 分类
-			LinkPresets.Categories,
-
-			// 标签
-			LinkPresets.Tags,
-		],
-	});
-
-	//社交及其子菜单
-	links.push({
-		name: "社交",
-		url: "#",
-		icon: "material-symbols:group",
-		children: [
-			// 友链
-			LinkPresets.Friends,
-
-			// 留言
-			LinkPresets.Guestbook,
-		],
-	});
-
-	// 我的及其子菜单
-	links.push({
-		name: "我的",
-		url: "#",
-		icon: "material-symbols:person",
-		children: [
-			// 动态
-			LinkPresets.Dynamic,
-
-			// 相册
-			LinkPresets.Gallery,
-
-			// 书签导航
-			LinkPresets.Booknav,
-
-			// 哔哩哔哩追番
-			LinkPresets.Bilibili,
-
-			// 番组计划
-			LinkPresets.Bangumi,
-
-			// VNDB
-			LinkPresets.VNDB,
-
-			// MyAnimeList
-			LinkPresets.MAL,
-		],
-	});
-
-	// 关于及其子菜单
-	links.push({
-		name: "关于",
-		url: "#",
-		icon: "material-symbols:info",
-		children: [
-			// 打赏
-			LinkPresets.Sponsor,
-
-			// 关于页面
-			LinkPresets.About,
-		],
-	});
-
-	// 文档链接
-	// links.push({
-	// 	name: "文档",
-	// 	url: "https://docs-firefly.cuteleaf.cn",
-	// 	external: true,
-	// 	icon: "material-symbols:docs",
-	// });
-
-	return { links } as NavBarConfig;
-};
-
-// 导航搜索配置
-export const navBarSearchConfig: NavBarSearchConfig = {
-	method: NavBarSearchMethod.PageFind,
-};
-
-// ============================================================================
-// 链接预设 - 可自由自定义导航栏链接的名称、图标和URL
-// Link Presets - Allows free customization of the name, icon, and URL of navigation bar links
-// ============================================================================
+/**
+ * 导航栏配置（统一单一来源）。
+ * - LinkPresets：命名链接预设表 —— 名称 / 地址 / 图标单点维护，可整体复用；
+ * - navBarConfig：导航结构 —— 顺序 + 分组（children 子菜单），
+ *   同时驱动顶栏下拉菜单与全端导航抽屉。
+ * 新增入口：先在 LinkPresets 登记预设，再在 navBarConfig.links 按序引用。
+ */
 export const LinkPresets: Record<string, NavBarLink> = {
 	Home: {
-		name: "主页",
+		name: i18n(I18nKey.home),
 		url: "/",
-		icon: "material-symbols:home",
+		icon: "material-symbols:home-outline-rounded",
+		pageKey: "home",
 	},
 	Archive: {
-		name: "归档",
+		name: i18n(I18nKey.archive),
 		url: "/archive/",
-		icon: "material-symbols:archive",
-	},
-	Categories: {
-		name: "分类",
-		url: "/categories/",
-		icon: "material-symbols:folder-open-rounded",
-	},
-	Tags: {
-		name: "标签",
-		url: "/tags/",
-		icon: "material-symbols:tag-rounded",
+		icon: "material-symbols:archive-outline-rounded",
+		pageKey: "archive",
 	},
 	Friends: {
-		name: "友链",
+		name: i18n(I18nKey.friends),
 		url: "/friends/",
-		icon: "material-symbols:link-2-rounded",
+		icon: "material-symbols:handshake-outline-rounded",
 		pageKey: "friends",
 	},
-	Guestbook: {
-		name: "留言",
-		url: "/guestbook/",
-		icon: "material-symbols:chat",
-		pageKey: "guestbook",
+	Moments: {
+		name: i18n(I18nKey.moments),
+		url: "/moments/",
+		icon: "material-symbols:auto-awesome-outline-rounded",
+		pageKey: "moments",
 	},
-	Dynamic: {
-		name: "动态",
-		url: "/dynamic/",
-		icon: "material-symbols:forum-rounded",
-		pageKey: "dynamic",
+	Anime: {
+		name: i18n(I18nKey.anime),
+		url: "/anime/",
+		icon: "material-symbols:live-tv-outline-rounded",
+		pageKey: "anime",
 	},
-	Gallery: {
-		name: "相册",
-		url: "/gallery/",
-		icon: "material-symbols:photo-library",
-		pageKey: "gallery",
+	Compass: {
+		name: i18n(I18nKey.compass),
+		url: "/compass/",
+		icon: "material-symbols:explore-rounded",
+		pageKey: "compass",
 	},
-	Booknav: {
-		name: "书签导航",
-		url: "/booknav/",
-		icon: "material-symbols:bookmarks",
-		pageKey: "booknav",
+	Skills: {
+		name: i18n(I18nKey.skills),
+		url: "/skills/",
+		icon: "material-symbols:workspaces-outline-rounded",
+		pageKey: "skills",
 	},
-	Bilibili: {
-		name: "哔哩哔哩",
-		url: "/bilibili/",
-		icon: "fa7-brands:bilibili",
-		pageKey: "bilibili",
+	Projects: {
+		name: i18n(I18nKey.projects),
+		url: "/projects/",
+		icon: "material-symbols:deployed-code-outline-rounded",
+		pageKey: "projects",
 	},
-	Bangumi: {
-		name: "番组计划",
-		url: "/bangumi/",
-		icon: "material-symbols:movie",
-		pageKey: "bangumi",
+	Devices: {
+		name: i18n(I18nKey.devices),
+		url: "/devices/",
+		icon: "material-symbols:devices-rounded",
+		pageKey: "devices",
 	},
-	VNDB: {
-		name: "VNDB",
-		url: "/vndb/",
-		icon: "material-symbols:chrome-reader-mode-rounded",
-		pageKey: "vndb",
+	Timeline: {
+		name: i18n(I18nKey.timeline),
+		url: "/timeline/",
+		icon: "material-symbols:timeline-rounded",
+		pageKey: "timeline",
 	},
-	MAL: {
-		name: "AnimeList",
-		url: "/myanimelist/",
-		icon: "material-symbols:menu-book",
-		pageKey: "mal",
+	Albums: {
+		name: i18n(I18nKey.albums),
+		url: "/albums/",
+		icon: "material-symbols:photo-library-outline-rounded",
+		pageKey: "albums",
 	},
-	Sponsor: {
-		name: "打赏",
-		url: "/sponsor/",
-		icon: "material-symbols:favorite",
-		pageKey: "sponsor",
+	Categories: {
+		name: i18n(I18nKey.categories),
+		url: "/categories/",
+		icon: "material-symbols:folder-outline-rounded",
+		pageKey: "categories",
+	},
+	Tags: {
+		name: i18n(I18nKey.tags),
+		url: "/tags/",
+		icon: "material-symbols:tag-rounded",
+		pageKey: "tags",
 	},
 	About: {
-		name: "关于我",
+		name: i18n(I18nKey.about),
 		url: "/about/",
-		icon: "material-symbols:person",
+		icon: "material-symbols:info-outline-rounded",
+		pageKey: "about",
+	},
+	GitHub: {
+		name: "GitHub",
+		url: "https://github.com/LyraVoid/Shirone",
+		icon: "fa6-brands:github",
+		external: true,
+		pageKey: "github",
 	},
 };
 
-export const navBarConfig: NavBarConfig = getDynamicNavBarConfig();
+export const navBarConfig: NavBarConfig = {
+	links: [
+		LinkPresets.Home,
+		LinkPresets.Archive,
+		LinkPresets.Friends,
+		LinkPresets.Moments,
+		LinkPresets.Anime,
+		LinkPresets.Compass,
+		LinkPresets.Albums,
+		{
+			name: i18n(I18nKey.more),
+			icon: "material-symbols:apps-rounded",
+			children: [
+				...(timelineConfig.enable ? [LinkPresets.Timeline] : []),
+				...(projectsConfig.enable ? [LinkPresets.Projects] : []),
+				...(devicesConfig.enable ? [LinkPresets.Devices] : []),
+				...(skillsConfig.enable ? [LinkPresets.Skills] : []),
+				// 分类/标签入口不进导航菜单（避免菜单项过多），预设已登记指向独立页面，
+				// 需要时取消注释即可
+				// LinkPresets.Categories,
+				// LinkPresets.Tags,
+				LinkPresets.About,
+				LinkPresets.GitHub,
+			],
+		},
+	],
+};

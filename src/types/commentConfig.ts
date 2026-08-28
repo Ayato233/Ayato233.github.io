@@ -1,63 +1,35 @@
-export type CommentConfig = {
-	/**
-	 * 当前启用的评论系统类型
-	 * "none" | "twikoo" | "waline" | "giscus" | "disqus" | 'artalk'
-	 */
-	type: "none" | "twikoo" | "waline" | "giscus" | "disqus" | "artalk";
-	twikoo?: {
-		envId: string;
-		region?: string;
-		lang?: string;
-		visitorCount?: boolean;
-		/**
-		 * Twikoo JS 文件地址，支持 CDN 链接
-		 * 国内推荐: https://registry.npmmirror.com/twikoo/1.7.9/files/dist/twikoo.min.js
-		 * 国际推荐: https://cdn.jsdelivr.net/npm/twikoo@1.7.9/dist/twikoo.min.js
-		 */
-		jsUrl?: string;
-		/**
-		 * Twikoo 自定义 CSS 文件地址，为空则不加载
-		 */
-		cssUrl?: string;
-	};
-	waline?: {
-		serverURL: string;
-		lang?: string;
-		emoji: string[];
-		login?: "enable" | "force" | "disable";
-		visitorCount?: boolean; // 是否统计访问量，true 启用访问量，false 关闭
-	};
-	artalk?: {
-		// 后端程序 API 地址
-		server: string;
-		/**
-		 * 语言，支持语言如下：
-		 * - "en" (English)
-		 * - "zh-CN" (简体中文)
-		 * - "zh-TW" (繁体中文)
-		 * - "ja" (日本語)
-		 * - "ko" (한국어)
-		 * - "fr" (Français)
-		 * - "ru" (Русский)
-		 * */
-		locale: string | "auto";
-		// 是否统计访问量，true 启用访问量，false 关闭
-		visitorCount?: boolean;
-	};
-	giscus?: {
-		repo: string;
-		repoId: string;
-		category: string;
-		categoryId: string;
-		mapping: string;
-		strict: string;
-		reactionsEnabled: string;
-		emitMetadata: string;
-		inputPosition: string;
-		lang: string;
-		loading: string;
-	};
-	disqus?: {
-		shortname: string;
-	};
-};
+export type CommentProvider = "none" | "twikoo";
+
+export interface TwikooConfig {
+	/** Twikoo 环境 ID 或后端服务地址 URL */
+	envId: string;
+	/** Twikoo 客户端 JS 脚本 CDN 地址 */
+	scriptUrl: string;
+	/** 评论语言，"auto" 自动跟随站点语言，也可指定如 "zh-CN", "en" 等 */
+	lang: "auto" | string;
+	/** 评论输入框的灰色说明文字；留空时不显示 */
+	placeholder?: string;
+}
+
+export interface CommentConfig {
+	/** 是否全局启用评论功能 */
+	enable: boolean;
+	/** 选用的评论提供商 */
+	provider: CommentProvider;
+	/** 是否开启视口懒加载（进入视口前不加载外部脚本） */
+	lazy: boolean;
+	/** Twikoo 专属配置 */
+	twikoo: TwikooConfig;
+}
+
+/** 传递给具体 Provider 组件的归一化上下文 */
+export interface CommentContext {
+	/** 页面唯一稳定标识（如 post:my-first-post） */
+	key: string;
+	/** 评论挂钩的 canonical 路径（如 /posts/my-first-post/） */
+	path: string;
+	/** 文章标题 */
+	title: string;
+	/** 当前页面语言代码 */
+	language: string;
+}

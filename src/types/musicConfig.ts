@@ -1,52 +1,91 @@
-// 音乐播放器配置
-export type MusicPlayerConfig = {
-	// 使用方式：'meting' 或 'local'
-	mode?: "meting" | "local"; // "meting" 使用 Meting API，"local" 使用本地音乐列表
+export type PlaybackMode = "sequence" | "repeat-one" | "shuffle";
 
-	// 默认音量 (0-1)
-	volume?: number;
+export type MusicProvider = "local" | "meting" | "custom" | "mixed";
 
-	// 播放模式：'list'=列表循环, 'one'=单曲循环, 'random'=随机播放
-	playMode?: "list" | "one" | "random";
+export type MetingServer = "netease" | "tencent" | "kugou" | "xiami" | "baidu";
 
-	// 是否显示歌词
-	showLyrics?: boolean;
+export type MetingType = "playlist" | "song" | "album" | "artist";
 
-	// 是否在导航栏显示音乐播放器
-	showInNavbar?: boolean;
+export type MusicErrorCode =
+	| "empty-playlist"
+	| "source-unavailable"
+	| "autoplay-blocked"
+	| "invalid-track";
 
-	// 是否在侧边栏显示音乐播放器组件
-	showInSidebar?: boolean;
+export type MusicStatus =
+	| "idle"
+	| "loading"
+	| "ready"
+	| "playing"
+	| "paused"
+	| "error";
 
-	// Meting API 配置
-	meting?: {
-		// Meting API 地址
-		api?: string;
+export interface TrackDescriptor {
+	readonly id: string;
+	readonly title: string;
+	readonly artist?: string;
+	readonly source: string;
+	readonly cover?: string;
+	/** 构建期生成的封面候选；远程 Meting 曲目保持为空。 */
+	readonly coverSrcset?: string;
+	readonly coverSizes?: string;
+	readonly coverWidth?: number;
+	readonly coverHeight?: number;
+	readonly duration?: number;
+}
 
-		// 音乐平台：netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
-		server?: "netease" | "tencent" | "kugou" | "xiami" | "baidu";
+export interface MetingMusicConfig {
+	/** 音乐平台，默认 netease（网易云音乐） */
+	readonly server?: MetingServer;
+	/** 资源类型，默认 playlist（歌单） */
+	readonly type?: MetingType;
+	/** 歌单 / 单曲 / 专辑 ID */
+	readonly id?: string;
+	/** Meting API 地址模板，默认使用公开 API */
+	readonly api?: string;
+}
 
-		// 类型：song=单曲, playlist=歌单, album=专辑, search=搜索, artist=艺术家
-		type?: "song" | "playlist" | "album" | "search" | "artist";
+export interface MusicConfig {
+	/** 是否全局启用音乐功能 */
+	readonly enable: boolean;
+	/** 音频数据源模式：local（本地曲目） | meting（Meting 远端歌单） | custom（显式传入 tracks） | mixed（本地与远端歌单合并） */
+	readonly provider?: MusicProvider;
+	/** 本地播放列表（provider 为 local, custom, mixed 时生效；未填时默认读取 src/data/music.ts） */
+	readonly tracks?: readonly TrackDescriptor[];
+	/** Meting API 配置（provider 为 meting 或 mixed 时生效） */
+	readonly meting?: MetingMusicConfig;
+	/** 初始音量，范围 0–1 */
+	readonly defaultVolume: number;
+	/** 初始播放模式 */
+	readonly defaultMode: PlaybackMode;
+}
 
-		// 歌单/专辑/单曲 ID 或搜索关键词
-		id?: string;
+export interface MusicSnapshot {
+	readonly playlist: readonly TrackDescriptor[];
+	readonly currentIndex: number;
+	readonly currentTrack: TrackDescriptor | null;
+	readonly status: MusicStatus;
+	readonly currentTime: number;
+	readonly duration: number;
+	readonly volume: number;
+	readonly muted: boolean;
+	readonly mode: PlaybackMode;
+	readonly error: MusicErrorCode | null;
+}
 
-		// 认证 token（可选）
-		auth?: string;
-
-		// 备用 API 配置（当主 API 失败时使用）
-		fallbackApis?: string[];
-	};
-
-	// 本地音乐配置（当 mode 为 'local' 时使用）
-	local?: {
-		playlist?: Array<{
-			name: string; // 歌曲名称
-			artist: string; // 艺术家
-			url: string; // 音乐文件路径（相对于 public 目录）
-			cover?: string; // 封面图片路径（相对于 public 目录）
-			lrc?: string; // 歌词内容，支持 LRC 格式
-		}>;
-	};
-};
+export interface MusicRuntime {
+	initialize(): Promise<void>;
+	getSnapshot(): MusicSnapshot;
+	subscribe(listener: (snapshot: MusicSnapshot) => void): () => void;
+	play(): Promise<void>;
+	pause(): void;
+	toggle(): Promise<void>;
+	select(index: number): Promise<void>;
+	next(): Promise<void>;
+	previous(): Promise<void>;
+	seek(seconds: number): void;
+	setVolume(value: number): void;
+	setMuted(value: boolean): void;
+	setMode(mode: PlaybackMode): void;
+	destroy(): void;
+}

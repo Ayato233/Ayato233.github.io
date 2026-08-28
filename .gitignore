@@ -1,9 +1,6 @@
 # build output
 dist/
 
-# generated vndb covers
-public/vndb-covers/
-
 # generated types
 .astro/
 
@@ -31,19 +28,32 @@ yarn.lock
 
 # ide
 .idea
+
+# generated font subsets
+src/assets/fonts/.subset/
 *.iml
 
-# docs
-Firefly-docs/
+# anime snapshot data & downloaded covers
+src/data/anime-snapshots/*.json
+public/assets/anime/covers/*
+!public/assets/anime/covers/.gitkeep
 
-# lite 版本
-Firefly-Lite/
+# generated responsive moment thumbnails
+public/assets/moments/thumbnails/*
+!public/assets/moments/thumbnails/.gitkeep
 
-cache/
-package/
-.obsidian/
+# local tooling artifacts
+.zcode/
+.codex-*.log
+research/
 
-# vibe coding
-.codex*
-.claude
-.mimocode
+# playwright
+.playwright-cli/
+test-results/
+playwright-report/
+tests/site/visual.spec.ts-snapshots/
+
+# Lighthouse local reports
+artifacts/lighthouse/*
+!artifacts/lighthouse/.gitkeep
+.lighthouseci/

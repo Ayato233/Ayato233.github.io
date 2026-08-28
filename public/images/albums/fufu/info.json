@@ -1,0 +1,87 @@
+{
+  "mode": "external",
+  "hidden": false,
+  "title": "芙芙",
+  "description": "芙宁娜（Furina）图集——枫丹的水神，歌剧院的主角。",
+  "date": "2026-08-26",
+  "location": "原神 · 枫丹",
+  "tags": [
+    "原神",
+    "芙宁娜"
+  ],
+  "layout": "masonry",
+  "columns": 3,
+  "cover": "/images/albums/fufu/thumbs/1.webp",
+  "photos": [
+    {
+      "id": "fufu-photo-1",
+      "src": "/images/albums/fufu/1.webp",
+      "thumbnail": "/images/albums/fufu/thumbs/1.webp",
+      "alt": "1",
+      "title": "1"
+    },
+    {
+      "id": "fufu-photo-2",
+      "src": "/images/albums/fufu/2.png",
+      "thumbnail": "/images/albums/fufu/thumbs/2.webp",
+      "alt": "2",
+      "title": "2"
+    },
+    {
+      "id": "fufu-photo-3",
+      "src": "/images/albums/fufu/3.png",
+      "thumbnail": "/images/albums/fufu/thumbs/3.webp",
+      "alt": "3",
+      "title": "3"
+    },
+    {
+      "id": "fufu-photo-4",
+      "src": "/images/albums/fufu/4.webp",
+      "thumbnail": "/images/albums/fufu/thumbs/4.webp",
+      "alt": "4",
+      "title": "4"
+    },
+    {
+      "id": "fufu-photo-5",
+      "src": "/images/albums/fufu/5.jpg",
+      "thumbnail": "/images/albums/fufu/thumbs/5.webp",
+      "alt": "5",
+      "title": "5"
+    },
+    {
+      "id": "fufu-photo-6",
+      "src": "/images/albums/fufu/6.webp",
+      "thumbnail": "/images/albums/fufu/thumbs/6.webp",
+      "alt": "6",
+      "title": "6"
+    },
+    {
+      "id": "fufu-photo-7",
+      "src": "/images/albums/fufu/7.webp",
+      "thumbnail": "/images/albums/fufu/thumbs/7.webp",
+      "alt": "7",
+      "title": "7"
+    },
+    {
+      "id": "fufu-photo-8",
+      "src": "/images/albums/fufu/8.jpg",
+      "thumbnail": "/images/albums/fufu/thumbs/8.webp",
+      "alt": "8",
+      "title": "8"
+    },
+    {
+      "id": "fufu-photo-9",
+      "src": "/images/albums/fufu/9.jpg",
+      "thumbnail": "/images/albums/fufu/thumbs/9.webp",
+      "alt": "9",
+      "title": "9"
+    },
+    {
+      "id": "fufu-photo-10",
+      "src": "/images/albums/fufu/1774797324849.png",
+      "thumbnail": "/images/albums/fufu/thumbs/1774797324849.webp",
+      "alt": "1774797324849",
+      "title": "1774797324849"
+    }
+  ]
+}

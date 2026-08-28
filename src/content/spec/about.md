@@ -25,4 +25,4 @@
 
 ## 📝 关于本站
 
-本博客基于 **Astro** 框架构建，使用 [Firefly](https://github.com/CuteLeaf/Firefly) 主题，记录我的技术学习笔记与生活随想。本站支持全文搜索、暗色模式、文章加密等特性，欢迎浏览与交流。
+本博客基于 **Astro** 框架构建，使用 [Shirone](https://github.com/LyraVoid/Shirone) 主题，记录我的技术学习笔记与生活随想。本站支持全文搜索、暗色模式、文章加密等特性，欢迎浏览与交流。

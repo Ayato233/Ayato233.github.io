@@ -1,43 +1,28 @@
-import type { ProfileConfig } from "../types/profileConfig";
+import type { ProfileConfig } from "@/types/config";
 
+/**
+ * 博主资料：头像 / 名称 / 简介 / 社交链接（侧栏 Profile 卡片、页脚、RSS 作者等消费）。
+ * 类型见 src/types/config.ts。
+ */
 export const profileConfig: ProfileConfig = {
-	// 头像
-	// 图片路径支持三种格式：
-	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/avatar.webp"
-	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/avatar.webp"
-	// 3. 远程 URL："https://example.com/avatar.jpg"
-	avatar: "assets/images/avatar.png",
-
-	// 名字
+	avatar: "/images/site/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Furina",
-
-	// 个人签名
-	bio: "一度失去的东西是再也回不来的。",
-
-	// 链接配置
-	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
-	// 访问https://icones.js.org/ 获取图标代码，
-	// 如果想使用尚未包含相应的图标集，则需要安装它
-	// `pnpm add @iconify-json/<icon-set-name>`
-	// showName: true 时显示图标和名称，false 时只显示图标
+	bio: "生活明朗，万物可爱。",
 	links: [
 		{
 			name: "GitHub",
-			icon: "fa7-brands:github",
+			icon: "fa6-brands:github",
 			url: "https://github.com/Ayato233",
-			showName: false,
 		},
 		{
-			name: "Email",
-			icon: "fa7-solid:envelope",
+			name: "Gitee",
+			icon: "material-symbols:code-blocks-rounded",
+			url: "https://gitee.com/Aizen233",
+		},
+		{
+			name: "邮箱",
+			icon: "material-symbols:mail-rounded",
 			url: "mailto:2783885223@qq.com",
-			showName: false,
-		},
-		{
-			name: "RSS",
-			icon: "fa7-solid:rss",
-			url: "/rss/",
-			showName: false,
 		},
 	],
 };
