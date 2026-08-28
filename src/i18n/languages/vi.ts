@@ -144,6 +144,11 @@ export const vi: Translation = {
 	[Key.tableOfContents]: "Mục lục",
 	[Key.formulaScrollable]: "Công thức có thể cuộn ngang",
 	[Key.announcement]: "Thông báo",
+	[Key.quoteOfTheDay]: "Lời hay mỗi ngày",
+	[Key.timeGreeting]: "Lời chào theo giờ",
+	[Key.scheduleProgress]: "Tiến độ thời gian",
+	[Key.welcomeKicker]: "XIN CHÀO",
+	[Key.welcomeTitle]: "Chào mừng đến {site}",
 	[Key.announcementClose]: "Đóng thông báo",
 
 	[Key.comments]: "Bình luận",

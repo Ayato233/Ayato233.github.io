@@ -143,6 +143,11 @@ export const es: Translation = {
 	[Key.tableOfContents]: "Tabla de contenidos",
 	[Key.formulaScrollable]: "Fórmula con desplazamiento horizontal",
 	[Key.announcement]: "Anuncio",
+	[Key.quoteOfTheDay]: "Cita del día",
+	[Key.timeGreeting]: "Saludo del momento",
+	[Key.scheduleProgress]: "Progreso del tiempo",
+	[Key.welcomeKicker]: "HOLA",
+	[Key.welcomeTitle]: "Bienvenido a {site}",
 	[Key.announcementClose]: "Cerrar anuncio",
 
 	[Key.comments]: "Comentarios",

@@ -144,6 +144,11 @@ export const id: Translation = {
 	[Key.tableOfContents]: "Daftar Isi",
 	[Key.formulaScrollable]: "Rumus yang dapat digulir secara horizontal",
 	[Key.announcement]: "Pengumuman",
+	[Key.quoteOfTheDay]: "Kutipan Hari Ini",
+	[Key.timeGreeting]: "Salam Waktu",
+	[Key.scheduleProgress]: "Progres Waktu",
+	[Key.welcomeKicker]: "HALO",
+	[Key.welcomeTitle]: "Selamat datang di {site}",
 	[Key.announcementClose]: "Tutup pengumuman",
 
 	[Key.comments]: "Komentar",

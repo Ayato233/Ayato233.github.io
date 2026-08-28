@@ -5,6 +5,7 @@ import SegmentedButton from "@components/atoms/selection/SegmentedButton.svelte"
 import Slider from "@components/atoms/selection/Slider.svelte";
 import Switch from "@components/atoms/selection/Switch.svelte";
 import I18nKey from "@i18n/i18nKey";
+import { en } from "@i18n/languages/en";
 import { i18n } from "@i18n/translation";
 import Icon from "@iconify/svelte";
 import {
@@ -232,7 +233,10 @@ const currentColor = $derived(styleColors(style, hue, dark, spec).primary);
 const stylePreviews = $derived(
 	MC_STYLES.map((s) => ({
 		style: s,
-		label: i18n(styleKey(s)),
+		// 悬停/无障碍标签：英文官方名 · 当前语言译名
+		label: `${en[styleKey(s)]} · ${i18n(styleKey(s))}`,
+		// 格内主显示：英文官方名（Material 专有名词，各语言统一）
+		enLabel: en[styleKey(s)],
 		colors: styleColors(s, hue, dark, spec),
 	})),
 );
@@ -285,7 +289,7 @@ const stylePreviews = $derived(
                                     <span class="m3-style-cell__dot" style={`background: ${p.colors.secondary}`}></span>
                                     <span class="m3-style-cell__dot" style={`background: ${p.colors.tertiary}`}></span>
                                 </span>
-                                <span class="m3-style-cell__name">{p.label}</span>
+                                <span class="m3-style-cell__name">{p.enLabel}</span>
                             </button>
                         {/each}
                     </div>

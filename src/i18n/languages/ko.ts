@@ -140,6 +140,11 @@ export const ko: Translation = {
 	[Key.tableOfContents]: "목차",
 	[Key.formulaScrollable]: "가로로 스크롤 가능한 수식",
 	[Key.announcement]: "공지사항",
+	[Key.quoteOfTheDay]: "오늘의 한마디",
+	[Key.timeGreeting]: "시간 인사",
+	[Key.scheduleProgress]: "시간 진행",
+	[Key.welcomeKicker]: "안녕하세요",
+	[Key.welcomeTitle]: "{site}에 오신 것을 환영합니다",
 	[Key.announcementClose]: "공지 닫기",
 
 	[Key.comments]: "댓글",

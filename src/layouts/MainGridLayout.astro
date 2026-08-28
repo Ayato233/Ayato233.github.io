@@ -4,6 +4,7 @@ import CategoryBar from "@components/organisms/CategoryBar.astro";
 import FloatingControls from "@components/organisms/FloatingControls.astro";
 import Footer from "@components/organisms/Footer.astro";
 import RouteProgress from "@components/organisms/RouteProgress.svelte";
+import ScrollProgress from "@components/organisms/ScrollProgress.astro";
 import SideBar from "@components/organisms/SideBar.astro";
 import SiteNavigationDrawer from "@components/organisms/SiteNavigationDrawer.svelte";
 import TopAppBar from "@components/organisms/TopAppBar.astro";
@@ -113,10 +114,80 @@ const mainContentClasses = generateMainContentClasses(sidebarResponsive);
         </div>
 
         <FloatingControls page={page} headings={headings} hasComments={hasComments} />
+        <ScrollProgress />
         <RouteProgress client:load />
     </div>
 </div>
 
 <SiteNavigationDrawer client:load />
+
+<script>
+	// 导航滚动策略（Swup Scroll 插件已禁用，滚动由本脚本独占）：
+	// - 非首页之间：切换动画遮挡期（content:scroll）瞬移到正文起点，无滚动动画；
+	// - 首页 ↔ 非首页：浏览器原生 smooth 过渡（合成器线程驱动，不掉帧），
+	//   自上而下滑入正文 / 自下而上涨回 hero。
+	// 正文起点 = 横幅底 - 顶栏高（顶栏 4rem 覆盖在横幅底缘之上）。
+	import { prefersReducedMotion } from "@utils/motion";
+
+	const TOP_BAR_PX = 64; // 顶栏 4rem（兜底；运行时优先读实际高度）
+	const CONTENT_GAP_PX = 38; // 正文起点额外留白，确保标题/头像不被顶栏压住
+
+	// 来源页是否为首页：URL 判定（dataset 在 Swup 导航中存在同步时序，URL 无歧义）
+	let fromHome = false;
+
+	function readCurrentPage(): string {
+		const container = document.getElementById("swup-container");
+		return container?.dataset.currentPage || "home";
+	}
+
+	/** 非首页正文起点（横幅底 - 顶栏实际高 - 额外留白） */
+	function contentTarget(): number {
+		const banner = document.getElementById("banner-wrapper");
+		if (!banner) return 0;
+		const navbar = document.getElementById("navbar");
+		const topBarH =
+			navbar && navbar.getBoundingClientRect().height > 0
+				? Math.round(navbar.getBoundingClientRect().height)
+				: TOP_BAR_PX;
+		return Math.max(
+			0,
+			banner.offsetTop + banner.offsetHeight - topBarH - CONTENT_GAP_PX,
+		);
+	}
+
+	/** 平滑滚动：浏览器原生 smooth（合成线程驱动，不占主线程）；reduced-motion 时瞬移 */
+	function animateScrollTo(target: number): void {
+		window.scrollTo({
+			top: target,
+			behavior: prefersReducedMotion() ? "auto" : "smooth",
+		});
+	}
+
+	function bindSwup(): void {
+		const swup = window.swup;
+		if (!swup || window.__shironeBannerSkipBound) return;
+		window.__shironeBannerSkipBound = true;
+
+		swup.hooks.on("visit:start", () => {
+			fromHome = location.pathname.replace(/\/+$/, "") === "";
+		});
+		swup.hooks.replace("content:scroll", () => {
+			// replace 接管 Swup 导航滚动：默认 handler 是核心「滚顶」（visit.scroll.reset=true），
+			// 替换后滚到哪由本脚本决定；此刻 window.scrollY 仍是替换前位置 → 平滑起点真实
+			const toPage = readCurrentPage();
+			const target = toPage === "home" ? 0 : contentTarget();
+			if (fromHome || toPage === "home") {
+				// 首页 ↔ 非首页：原生 smooth 过渡（上滑回 hero / 下滑入正文）
+				animateScrollTo(target);
+			} else {
+				// 非首页之间：瞬移
+				window.scrollTo({ top: target, behavior: "auto" });
+			}
+		});
+	}
+
+	bindSwup();
+	document.addEventListener("swup:enable", bindSwup, { once: true });
+</script>
 
 </Layout>

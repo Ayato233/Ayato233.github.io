@@ -1,0 +1,244 @@
+---
+/**
+ * 分时问候时钟侧栏组件。
+ *
+ * 设计目标（沿主题「按需加载 / 零额外负担」铁律）：
+ * - 零网络：时段文案与图片池来自 timeGreetingConfig，数据经 define:vars 内联；
+ * - SSR 可见：初值（问候/时钟/日期/星期/随机图）服务端渲染，禁 JS 仍完整显示；
+ * - 客户端只补时间感：对齐下一分钟刷新时钟、跨时段切换问候、跨日重随机图片，
+ *   数据全部内联，无任何请求；
+ * - 本地化：日期/星期/时钟格式走 Intl（locale 由 siteConfig.lang 映射），
+ *   不额外维护星期名 i18n key。
+ */
+import { siteConfig } from "@/config";
+import { timeGreetingConfig } from "@/config/timeGreetingConfig";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import WidgetLayout from "./WidgetLayout.astro";
+
+interface Props {
+	class?: string;
+	style?: string;
+}
+const className = Astro.props.class;
+const style = Astro.props.style;
+
+const greetings = timeGreetingConfig.greetings;
+const images = timeGreetingConfig.images;
+
+const localeMap: Record<string, string> = {
+	zh_CN: "zh-CN",
+	zh_TW: "zh-TW",
+	en: "en",
+	en_us: "en",
+	en_gb: "en",
+	ja: "ja",
+	ja_jp: "ja",
+	ko: "ko",
+	ko_kr: "ko",
+	th: "th",
+	th_th: "th",
+	vi: "vi",
+	vi_vn: "vi",
+	id: "id",
+	tr: "tr",
+	tr_tr: "tr",
+	es: "es",
+};
+const intlLocale = localeMap[siteConfig.lang] ?? "zh-CN";
+
+// 取起始小时 <= 当前小时的最后一条（greetings 按升序）
+const greetingFor = (hour: number) =>
+	greetings.filter((g) => g.hour <= hour).at(-1)?.message ?? "";
+
+const now = new Date();
+const serverHour = now.getHours();
+const greeting = greetingFor(serverHour);
+const timeFmt = new Intl.DateTimeFormat(intlLocale, {
+	hour: "2-digit",
+	minute: "2-digit",
+	hour12: false,
+});
+const weekFmt = new Intl.DateTimeFormat(intlLocale, { weekday: "short" });
+const dayFmt = new Intl.DateTimeFormat(intlLocale, {
+	month: "long",
+	day: "numeric",
+});
+const serverClock = timeFmt.format(now);
+const serverWeek = weekFmt.format(now);
+const serverDay = dayFmt.format(now);
+const imageIndex =
+	images.length > 0 ? Math.floor(Math.random() * images.length) : -1;
+const imageUrl = imageIndex >= 0 ? images[imageIndex] : null;
+---
+
+<WidgetLayout
+	name={i18n(I18nKey.timeGreeting)}
+	id="time-greeting"
+	class={className}
+	style={style}
+>
+	<div class="tg" data-greeting={greeting} data-image-index={String(imageIndex)}>
+		<div class="tg__info">
+			<p class="tg__message">{greeting}</p>
+			<div class="tg__meta">
+				<time class="tg__clock" datetime="">{serverClock}</time>
+				<div class="tg__date">
+					<span class="tg__week">{serverWeek}</span>
+					<span class="tg__day">{serverDay}</span>
+				</div>
+			</div>
+		</div>
+		{imageUrl && (
+			<div
+				class="tg__image"
+				style={`background-image: url("${imageUrl}")`}
+				role="img"
+				aria-label=""
+			></div>
+		)}
+	</div>
+</WidgetLayout>
+
+<style lang="stylus">
+.tg
+	display: flex
+	flex-direction: column
+	gap: 0.75rem
+
+	&__info
+		display: flex
+		flex-direction: column
+		gap: 0.375rem
+		padding: 0.125rem 0
+
+	&__message
+		margin: 0
+		font-size: 0.875rem
+		font-weight: 600
+		color: var(--primary)
+
+	&__meta
+		display: flex
+		align-items: flex-end
+		justify-content: space-between
+		gap: 0.75rem
+
+	&__clock
+		font-family: var(--m3e-font-mono-family)
+		font-size: 2rem
+		font-weight: 700
+		line-height: 1
+		font-variant-numeric: tabular-nums
+		color: var(--on-surface)
+
+	&__date
+		display: flex
+		flex-direction: column
+		align-items: flex-end
+		gap: 0.125rem
+		padding-bottom: 0.125rem
+
+	&__week
+		font-size: 0.6875rem
+		letter-spacing: 0.08em
+		color: var(--on-surface-variant)
+
+	&__day
+		font-size: 0.875rem
+		font-weight: 600
+		color: var(--on-surface)
+
+	&__image
+		height: 8.5rem
+		border-radius: calc(var(--shape-corner-m) * 0.85)
+		background-position: center
+		background-size: cover
+		overflow: hidden
+</style>
+
+<script is:inline define:vars={{ greetings, images }}>
+	// 客户端补充时间感：对齐下一分钟刷新时钟、跨时段切换问候、跨日重随机图片。
+	// 侧栏是 Swup 容器外的长驻元素，脚本只在整页加载执行一次，定时任务独占管理。
+	const localeMap = {
+		zh_CN: "zh-CN",
+		zh_TW: "zh-TW",
+		en: "en",
+		ja: "ja",
+		ko: "ko",
+		th: "th",
+		vi: "vi",
+		id: "id",
+		tr: "tr",
+		es: "es",
+	};
+	const intlLocale = localeMap[document.documentElement.lang] || "zh-CN";
+
+	const root = document.querySelector(
+		'widget-layout[data-id="time-greeting"]',
+	);
+	if (!root) throw new Error("time-greeting widget not found");
+	const el = root.querySelector(".tg");
+	if (!el) throw new Error("time-greeting root missing");
+
+	const clockEl = root.querySelector(".tg__clock");
+	const weekEl = root.querySelector(".tg__week");
+	const dayEl = root.querySelector(".tg__day");
+	const msgEl = root.querySelector(".tg__message");
+	const imgEl = root.querySelector(".tg__image");
+
+	const timeFmt = new Intl.DateTimeFormat(intlLocale, {
+		hour: "2-digit",
+		minute: "2-digit",
+		hour12: false,
+	});
+	const weekFmt = new Intl.DateTimeFormat(intlLocale, { weekday: "short" });
+	const dayFmt = new Intl.DateTimeFormat(intlLocale, {
+		month: "long",
+		day: "numeric",
+	});
+
+	const pickImage = () =>
+		images.length > 0
+			? Math.floor(Math.random() * images.length)
+			: -1;
+
+	let lastDay = -1;
+
+	function refresh() {
+		const now = new Date();
+		const day = now.getDate();
+		if (clockEl) clockEl.textContent = timeFmt.format(now);
+		if (weekEl) weekEl.textContent = weekFmt.format(now);
+		if (dayEl) dayEl.textContent = dayFmt.format(now);
+
+		// 跨时段切换问候
+		const msg =
+			greetings.filter((g) => g.hour <= now.getHours()).at(-1)?.message ||
+			el.dataset.greeting ||
+			"";
+		if (msgEl && msg !== msgEl.textContent) msgEl.textContent = msg;
+
+		// 跨日重随机图片
+		if (day !== lastDay) {
+			lastDay = day;
+			if (imgEl && images.length > 0) {
+				const idx = pickImage();
+				imgEl.style.backgroundImage = `url("${images[idx]}")`;
+			}
+		}
+	}
+
+	// 对齐下一分钟边界，避免秒数偏移累积
+	function alignToNextMinute() {
+		const now = new Date();
+		const msToNext = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+		window.setTimeout(() => {
+			refresh();
+			alignToNextMinute();
+		}, Math.max(1000, msToNext));
+	}
+
+	refresh();
+	alignToNextMinute();
+</script>

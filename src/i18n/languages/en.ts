@@ -142,6 +142,11 @@ export const en: Translation = {
 	[Key.tableOfContents]: "Table of Contents",
 	[Key.formulaScrollable]: "Horizontally scrollable formula",
 	[Key.announcement]: "Announcement",
+	[Key.quoteOfTheDay]: "Quote of the Day",
+	[Key.timeGreeting]: "Time Greeting",
+	[Key.scheduleProgress]: "Time Progress",
+	[Key.welcomeKicker]: "HELLO",
+	[Key.welcomeTitle]: "Welcome to {site}",
 	[Key.announcementClose]: "Close Announcement",
 
 	[Key.comments]: "Comments",

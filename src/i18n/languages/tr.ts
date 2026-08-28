@@ -143,6 +143,11 @@ export const tr: Translation = {
 	[Key.tableOfContents]: "İçindekiler",
 	[Key.formulaScrollable]: "Yatay kaydırılabilir formül",
 	[Key.announcement]: "Duyuru",
+	[Key.quoteOfTheDay]: "Günün Sözü",
+	[Key.timeGreeting]: "Anlık Selam",
+	[Key.scheduleProgress]: "Zaman İlerlemesi",
+	[Key.welcomeKicker]: "MERHABA",
+	[Key.welcomeTitle]: "{site} sitesine hoş geldiniz",
 	[Key.announcementClose]: "Duyuruyu Kapat",
 
 	[Key.comments]: "Yorumlar",

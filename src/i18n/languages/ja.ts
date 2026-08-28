@@ -141,6 +141,11 @@ export const ja: Translation = {
 	[Key.tableOfContents]: "目次",
 	[Key.formulaScrollable]: "横スクロール可能な数式",
 	[Key.announcement]: "お知らせ",
+	[Key.quoteOfTheDay]: "今日の一言",
+	[Key.timeGreeting]: "時刻のご挨拶",
+	[Key.scheduleProgress]: "時間の進捗",
+	[Key.welcomeKicker]: "こんにちは",
+	[Key.welcomeTitle]: "{site}へようこそ",
 	[Key.announcementClose]: "告知を閉じる",
 
 	[Key.comments]: "コメント",

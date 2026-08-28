@@ -13,7 +13,10 @@
 import Announcement from "@components/molecules/Announcement.astro";
 import Calendar from "@components/molecules/Calendar.astro";
 import Categories from "@components/molecules/Categories.astro";
+import QuoteOfTheDay from "@components/molecules/QuoteOfTheDay.astro";
+import ScheduleProgress from "@components/molecules/ScheduleProgress.astro";
 import SidebarTOC from "@components/molecules/SidebarTOC.astro";
+import TimeGreeting from "@components/molecules/TimeGreeting.astro";
 import SiteStats from "@components/molecules/SiteStats.astro";
 import Tags from "@components/molecules/Tags.astro";
 import I18nKey from "@i18n/i18nKey";
@@ -71,6 +74,9 @@ const componentMap = {
 	categories: Categories,
 	tags: Tags,
 	announcement: Announcement,
+	quoteOfTheDay: QuoteOfTheDay,
+	timeGreeting: TimeGreeting,
+	scheduleProgress: ScheduleProgress,
 	stats: SiteStats,
 	calendar: Calendar,
 	toc: SidebarTOC,

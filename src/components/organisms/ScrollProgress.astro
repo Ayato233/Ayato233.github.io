@@ -1,0 +1,53 @@
+---
+/**
+ * 滚动阅读进度条（顶部彩色细条）。
+ *
+ * 实现为纯 CSS：`animation-timeline: scroll(root)` 让进度条动画
+ * 直接由页面滚动驱动（scaleX 0→1），零 JS、零 bundle 影响。
+ * 仅支持 CSS Scroll-Driven Animations 的浏览器显示（@supports 门槛），
+ * 旧浏览器静默隐藏，不影响布局（固定定位 + pointer-events: none）。
+ *
+ * 配色跟随主题：M3 dynamic 三角色渐变（secondary → primary → tertiary），
+ * 随色相/明暗自动变化，不做任何硬编码颜色。
+ * 定位与 RouteProgress 保持一致（顶栏下沿；banner 未滚动时贴视口上沿）。
+ */
+---
+
+<div class="scroll-progress" aria-hidden="true">
+	<div class="scroll-progress__bar"></div>
+</div>
+
+<style lang="stylus">
+.scroll-progress
+	position: fixed
+	top: 4rem
+	left: 0
+	right: 0
+	height: 3px
+	z-index: 65
+	pointer-events: none
+	overflow: hidden
+	opacity: 0
+
+	// 仅支持 scroll() 时间线的浏览器显示，其余静默隐藏
+	@supports (animation-timeline: scroll())
+		opacity: 1
+
+	&__bar
+		position: absolute
+		inset: 0
+		transform-origin: 0 50%
+		background: linear-gradient(90deg, var(--secondary), var(--primary), var(--tertiary))
+		animation: scroll-progress-grow linear both
+		animation-timeline: scroll(root)
+
+// banner 未滚动时 RouteProgress 一样贴住视口上沿
+:global(body[data-banner-visible="true"][data-banner-scrolled="false"]) .scroll-progress
+	top: 0
+
+@keyframes scroll-progress-grow
+	from
+		transform: scaleX(0)
+	to
+		transform: scaleX(1)
+</style>

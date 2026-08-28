@@ -1,0 +1,38 @@
+/**
+ * 自定义光标（仅可点击控件态，默认态保留系统箭头）。
+ *
+ * 设计取舍：
+ * - 只替换可点击控件的光标为站内 SVG（明暗两版，随主题切换），
+ *   输入框/文本域继续使用系统文本光标（避免覆盖浏览器输入提示）；
+ * - url 后的系统回退值保留：自定义文件加载失败时自动回落 pointer；
+ * - @media (hover: hover) and (pointer: fine) 仅真鼠标设备生效，
+ *   触屏端零影响；
+ * - 不替换默认箭头：保持克制，两态中默认态跟随系统最稳。
+ */
+@media (hover: hover) and (pointer: fine) {
+	:root {
+		--cursor-pointer: url("/cursor/pointer-light.svg") 12 12, pointer;
+	}
+	html.dark {
+		--cursor-pointer: url("/cursor/pointer-dark.svg") 12 12, pointer;
+	}
+
+	a,
+	button,
+	select,
+	summary,
+	[role="button"],
+	[role="link"],
+	input[type="button"],
+	input[type="submit"],
+	input[type="reset"],
+	.cursor-pointer {
+		cursor: var(--cursor-pointer);
+	}
+
+	input,
+	textarea,
+	[contenteditable="true"] {
+		cursor: text;
+	}
+}

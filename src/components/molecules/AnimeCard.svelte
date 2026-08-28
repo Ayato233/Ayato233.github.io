@@ -127,17 +127,20 @@ const metaLine = $derived(
 	border-radius: var(--shape-corner-l)
 	background: var(--card-bg)
 
-	-webkit-backdrop-filter: var(--card-blur)
+	/* 毛玻璃：Chromium 对 backdrop-filter 的 var() 引用不生效（实测），
+	 * 此处按 variables 的 --card-blur 默认值固化；触屏降级见文件尾部 */
+	-webkit-backdrop-filter: blur(16px)
 
-	backdrop-filter: var(--card-blur)
-	border: 1px solid var(--outline-variant)
+	backdrop-filter: blur(16px)
+	/* 拟态玻璃：去深色描边，换顶部微反光 + 柔和悬浮阴影（hover 浮起）；
+	 * 现代 rgb() 空格语法需整体 unquote，避免 Stylus 旧除法解析 */
+	border: none
+	box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.08)"), var(--card-shadow)
 	transition:
-		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
 	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-2)
+		box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.12), var(--m3e-elevation-2)")
 		transform: translateY(-2px)
 
 	/* 2:3 海报封面：渐变占位同时充当图片加载背景 */
@@ -336,4 +339,10 @@ const metaLine = $derived(
 	.anime-card__play
 		transition: none
 		transform: none
+
+/* 触屏设备降低玻璃模糊（对齐 variables 的 --card-blur 降级策略） */
+@media (hover: none) and (pointer: coarse)
+	.anime-card
+		-webkit-backdrop-filter: blur(6px)
+		backdrop-filter: blur(6px)
 </style>

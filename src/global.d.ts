@@ -6,6 +6,7 @@ declare global {
 		swup?: Swup;
 		__shironeNavigationBound?: boolean;
 		__shironeSidebarBound?: boolean;
+		__shironeBannerSkipBound?: boolean;
 		pagefind: {
 			search: (query: string) => Promise<{
 				results: Array<{

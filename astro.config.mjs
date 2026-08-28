@@ -144,7 +144,7 @@ export default defineConfig({
 			ignore: 'a[href="#"]',
 			animationClass: "transition-swup-",
 			containers: ["main", "#toc"],
-			smoothScrolling: true,
+			smoothScrolling: false,
 			cache: true,
 			preload: true,
 			accessibility: true,

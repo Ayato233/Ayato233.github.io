@@ -2,6 +2,7 @@
 import { Font } from "astro:assets";
 import Snackbar from "@components/atoms/overlay/Snackbar.svelte";
 import ConfigCarrier from "@components/system/ConfigCarrier.astro";
+import WelcomeToast from "@components/organisms/WelcomeToast.astro";
 import {
 	expressiveCodeConfig,
 	profileConfig,
@@ -28,6 +29,7 @@ import { pathsEqual, url } from "../utils/url-utils";
 import "katex/dist/katex.css";
 import "overlayscrollbars/overlayscrollbars.css";
 import "../styles/main.css";
+import "../styles/cursor.css";
 import "../styles/font-faces.css";
 import textureStyles from "../styles/textures.css?raw";
 
@@ -201,6 +203,7 @@ const hasMonoFont =
 		)}
 		<Snackbar client:only="svelte"></Snackbar>
 		<slot />
+		<WelcomeToast />
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
 	</body>
 </html>
@@ -290,10 +293,26 @@ function initCustomScrollbar() {
 	katexElements.forEach(element => observer.observe(element));
 }
 
+function initGlobalScrollbar() {
+	// 全局接管页面主滚动条：overlay 模式（滚动时浮现、静止自动隐藏），
+	// 样式走 scrollbar-base scrollbar-auto，随主题取色，替代原生滚动条。
+	// 库已用于公式容器，此处零新增依赖；Swup 换页只替换 #swup-container 内容，
+	// 体量变化由库的 ResizeObserver 自动跟随，无需在导航钩子里做额外处理。
+	OverlayScrollbars(document.body, {
+		scrollbars: {
+			theme: 'scrollbar-base scrollbar-auto',
+			autoHide: 'leave',
+			autoHideDelay: 500,
+			autoHideSuspend: false,
+		},
+	});
+}
+
 function init() {
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
+	initGlobalScrollbar();
 }
 init();
 initLastUpdatedNotices();
@@ -343,6 +362,11 @@ function scrollFunction() {
 	const overBanner = bannerVisible && scrollTop < Math.max(0, bannerBottom - 64);
 	document.body.dataset.bannerScrolled = String(!overBanner);
 	navbar?.classList.toggle('top-app-bar--transparent', overBanner);
+	// 顶栏实色度渐变：透明模式下随滚动在横幅区内线性 0→1，
+	// 超出阈值（实色模式）恒为 1 —— 顶栏背景随滚动丝滑渐变
+	const navThreshold = Math.max(0, bannerBottom - 64);
+	const solid = overBanner ? Math.min(1, Math.max(0, navThreshold > 0 ? scrollTop / navThreshold : 1)) : 1;
+	document.documentElement.style.setProperty('--nav-solid', String(solid));
 }
 window.addEventListener('scroll', scrollFunction, { passive: true });
 window.addEventListener('resize', () => {

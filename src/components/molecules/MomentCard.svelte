@@ -168,17 +168,20 @@ function foldMutableImages(el: HTMLElement) {
 	border-radius: var(--shape-corner-l)
 	background: var(--card-bg)
 
-	-webkit-backdrop-filter: var(--card-blur)
+	/* 毛玻璃：Chromium 对 backdrop-filter 的 var() 引用不生效（实测），
+	 * 此处按 variables 的 --card-blur 默认值固化；触屏降级见文件尾部 */
+	-webkit-backdrop-filter: blur(16px)
 
-	backdrop-filter: var(--card-blur)
-	border: 1px solid var(--outline-variant)
-	box-shadow: var(--m3e-elevation-1)
+	backdrop-filter: blur(16px)
+	/* 拟态玻璃：去深色描边，换顶部微反光 + 柔和悬浮阴影（hover 浮起）；
+	 * 现代 rgb() 空格语法需整体 unquote，避免 Stylus 旧除法解析 */
+	border: none
+	box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.08)"), var(--card-shadow)
 	color: var(--on-surface)
-	transition: box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), border-color var(--m3e-duration-medium) var(--m3e-easing-standard)
+	transition: box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
 
 	&:hover
-		box-shadow: var(--m3e-elevation-2)
-		border-color: var(--outline)
+		box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.12), var(--m3e-elevation-2)")
 
 	&__header
 		display: flex
@@ -324,4 +327,10 @@ function foldMutableImages(el: HTMLElement) {
 
 	@media (max-width: bp-sm - 1px)
 		padding: 0.875rem 1rem
+
+/* 触屏设备降低玻璃模糊（对齐 variables 的 --card-blur 降级策略） */
+@media (hover: none) and (pointer: coarse)
+	.moment-card
+		-webkit-backdrop-filter: blur(6px)
+		backdrop-filter: blur(6px)
 </style>

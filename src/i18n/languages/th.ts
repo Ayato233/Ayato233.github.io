@@ -133,6 +133,11 @@ export const th: Translation = {
 	[Key.tableOfContents]: "สารบัญ",
 	[Key.formulaScrollable]: "สูตรที่เลื่อนในแนวนอนได้",
 	[Key.announcement]: "ประกาศ",
+	[Key.quoteOfTheDay]: "คำพูดประจำวัน",
+	[Key.timeGreeting]: "คำทักทายตามเวลา",
+	[Key.scheduleProgress]: "ความคืบหน้าของเวลา",
+	[Key.welcomeKicker]: "สวัสดี",
+	[Key.welcomeTitle]: "ยินดีต้อนรับสู่ {site}",
 	[Key.announcementClose]: "ปิดประกาศ",
 
 	[Key.comments]: "ความคิดเห็น",

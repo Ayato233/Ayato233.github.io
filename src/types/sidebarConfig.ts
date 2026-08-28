@@ -89,6 +89,36 @@ export interface AnnouncementWidget {
 	pages?: SidebarPage[];
 }
 
+/** 每日一言（句子来自 quoteConfig，按本地日期轮换，同日固定） */
+export interface QuoteWidget {
+	type: "quoteOfTheDay";
+	enable: boolean;
+	slot: SidebarWidgetSlot;
+	column?: SidebarColumn;
+	/** 限定显示的页面，省略或空数组表示所有页面 */
+	pages?: SidebarPage[];
+}
+
+/** 分时问候时钟（时段文案/图片池来自 timeGreetingConfig） */
+export interface TimeGreetingWidget {
+	type: "timeGreeting";
+	enable: boolean;
+	slot: SidebarWidgetSlot;
+	column?: SidebarColumn;
+	/** 限定显示的页面，省略或空数组表示所有页面 */
+	pages?: SidebarPage[];
+}
+
+/** 时间进度（年/月/周进度 + 节日倒计时，表来自 scheduleConfig） */
+export interface ScheduleProgressWidget {
+	type: "scheduleProgress";
+	enable: boolean;
+	slot: SidebarWidgetSlot;
+	column?: SidebarColumn;
+	/** 限定显示的页面，省略或空数组表示所有页面 */
+	pages?: SidebarPage[];
+}
+
 /** 站点统计（数据自动汇总：文章/动态/分类/标签/总字数/运行天数） */
 export interface StatsWidget {
 	type: "stats";
@@ -135,6 +165,9 @@ export type SidebarWidget =
 	| CategoriesWidget
 	| TagsWidget
 	| AnnouncementWidget
+	| QuoteWidget
+	| TimeGreetingWidget
+	| ScheduleProgressWidget
 	| StatsWidget
 	| CalendarWidget
 	| TocWidget

@@ -132,6 +132,11 @@ enum I18nKey {
 	formulaScrollable = "formulaScrollable",
 	announcement = "announcement",
 	announcementClose = "announcementClose",
+	quoteOfTheDay = "quoteOfTheDay",
+	timeGreeting = "timeGreeting",
+	scheduleProgress = "scheduleProgress",
+	welcomeKicker = "welcomeKicker",
+	welcomeTitle = "welcomeTitle",
 
 	comments = "comments",
 	commentsLoading = "commentsLoading",

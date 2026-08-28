@@ -76,13 +76,14 @@ const host = $derived.by(() => {
 	color: var(--on-surface)
 	border: 1px solid var(--outline-variant)
 	text-decoration: none
+	box-shadow: var(--card-shadow)
 	transition:
 		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
 	&:hover
 		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-1)
+		box-shadow: var(--m3e-elevation-2)
 		background: unquote("color-mix(in oklab, var(--on-surface) 3%, var(--card-bg))")
 
 	&__body

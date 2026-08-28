@@ -166,11 +166,15 @@ define({
   --page-bg: var(--surface-container-low)
   --card-bg: unquote("color-mix(in srgb, var(--surface-container) 72%, transparent)")
   --card-blur: 16px
+  /* 卡片柔和阴影（全站卡片统一层次感）：散射大、透明度低的双影；
+     8 位 hex 避免 Stylus 对 rgba 空格语法/除号的解析坑 */
+  --card-shadow: 0 2px 12px #00000014, 0 1px 3px #0000000d
   --float-panel-bg: unquote("color-mix(in srgb, var(--surface-container) 78%, transparent)")
 :root.dark
   --page-bg: var(--surface)
   --card-bg: unquote("color-mix(in srgb, var(--surface-container-high) 72%, transparent)")
   --card-blur: 16px
+  --card-shadow: 0 2px 12px #00000047, 0 1px 3px #0000002e
   --float-panel-bg: unquote("color-mix(in srgb, var(--surface-container) 78%, transparent)")
 
 /* 移动端（无 hover 的触屏设备）降低玻璃模糊，守护滚动流畅 */

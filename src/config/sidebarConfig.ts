@@ -27,8 +27,9 @@ export const sidebarConfig: SidebarConfig = {
 	side: "left",
 	components: [
 		{ type: "profile", enable: true, slot: "top" },
+		{ type: "announcement", enable: true, slot: "top" },
+		{ type: "quoteOfTheDay", enable: true, slot: "top" },
 		{ type: "music", enable: true, slot: "top" },
-		{ type: "announcement", enable: true, slot: "top", pages: ["home"] },
 		{
 			type: "categories",
 			enable: true,
@@ -75,6 +76,7 @@ export const sidebarConfig: SidebarConfig = {
 				"tags",
 			],
 		},
+		{ type: "timeGreeting", enable: true, slot: "top", column: "secondary" },
 		{
 			type: "stats",
 			enable: true,
@@ -83,6 +85,12 @@ export const sidebarConfig: SidebarConfig = {
 			pages: ["home", "archive", "categories", "tags"],
 		},
 		{ type: "calendar", enable: true, slot: "top", column: "secondary" },
+		{
+			type: "scheduleProgress",
+			enable: true,
+			slot: "top",
+			column: "secondary",
+		},
 		{
 			type: "toc",
 			enable: true,

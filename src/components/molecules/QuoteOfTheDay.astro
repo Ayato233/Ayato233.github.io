@@ -1,0 +1,139 @@
+---
+/**
+ * 每日一言侧栏组件。
+ *
+ * 设计目标（沿主题「按需加载 / 零额外负担」铁律）：
+ * - 零网络：句子库来自 quoteConfig，经 define:vars 内联到脚本，无任何外部请求；
+ * - 数据驱动：增删句子/改署名只编辑 src/config/quoteConfig.ts；
+ * - 按天轮换：同日固定显示同一句（服务器初值 + 客户端本地日期校准），
+ *   跨本地零点自动换下一句（午夜定时器，侧栏长驻 Swup 容器外，无残留）；
+ * - SSR 可见：初值在服务端渲染，禁 JS 时仍显示当日句子，无空白。
+ */
+import { quoteConfig } from "@/config/quoteConfig";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import WidgetLayout from "./WidgetLayout.astro";
+
+interface Props {
+	class?: string;
+	style?: string;
+}
+const className = Astro.props.class;
+const style = Astro.props.style;
+
+const quotes = quoteConfig.quotes;
+const hasQuotes = quotes.length > 0;
+
+// 本地的 UTC 天数：同一天全局一致，跨天 +1；用作句子索引基准
+const dayNumber = Math.floor(
+	Date.UTC(
+		new Date().getFullYear(),
+		new Date().getMonth(),
+		new Date().getDate(),
+	) / 86_400_000,
+);
+const serverIndex = hasQuotes ? dayNumber % quotes.length : 0;
+const initialQuote = hasQuotes ? quotes[serverIndex] : null;
+---
+
+{hasQuotes && initialQuote && (
+	<WidgetLayout
+		name={i18n(I18nKey.quoteOfTheDay)}
+		id="quote-of-the-day"
+		class={className}
+		style={style}
+	>
+		<figure class="quote-of-day" data-server-index={String(serverIndex)}>
+			<blockquote class="quote-of-day__body">
+				<span class="quote-of-day__mark" aria-hidden="true">「</span>
+				<span class="quote-of-day__text">{initialQuote.text}</span>
+				<span class="quote-of-day__mark" aria-hidden="true">」</span>
+			</blockquote>
+			<figcaption class="quote-of-day__author">
+				—— {initialQuote.author}
+			</figcaption>
+		</figure>
+	</WidgetLayout>
+)}
+
+<style lang="stylus">
+.quote-of-day
+	margin: 0.125rem 0 0
+	display: flex
+	flex-direction: column
+	gap: 0.375rem
+
+	&__body
+		margin: 0
+		line-height: 1.75
+		font-size: 0.875rem
+		color: var(--on-surface)
+
+	&__mark
+		color: var(--primary)
+		opacity: 0.5
+		font-weight: 500
+
+	&__text
+		transition: color 180ms ease
+
+		@media (hover: hover)
+			&:hover
+				color: var(--primary)
+
+	&__author
+		margin: 0
+		align-self: flex-end
+		font-size: 0.75rem
+		color: var(--on-surface-variant)
+		opacity: 0.85
+</style>
+
+<script is:inline define:vars={{ quotes }}>
+	// 客户端按访客本地日期校准（SSR 初值可能来自构建日），并安排午夜轮换。
+	// 侧栏是 Swup 容器外的长驻元素，本脚本只在整页加载时执行一次，
+	// 定时器由组件独占管理，不会因站内切页产生重复任务。
+	const dayIndex = () =>
+		Math.floor(
+			Date.UTC(
+				new Date().getFullYear(),
+				new Date().getMonth(),
+				new Date().getDate(),
+			) / 86_400_000,
+		) % quotes.length;
+
+	const applyQuote = () => {
+		const layout = document.querySelector(
+			'widget-layout[data-id="quote-of-the-day"]',
+		);
+		if (!layout) return;
+		const index = dayIndex();
+		if (Number(layout.dataset.serverIndex) === index) return;
+		const text = layout.querySelector(".quote-of-day__text");
+		const author = layout.querySelector(".quote-of-day__author");
+		if (text && quotes[index]) text.textContent = quotes[index].text;
+		if (author && quotes[index])
+			author.textContent = `—— ${quotes[index].author}`;
+		layout.dataset.serverIndex = String(index);
+	};
+
+	const scheduleMidnight = () => {
+		const now = new Date();
+		// 下一个本地零点 +1s，避免与系统时间戳精度竞态
+		const next = new Date(
+			now.getFullYear(),
+			now.getMonth(),
+			now.getDate() + 1,
+			0,
+			0,
+			1,
+		);
+		window.setTimeout(() => {
+			applyQuote();
+			scheduleMidnight();
+		}, Math.max(1000, next.getTime() - now.getTime()));
+	};
+
+	applyQuote();
+	scheduleMidnight();
+</script>

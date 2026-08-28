@@ -104,6 +104,8 @@ const styleVars = [
     background: var(--m3-card-bg)
     -webkit-backdrop-filter: var(--card-blur)
     backdrop-filter: var(--card-blur)
+    /* 默认（filled）也带柔和阴影，保证半透明卡片有层次感 */
+    box-shadow: var(--card-shadow)
     color: var(--on-surface)
     /* 形状圆角跟随变体一致，内容溢出圆角裁剪 */
     overflow: hidden

@@ -69,13 +69,14 @@ const fallback = $derived((skill.name.charAt(0) || "?").toUpperCase());
 	backdrop-filter: var(--card-blur)
 	border: 1px solid var(--outline-variant)
 	border-radius: var(--shape-corner-l)
+	box-shadow: var(--card-shadow)
 	transition:
 		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
 
 	&:hover
 		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-1)
+		box-shadow: var(--m3e-elevation-2)
 
 	&__header
 		display: flex

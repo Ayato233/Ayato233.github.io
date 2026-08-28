@@ -143,6 +143,7 @@ const showImage = $derived(Boolean(device.image) && !coverFailed);
 	backdrop-filter: var(--card-blur)
 	border: 1px solid var(--outline-variant)
 	border-radius: var(--shape-corner-l)
+	box-shadow: var(--card-shadow)
 	transition:
 		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),

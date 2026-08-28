@@ -1,0 +1,334 @@
+---
+/**
+ * 时间进度侧栏组件：年/月/周三条进度 + 下一个节日倒计时。
+ *
+ * 设计目标（沿主题「按需加载 / 零额外负担」铁律）：
+ * - 零网络：全部为本地日期计算，节日表来自 scheduleConfig；
+ * - SSR 可见：初值（进度/剩余天数/节日）服务端渲染，禁 JS 仍完整显示；
+ * - 客户端只补「跨天」：午夜定时器刷新一次（侧栏长驻 Swup 容器外，无残留）；
+ * - 计算注意：闰年、周日起始（周日=0 → 映射周一=1）、月天数、跨年节日取明年。
+ */
+import { scheduleConfig } from "@/config/scheduleConfig";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import WidgetLayout from "./WidgetLayout.astro";
+
+interface Props {
+	class?: string;
+	style?: string;
+}
+const className = Astro.props.class;
+const style = Astro.props.style;
+
+const holidays = scheduleConfig.holidays;
+
+const MINUTE_MS = 86_400_000;
+const isLeap = (y: number) => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+const daysInMonth = (y: number, m: number) => new Date(y, m, 0).getDate(); // m 1-12
+const dayOfYear = (d: Date) => {
+	const start = new Date(d.getFullYear(), 0, 1);
+	return Math.round((d.getTime() - start.getTime()) / MINUTE_MS) + 1;
+};
+const nextHolidayDate = (holiday: (typeof holidays)[number], year: number) => {
+	if (holiday.fixed) {
+		const d = new Date(year, holiday.fixed.month - 1, holiday.fixed.day);
+		return d.getTime() >= Date.now() ? d : null;
+	}
+	if (holiday.nthWeekday) {
+		const { month, nth, weekday } = holiday.nthWeekday;
+		const first = new Date(year, month - 1, 1);
+		let diff = weekday - first.getDay();
+		if (diff < 0) diff += 7;
+		const day = 1 + diff + (nth - 1) * 7;
+		if (day > daysInMonth(year, month)) return null;
+		const d = new Date(year, month - 1, day);
+		return d.getTime() >= Date.now() ? d : null;
+	}
+	return null;
+};
+
+function compute(now: Date) {
+	const year = now.getFullYear();
+	const month = now.getMonth() + 1;
+	const day = now.getDate();
+
+	// 年
+	const yearDays = isLeap(year) ? 366 : 365;
+	const yearPassed = dayOfYear(now);
+	const yearPercent = Math.round((yearPassed / yearDays) * 100);
+	const yearLeft = yearDays - yearPassed;
+
+	// 月
+	const monthDays = daysInMonth(year, month);
+	const monthPercent = Math.round((day / monthDays) * 100);
+	const monthLeft = monthDays - day;
+
+	// 周（周一=1 … 周日=7）
+	const jsDow = now.getDay();
+	const weekDay = jsDow === 0 ? 7 : jsDow;
+	const weekPercent = Math.round((weekDay / 7) * 100);
+	const weekLeft = 7 - weekDay;
+
+	// 下一个节日（今年或明年）
+	const thisYear = holidays
+		.map((h) => ({ h, d: nextHolidayDate(h, year) }))
+		.filter((x): x is { h: (typeof holidays)[number]; d: Date } => !!x.d)
+		.map((x) => ({
+			name: x.h.name,
+			days: Math.round((x.d.getTime() - now.getTime()) / MINUTE_MS),
+			t: x.d.getTime(),
+		}))
+		.sort((a, b) => a.t - b.t)[0];
+	const nextYear = holidays
+		.map((h) => ({ h, d: nextHolidayDate(h, year + 1) }))
+		.filter((x): x is { h: (typeof holidays)[number]; d: Date } => !!x.d)
+		.map((x) => ({
+			name: x.h.name,
+			days: Math.round((x.d.getTime() - now.getTime()) / MINUTE_MS),
+			t: x.d.getTime(),
+		}))
+		.sort((a, b) => a.t - b.t)[0];
+	const holiday = thisYear ?? nextYear;
+
+	return {
+		yearPercent,
+		yearLeft,
+		monthPercent,
+		monthLeft,
+		weekPercent,
+		weekLeft,
+		holidayName: holiday?.name ?? "",
+		holidayDays: holiday?.days ?? 0,
+	};
+}
+
+const now = new Date();
+const v = compute(now);
+---
+
+<WidgetLayout
+	name={i18n(I18nKey.scheduleProgress)}
+	id="schedule-progress"
+	class={className}
+	style={style}
+>
+	<div class="sp">
+		<div class="sp__row" data-kind="year">
+			<span class="sp__percent" data-f="yearPercent">{v.yearPercent}%</span>
+			<div class="sp__detail">
+				<span class="sp__copy" data-f="yearLeft">本年还剩 {v.yearLeft} 天</span>
+				<div class="sp__track">
+					<i style={`width: ${v.yearPercent}%`}></i>
+				</div>
+			</div>
+		</div>
+		<div class="sp__row" data-kind="month">
+			<span class="sp__percent" data-f="monthPercent">{v.monthPercent}%</span>
+			<div class="sp__detail">
+				<span class="sp__copy" data-f="monthLeft">本月还剩 {v.monthLeft} 天</span>
+				<div class="sp__track">
+					<i style={`width: ${v.monthPercent}%`}></i>
+				</div>
+			</div>
+		</div>
+		<div class="sp__row" data-kind="week">
+			<span class="sp__percent" data-f="weekPercent">{v.weekPercent}%</span>
+			<div class="sp__detail">
+				<span class="sp__copy" data-f="weekLeft">本周还剩 {v.weekLeft} 天</span>
+				<div class="sp__track">
+					<i style={`width: ${v.weekPercent}%`}></i>
+				</div>
+			</div>
+		</div>
+		{v.holidayName && (
+			<div class="sp__milestone">
+				<span class="sp__milestone-label">下一个节日</span>
+				<div class="sp__milestone-meta">
+					<span class="sp__milestone-name" data-f="holidayName">{v.holidayName}</span>
+					<span class="sp__milestone-days" data-f="holidayDays">{v.holidayDays} 天</span>
+				</div>
+			</div>
+		)}
+	</div>
+</WidgetLayout>
+
+<style lang="stylus">
+.sp
+	display: flex
+	flex-direction: column
+	gap: 0.75rem
+
+	&__row
+		display: flex
+		align-items: center
+		gap: 0.625rem
+
+	&__percent
+		width: 2.75rem
+		flex: none
+		font-family: var(--m3e-font-mono-family)
+		font-size: 0.75rem
+		font-weight: 700
+		font-variant-numeric: tabular-nums
+		color: var(--primary)
+
+	&__detail
+		min-width: 0
+		flex: 1
+		display: flex
+		flex-direction: column
+		gap: 0.25rem
+
+	&__copy
+		font-size: 0.75rem
+		color: var(--on-surface-variant)
+
+	&__track
+		height: 0.375rem
+		border-radius: 999px
+		background: var(--surface-container-high)
+		overflow: hidden
+
+		i
+			display: block
+			height: 100%
+			border-radius: inherit
+			background: linear-gradient(
+				90deg,
+				var(--secondary),
+				var(--primary)
+			)
+			transition: width 0.3s var(--m3e-easing-standard)
+
+	&__milestone
+		margin-top: 0.25rem
+		padding-top: 0.625rem
+		border-top: 1px dashed var(--outline-variant)
+		display: flex
+		flex-direction: column
+		gap: 0.25rem
+
+	&__milestone-label
+		font-size: 0.6875rem
+		letter-spacing: 0.05em
+		color: var(--on-surface-variant)
+		opacity: 0.85
+
+	&__milestone-meta
+		display: flex
+		align-items: baseline
+		justify-content: space-between
+		gap: 0.5rem
+
+	&__milestone-name
+		font-size: 0.875rem
+		font-weight: 600
+		color: var(--on-surface)
+
+	&__milestone-days
+		font-family: var(--m3e-font-mono-family)
+		font-size: 0.8125rem
+		font-weight: 700
+		font-variant-numeric: tabular-nums
+		color: var(--primary)
+</style>
+
+<script is:inline define:vars={{ holidays }}>
+	// 跨天刷新：午夜定时器重算并更新进度与节日（侧栏长驻，无残留）
+	const root = document.querySelector(
+		'widget-layout[data-id="schedule-progress"]',
+	);
+	if (!root) throw new Error("schedule-progress widget not found");
+
+	const MS_DAY = 86_400_000;
+	const isLeap = (y) => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+	const daysInMonth = (y, m) => new Date(y, m, 0).getDate();
+	const dayOfYear = (d) =>
+		Math.round((d.getTime() - new Date(d.getFullYear(), 0, 1).getTime()) / MS_DAY) +
+		1;
+	const holidayDate = (h, year) => {
+		if (h.fixed) {
+			const d = new Date(year, h.fixed.month - 1, h.fixed.day);
+			return d.getTime() >= Date.now() ? d : null;
+		}
+		if (h.nthWeekday) {
+			const { month, nth, weekday } = h.nthWeekday;
+			const first = new Date(year, month - 1, 1);
+			let diff = weekday - first.getDay();
+			if (diff < 0) diff += 7;
+			const day = 1 + diff + (nth - 1) * 7;
+			if (day > daysInMonth(year, month)) return null;
+			const d = new Date(year, month - 1, day);
+			return d.getTime() >= Date.now() ? d : null;
+		}
+		return null;
+	};
+	const pickHoliday = (year) => {
+		const list = holidays
+			.map((h) => ({ h, d: holidayDate(h, year) }))
+			.filter((x) => !!x.d)
+			.map((x) => ({
+				name: x.h.name,
+				days: Math.round((x.d.getTime() - Date.now()) / MS_DAY),
+				t: x.d.getTime(),
+			}))
+			.sort((a, b) => a.t - b.t)[0];
+		return list || null;
+	};
+
+	function refresh() {
+		const now = new Date();
+		const y = now.getFullYear();
+		const m = now.getMonth() + 1;
+		const d = now.getDate();
+
+		const yearDays = isLeap(y) ? 366 : 365;
+		const yearPassed = dayOfYear(now);
+		const set = (kind, field, text) => {
+			const el = root.querySelector(
+				`.sp__row[data-kind="${kind}"] [data-f="${field}"]`,
+			);
+			if (el) el.textContent = text;
+		};
+		set("year", "yearPercent", Math.round((yearPassed / yearDays) * 100) + "%");
+		set("year", "yearLeft", `本年还剩 ${yearDays - yearPassed} 天`);
+		const monthDays = daysInMonth(y, m);
+		set("month", "monthPercent", Math.round((d / monthDays) * 100) + "%");
+		set("month", "monthLeft", `本月还剩 ${monthDays - d} 天`);
+		const jsDow = now.getDay();
+		const weekDay = jsDow === 0 ? 7 : jsDow;
+		set("week", "weekPercent", Math.round((weekDay / 7) * 100) + "%");
+		set("week", "weekLeft", `本周还剩 ${7 - weekDay} 天`);
+
+		// 更新轨道宽度
+		const setTrack = (kind, pct) => {
+			const el = root.querySelector(
+				`.sp__row[data-kind="${kind}"] .sp__track i`,
+			);
+			if (el) el.style.width = pct + "%";
+		};
+		setTrack("year", Math.round((yearPassed / yearDays) * 100));
+		setTrack("month", Math.round((d / monthDays) * 100));
+		setTrack("week", Math.round((weekDay / 7) * 100));
+
+		const holiday = pickHoliday(y) || pickHoliday(y + 1);
+		const nameEl = root.querySelector('[data-f="holidayName"]');
+		const daysEl = root.querySelector('[data-f="holidayDays"]');
+		if (holiday && nameEl && daysEl) {
+			nameEl.textContent = holiday.name;
+			daysEl.textContent = holiday.days + " 天";
+		}
+	}
+
+	function alignToMidnight() {
+		const now = new Date();
+		const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+		window.setTimeout(() => {
+			refresh();
+			alignToMidnight();
+		}, Math.max(1000, next.getTime() - now.getTime() + 100));
+	}
+
+	refresh();
+	alignToMidnight();
+</script>
