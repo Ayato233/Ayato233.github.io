@@ -1,4 +1,4 @@
-# build output
+﻿# build output
 dist/
 
 # generated types
@@ -33,10 +33,6 @@ yarn.lock
 src/assets/fonts/.subset/
 *.iml
 
-# anime snapshot data & downloaded covers
-src/data/anime-snapshots/*.json
-public/assets/anime/covers/*
-!public/assets/anime/covers/.gitkeep
 
 # generated responsive moment thumbnails
 public/assets/moments/thumbnails/*
@@ -57,3 +53,4 @@ tests/site/visual.spec.ts-snapshots/
 artifacts/lighthouse/*
 !artifacts/lighthouse/.gitkeep
 .lighthouseci/
+
