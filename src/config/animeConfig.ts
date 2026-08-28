@@ -43,9 +43,9 @@ export const animeConfig: AnimeConfig = {
 
 	/** 主数据源选择 */
 	source: {
-		kind: "local",
-		// provider: "bangumi",
-		// file: "bangumi.json",
+		kind: "snapshot",
+		provider: "bilibili",
+		// file: "bilibili.json",
 		// fetchOnDev: true,
 	},
 
@@ -66,8 +66,8 @@ export const animeConfig: AnimeConfig = {
 			},
 		},
 		bilibili: {
-			enable: false,
-			vmid: "", // 填入你的 B 站公开 UID
+			enable: true,
+			vmid: "24769766", // 填入你的 B 站公开 UID
 			sessdataEnv: "BILI_SESSDATA",
 			cover: {
 				mode: "local", // "local" 站内下载缓存（推荐）| "remote" 远程链接 | "none"
