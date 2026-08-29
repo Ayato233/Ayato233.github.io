@@ -70,20 +70,19 @@ const host = $derived.by(() => {
 	border-radius: var(--shape-corner-l)
 	background: var(--card-bg)
 
-	-webkit-backdrop-filter: var(--card-blur)
+	-webkit-backdrop-filter: blur(16px)
 
-	backdrop-filter: var(--card-blur)
+	backdrop-filter: blur(16px)
 	color: var(--on-surface)
-	border: 1px solid var(--outline-variant)
+	/* 拟态玻璃：去深色描边，换顶部微反光 + 柔和悬浮阴影（与动态/番剧卡一致） */
+	border: none
 	text-decoration: none
-	box-shadow: var(--card-shadow)
+	box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.08)"), var(--card-shadow)
 	transition:
-		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
 	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-2)
+		box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.12)"), var(--m3e-elevation-2)
 		background: unquote("color-mix(in oklab, var(--on-surface) 3%, var(--card-bg))")
 
 	&__body
@@ -159,4 +158,10 @@ const host = $derived.by(() => {
 	&__tag
 		color: var(--on-surface-variant)
 		font: var(--m3e-type-label-small)
+
+/* 触屏设备降低玻璃模糊（对齐 variables 的 --card-blur 降级策略） */
+@media (hover: none) and (pointer: coarse)
+	.friend-card
+		-webkit-backdrop-filter: blur(6px)
+		backdrop-filter: blur(6px)
 </style>
