@@ -116,26 +116,33 @@ export const LinkPresets: Record<string, NavBarLink> = {
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPresets.Home,
-		LinkPresets.Archive,
-		LinkPresets.Friends,
+		{
+			name: i18n(I18nKey.articles),
+			icon: "material-symbols:article-outline-rounded",
+			children: [
+				LinkPresets.Archive,
+				LinkPresets.Categories,
+				LinkPresets.Tags,
+			],
+		},
 		LinkPresets.Moments,
 		LinkPresets.Anime,
-		LinkPresets.Compass,
 		LinkPresets.Albums,
+		{
+			name: i18n(I18nKey.social),
+			icon: "material-symbols:groups-outline-rounded",
+			children: [LinkPresets.Friends, LinkPresets.Guestbook],
+		},
 		{
 			name: i18n(I18nKey.more),
 			icon: "material-symbols:apps-rounded",
 			children: [
+				LinkPresets.Compass,
 				...(timelineConfig.enable ? [LinkPresets.Timeline] : []),
 				...(projectsConfig.enable ? [LinkPresets.Projects] : []),
 				...(devicesConfig.enable ? [LinkPresets.Devices] : []),
 				...(skillsConfig.enable ? [LinkPresets.Skills] : []),
-				// 分类/标签入口不进导航菜单（避免菜单项过多），预设已登记指向独立页面，
-				// 需要时取消注释即可
-				// LinkPresets.Categories,
-				// LinkPresets.Tags,
 				LinkPresets.About,
-				LinkPresets.Guestbook,
 			],
 		},
 	],
