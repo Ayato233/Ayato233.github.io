@@ -20,11 +20,6 @@ export const compassData: CompassShelf[] = [
         "note": "daohangtx.com"
       },
       {
-        "label": "编程导航 - 程序员导航",
-        "href": "https://home.code-nav.cn/",
-        "note": "程序员常用站点导航"
-      },
-      {
         "label": "TinyPNG – Compress PNG images while preserving transparency",
         "href": "https://tinypng.com/",
         "note": "在线 PNG/JPEG 无损压缩"
@@ -55,9 +50,24 @@ export const compassData: CompassShelf[] = [
         "note": "Steam 社区加速与增强工具箱"
       },
       {
-        "label": "GitHub 文件加速",
-        "href": "https://ghproxy.net/",
-        "note": "GitHub 下载与克隆加速代理"
+        "label": "Photopea",
+        "href": "https://www.photopea.com",
+        "note": "在线版 Photoshop，免安装修图"
+      },
+      {
+        "label": "regex101",
+        "href": "https://regex101.com",
+        "note": "正则表达式在线测试与调试"
+      },
+      {
+        "label": "DeepL",
+        "href": "https://www.deepl.com",
+        "note": "高质量机器翻译"
+      },
+      {
+        "label": "caniuse",
+        "href": "https://caniuse.com",
+        "note": "浏览器兼容性查询"
       }
     ]
   },
@@ -99,7 +109,7 @@ export const compassData: CompassShelf[] = [
       },
       {
         "label": "Layui 开发使用文档 - 入门指南",
-        "href": "http://layui.sandbean.com/doc/index.htm",
+        "href": "https://layui.dev/",
         "note": "经典前端 UI 框架文档"
       },
       {
@@ -133,11 +143,6 @@ export const compassData: CompassShelf[] = [
         "note": "r2coding.com"
       },
       {
-        "label": "mysql Tags | Docker Hub",
-        "href": "https://hub.docker.com/_/mysql/tags",
-        "note": "Docker 官方镜像仓库"
-      },
-      {
         "label": "Docker and Kubernetes Management | Portainer",
         "href": "https://www.portainer.io/",
         "note": "portainer.io"
@@ -148,9 +153,24 @@ export const compassData: CompassShelf[] = [
         "note": "docker.com"
       },
       {
-        "label": "Portainer | local",
-        "href": "http://121.37.97.58:9000/#!/home",
-        "note": "本地容器管理界面"
+        "label": "MDN Web Docs",
+        "href": "https://developer.mozilla.org",
+        "note": "Web 开发权威文档库"
+      },
+      {
+        "label": "DevDocs",
+        "href": "https://devdocs.io",
+        "note": "开发者文档聚合快速查阅"
+      },
+      {
+        "label": "LeetCode",
+        "href": "https://leetcode.cn",
+        "note": "算法刷题平台"
+      },
+      {
+        "label": "TypeScript",
+        "href": "https://www.typescriptlang.org",
+        "note": "TypeScript 官方文档"
       }
     ]
   },
@@ -224,6 +244,11 @@ export const compassData: CompassShelf[] = [
         "label": "芙芙启动器",
         "href": "https://philia093.xyz/",
         "note": "个人项目启动器站点"
+      },
+      {
+        "label": "AniList",
+        "href": "https://anilist.co",
+        "note": "国际追番/漫画收藏管理"
       }
     ]
   },
@@ -247,6 +272,103 @@ export const compassData: CompassShelf[] = [
         "label": "DeepSeek | 深度求索",
         "href": "https://www.deepseek.com/",
         "note": "deepseek.com"
+      },
+      {
+        "label": "Ollama",
+        "href": "https://ollama.com",
+        "note": "本地运行大模型"
+      },
+      {
+        "label": "LM Studio",
+        "href": "https://lmstudio.ai",
+        "note": "本地模型图形化管理"
+      }
+    ]
+  },
+  {
+    "key": "resources",
+    "name": "资源",
+    "icon": "material-symbols:photo-library-outline-rounded",
+    "blurb": "免费图库与图标资源",
+    "entries": [
+      {
+        "label": "Unsplash",
+        "href": "https://unsplash.com",
+        "note": "免费高清图片库"
+      },
+      {
+        "label": "Iconify",
+        "href": "https://iconify.design",
+        "note": "跨图标集图标搜索"
+      }
+    ]
+  },
+  {
+    "key": "design",
+    "name": "设计",
+    "icon": "material-symbols:palette-outline-rounded",
+    "blurb": "界面设计、灵感与素材",
+    "entries": [
+      {
+        "label": "Figma",
+        "href": "https://www.figma.com",
+        "note": "界面设计与协作"
+      },
+      {
+        "label": "Dribbble",
+        "href": "https://dribbble.com",
+        "note": "设计师灵感社区"
+      },
+      {
+        "label": "Coolors",
+        "href": "https://coolors.co",
+        "note": "快速配色方案生成"
+      },
+      {
+        "label": "Excalidraw",
+        "href": "https://excalidraw.com",
+        "note": "手绘风白板绘图"
+      }
+    ]
+  },
+  {
+    "key": "community",
+    "name": "社区",
+    "icon": "material-symbols:forum-outline-rounded",
+    "blurb": "开发者问答与内容社区",
+    "entries": [
+      {
+        "label": "Stack Overflow",
+        "href": "https://stackoverflow.com",
+        "note": "全球开发者问答"
+      },
+      {
+        "label": "思否 SegmentFault",
+        "href": "https://segmentfault.com",
+        "note": "中文技术问答社区"
+      },
+      {
+        "label": "掘金",
+        "href": "https://juejin.cn",
+        "note": "技术文章与沸点"
+      }
+    ]
+  },
+  {
+    "key": "media",
+    "name": "影音",
+    "icon": "material-symbols:movie-outline-rounded",
+    "blurb": "视频与音乐平台",
+    "entries": [
+      {
+        "label": "哔哩哔哩",
+        "href": "https://www.bilibili.com",
+        "note": "视频弹幕社区（ACG 主场）"
+      },
+      {
+        "label": "网易云音乐",
+        "href": "https://music.163.com",
+        "note": "在线音乐平台"
       }
     ]
   }

@@ -271,8 +271,11 @@ onMount(() => {
 
 .compass-shelf__grid
 	display: grid
-	grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr))
+	grid-template-columns: repeat(2, minmax(0, 1fr))
 	gap: 0.75rem
+
+	@media (min-width: 48rem)
+		grid-template-columns: repeat(4, minmax(0, 1fr))
 
 	@media (max-width: bp-sm - 1px)
 		gap: 0.625rem
