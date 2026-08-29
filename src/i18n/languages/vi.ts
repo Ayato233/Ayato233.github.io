@@ -311,4 +311,7 @@ export const vi: Translation = {
 	[Key.social]: "Mạng xã hội",
 	[Key.articles]: "Bài viết",
 	[Key.cardOpacity]: "Độ mờ của thẻ",
+	[Key.fontToggle]: "Chuyển đổi phông chữ",
+	[Key.animeAll]: "Tất cả",
+	[Key.animeMeta]: "{count} anime · cập nhật {date}",
 };

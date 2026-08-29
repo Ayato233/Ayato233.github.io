@@ -309,4 +309,7 @@ export const ja: Translation = {
 	[Key.social]: "ソーシャル",
 	[Key.articles]: "記事",
 	[Key.cardOpacity]: "カードの不透明度",
+	[Key.fontToggle]: "フォント切替",
+	[Key.animeAll]: "すべて",
+	[Key.animeMeta]: "アニメ {count} 件 · 更新 {date}",
 };

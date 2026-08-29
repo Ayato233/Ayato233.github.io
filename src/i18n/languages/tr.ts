@@ -312,4 +312,7 @@ export const tr: Translation = {
 	[Key.social]: "Sosyal",
 	[Key.articles]: "Makaleler",
 	[Key.cardOpacity]: "Kart opakliği",
+	[Key.fontToggle]: "Yazı tipi değiştir",
+	[Key.animeAll]: "Tümü",
+	[Key.animeMeta]: "{count} anime · güncellenme {date}",
 };

@@ -31,7 +31,7 @@ export const zh_CN: Translation = {
 	[Key.animeNoResults]: "没有符合条件的番剧",
 	[Key.animeCounts]: "部番剧",
 	[Key.animeStatusWatching]: "在看",
-	[Key.animeStatusCompleted]: "看完",
+	[Key.animeStatusCompleted]: "看过",
 	[Key.animeStatusPlanned]: "想看",
 	[Key.animeStatusOnHold]: "搁置",
 	[Key.animeStatusDropped]: "弃番",
@@ -299,4 +299,7 @@ export const zh_CN: Translation = {
 	[Key.social]: "社交",
 	[Key.articles]: "文章",
 	[Key.cardOpacity]: "卡片透明度",
+	[Key.fontToggle]: "字体切换",
+	[Key.animeAll]: "全部",
+	[Key.animeMeta]: "动画 {count} 部 · 数据更新于 {date}",
 };

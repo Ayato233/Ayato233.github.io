@@ -298,4 +298,7 @@ export const th: Translation = {
 	[Key.social]: "โซเชียล",
 	[Key.articles]: "บทความ",
 	[Key.cardOpacity]: "ความทึบของการ์ด",
+	[Key.fontToggle]: "สลับฟอนต์",
+	[Key.animeAll]: "ทั้งหมด",
+	[Key.animeMeta]: "อนิเมะ {count} · อัปเดต {date}",
 };

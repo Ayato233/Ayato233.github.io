@@ -308,4 +308,7 @@ export const ko: Translation = {
 	[Key.social]: "소셜",
 	[Key.articles]: "게시물",
 	[Key.cardOpacity]: "카드 불투명도",
+	[Key.fontToggle]: "폰트 토글",
+	[Key.animeAll]: "전체",
+	[Key.animeMeta]: "애니메이션 {count}개 · 업데이트 {date}",
 };

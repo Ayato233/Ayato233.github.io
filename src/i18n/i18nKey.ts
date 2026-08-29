@@ -27,6 +27,9 @@ enum I18nKey {
 	anime = "anime",
 	animeBanner = "animeBanner",
 	animeNoResults = "animeNoResults",
+	animeAll = "animeAll",
+	animeMeta = "animeMeta",
+
 	animeCounts = "animeCounts",
 	animeStatusWatching = "animeStatusWatching",
 	animeStatusCompleted = "animeStatusCompleted",
@@ -137,6 +140,8 @@ enum I18nKey {
 	scheduleProgress = "scheduleProgress",
 	welcomeKicker = "welcomeKicker",
 	welcomeTitle = "welcomeTitle",
+
+	fontToggle = "fontToggle",
 
 	cardOpacity = "cardOpacity",
 

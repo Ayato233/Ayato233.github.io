@@ -309,4 +309,7 @@ export const en: Translation = {
 	[Key.social]: "Social",
 	[Key.articles]: "Posts",
 	[Key.cardOpacity]: "Card opacity",
+	[Key.fontToggle]: "Font toggle",
+	[Key.animeAll]: "All",
+	[Key.animeMeta]: "{count} anime · synced {date}",
 };

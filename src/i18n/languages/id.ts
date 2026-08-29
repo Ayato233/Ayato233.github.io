@@ -313,4 +313,7 @@ export const id: Translation = {
 	[Key.social]: "Sosial",
 	[Key.articles]: "Artikel",
 	[Key.cardOpacity]: "Opasitas kartu",
+	[Key.fontToggle]: "Ganti jenis huruf",
+	[Key.animeAll]: "Semua",
+	[Key.animeMeta]: "{count} anime · diperbarui {date}",
 };

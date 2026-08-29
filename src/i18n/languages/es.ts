@@ -311,4 +311,7 @@ export const es: Translation = {
 	[Key.social]: "Social",
 	[Key.articles]: "Artículos",
 	[Key.cardOpacity]: "Opacidad de tarjetas",
+	[Key.fontToggle]: "Alternar fuente",
+	[Key.animeAll]: "Todos",
+	[Key.animeMeta]: "{count} animes · actualizado {date}",
 };

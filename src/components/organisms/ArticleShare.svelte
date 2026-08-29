@@ -248,7 +248,7 @@ function downloadPoster() {
 	{#if shareDialogOpen}
 		<Dialog bind:open={shareDialogOpen} title={i18n(I18nKey.shareArticle)} class="article-share-dialog">
 			<div class="share-dialog-content">
-				{#if posterState === "generating"}
+				{#if posterState === "idle" || posterState === "generating"}
 					<div class="share-poster-status share-poster-status--loading">
 						<ProgressIndicator variant="circular" label={i18n(I18nKey.generatingSharePoster)} />
 						<p>{i18n(I18nKey.generatingSharePoster)}</p>
