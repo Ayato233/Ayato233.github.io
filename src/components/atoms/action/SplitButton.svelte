@@ -182,8 +182,8 @@ let {
         --m3e-state-color: var(--primary)
         box-shadow: none
         .m3-split-button__leading, .m3-split-button__trailing
-            border: 1px solid var(--outline)
-            background: transparent
+            border: none
+            background: var(--surface-container-high)
 
     /* disabled：两段整体禁用 */
     &:has(button:disabled)

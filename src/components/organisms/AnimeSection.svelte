@@ -172,7 +172,7 @@ onMount(() => {
 });
 </script>
 
-<Card color="var(--card-bg)" radius="l" class="anime-section px-8 py-6">
+<div class="anime-section px-8 py-6">
 	<PageHeader
 		icon="material-symbols:live-tv-outline-rounded"
 		title={i18n(I18nKey.anime)}
@@ -285,7 +285,7 @@ onMount(() => {
 			{/if}
 		</div>
 	{/if}
-</Card>
+</div>
 
 <style lang="stylus">
 @import "../../styles/breakpoints.styl"

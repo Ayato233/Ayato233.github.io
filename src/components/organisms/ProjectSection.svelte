@@ -108,7 +108,7 @@ $effect(() => {
 });
 </script>
 
-<Card color="var(--card-bg)" radius="l" class="projects-section px-8 py-6">
+<div class="projects-section px-8 py-6">
 	<PageHeader
 		icon="material-symbols:deployed-code-outline-rounded"
 		title={i18n(I18nKey.projects)}
@@ -192,7 +192,7 @@ $effect(() => {
 			<span>{i18n(I18nKey.projectsNoResults)}</span>
 		</div>
 	{/if}
-</Card>
+</div>
 
 <style lang="stylus">
 @import "../../styles/breakpoints.styl"

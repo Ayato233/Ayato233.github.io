@@ -1,6 +1,5 @@
 ---
 import { getEntry, render } from "astro:content";
-import Card from "@components/atoms/display/Card.svelte";
 import Markdown from "@components/content/Markdown.astro";
 import FriendSection from "@components/organisms/FriendSection.svelte";
 import I18nKey from "@i18n/i18nKey";
@@ -19,11 +18,11 @@ const { Content } = await render(friendsPost);
 
 <MainGridLayout title={i18n(I18nKey.friends)} description={i18n(I18nKey.friendsBanner)} page="friends">
 	<FriendSection friends={getFriendsList()} client:visible />
-	<div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32 mt-6">
-		<Card color="var(--card-bg)" radius="l" class="z-10 px-4 py-5 sm:px-7 relative w-full">
+	<div class="flex w-full relative min-h-32 mt-6 px-4 sm:px-8">
+		<div class="w-full">
 			<Markdown class="mt-2">
 				<Content />
 			</Markdown>
-		</Card>
+		</div>
 	</div>
 </MainGridLayout>

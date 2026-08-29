@@ -71,7 +71,7 @@ onMount(() => {
 });
 </script>
 
-<Card color="var(--card-bg)" radius="l" class="album-section px-8 py-6">
+<div class="album-section px-8 py-6">
 	<PageHeader
 		icon="material-symbols:photo-library-outline-rounded"
 		title={i18n(I18nKey.albums)}
@@ -130,7 +130,7 @@ onMount(() => {
 			<span>{i18n(I18nKey.albumsNoResults)}</span>
 		</div>
 	{/if}
-</Card>
+</div>
 
 <style lang="stylus">
 .album-section

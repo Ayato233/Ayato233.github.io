@@ -34,7 +34,7 @@ const filteredItems = $derived(
 );
 </script>
 
-<Card color="var(--card-bg)" radius="l" class="skills-section px-8 py-6">
+<div class="skills-section px-8 py-6">
 	<PageHeader
 		icon="material-symbols:workspaces-outline-rounded"
 		title={i18n(I18nKey.skills)}
@@ -54,7 +54,7 @@ const filteredItems = $derived(
 			<SkillCard {skill} delay={Math.min(index, 7) * 45} />
 		{/each}
 	</div>
-</Card>
+</div>
 
 <style lang="stylus">
 @import "../../styles/breakpoints.styl"

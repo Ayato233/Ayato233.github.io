@@ -106,7 +106,7 @@ onMount(() => {
 });
 </script>
 
-<Card color="var(--card-bg)" radius="l" class="compass-section px-8 py-6">
+<div class="compass-section px-8 py-6">
 	<PageHeader
 		icon="material-symbols:explore-rounded"
 		title={i18n(I18nKey.compass)}
@@ -182,7 +182,7 @@ onMount(() => {
 			<span>{i18n(I18nKey.compassNoResults)}</span>
 		</div>
 	{/if}
-</Card>
+</div>
 
 <style lang="stylus">
 @import "../../styles/breakpoints.styl"

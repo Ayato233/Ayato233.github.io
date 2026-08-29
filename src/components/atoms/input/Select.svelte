@@ -318,13 +318,13 @@ $effect(() => {
 	&--filled.m3-select--open &__field
 		background: unquote("color-mix(in oklab, var(--on-surface) 16%, var(--surface-container-high))")
 
-	/* ===== outlined：surface + 1px outline-variant 边框 ===== */
+	/* ===== outlined：填充式（无描边，聚焦主题环） ===== */
 	&--outlined &__field
 		border-radius: var(--shape-corner-xs)
-		border: 1px solid var(--outline-variant)
-		background: var(--surface)
+		border: none
+		background: var(--surface-container-low)
 		&:hover
-			border-color: var(--outline)
+			box-shadow: 0 0 0 1px var(--outline)
 		&:focus-visible
 			outline: none
 

@@ -87,7 +87,7 @@ onMount(() => {
 });
 </script>
 
-<Card color="var(--card-bg)" radius="l" class="friend-section px-8 py-6">
+<div class="friend-section px-8 py-6">
 	<PageHeader
 		icon="material-symbols:handshake-outline-rounded"
 		title={i18n(I18nKey.friends)}
@@ -156,7 +156,7 @@ onMount(() => {
 			<span>{i18n(I18nKey.friendsNoResults)}</span>
 		</div>
 	{/if}
-</Card>
+</div>
 
 <style lang="stylus">
 @import "../../styles/breakpoints.styl"

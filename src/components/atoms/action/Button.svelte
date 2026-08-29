@@ -285,12 +285,13 @@ const radiusVar = (r: string) => RADIUS_TOKENS[r] ?? r;
 				opacity: 0.38
 
 	&--outlined
-		border: 1px solid var(--outline)
+		border: none
+		background: var(--surface-container-high)
 		color: var(--primary)
 		--m3e-state-color: var(--primary)
 
 		&:hover
-			border-color: var(--outline)
+			background: var(--surface-container-highest)
 
 		&.m3-button--disabled
 			opacity: 1

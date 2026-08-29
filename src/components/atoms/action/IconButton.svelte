@@ -276,7 +276,8 @@ function handleClick() {
 				opacity: 0.38
 
 	&--outlined
-		border: 1px solid var(--outline)
+		border: none
+		background: var(--surface-container-high)
 		color: var(--on-surface)
 		--m3e-state-color: var(--on-surface)
 

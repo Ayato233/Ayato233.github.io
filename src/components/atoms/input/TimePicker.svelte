@@ -401,9 +401,9 @@ function onDialClick(e: MouseEvent) {
 		height: 40px
 		min-width: 72px
 		padding: 0 12px
-		border: 1px solid var(--outline)
+		border: none
 		border-radius: var(--shape-corner-full)
-		background: transparent
+		background: var(--surface-container-high)
 		color: var(--on-surface-variant)
 		font: var(--m3e-type-label-large)
 		cursor: pointer

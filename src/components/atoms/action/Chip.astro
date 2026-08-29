@@ -93,25 +93,24 @@ const {
   &--assist
     background: var(--surface-container-low)
     color: var(--on-surface-variant)
-    border: 1px solid var(--outline-variant)
+    border: none
     --m3e-state-color: var(--on-surface-variant)
 
   &--filter
-    background: transparent
+    background: var(--surface-container-low)
     color: var(--on-surface-variant)
-    border: 1px solid var(--outline-variant)
+    border: none
     --m3e-state-color: var(--on-surface-variant)
     &.m3-chip--selected
       background: var(--secondary-container)
       color: var(--on-secondary-container)
       --m3e-state-color: var(--on-secondary-container)
-      border-color: transparent
 
   /* suggestion / input：leading 图标 + label，selected 态次级容器（M3 标准） */
   &--suggestion, &--input
-    background: transparent
+    background: var(--surface-container-low)
     color: var(--on-surface-variant)
-    border: 1px solid var(--outline-variant)
+    border: none
     --m3e-state-color: var(--on-surface-variant)
     &.m3-chip--selected
       background: var(--secondary-container)

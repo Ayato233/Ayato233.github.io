@@ -134,11 +134,11 @@ onMount(() => {
                 background: unquote("color-mix(in oklab, var(--on-surface) 12%, var(--surface-container-high))")
 
         &--outlined
-            background: var(--surface)
-            border: 1px solid var(--outline-variant)
+            background: var(--surface-container-low)
+            border: none
             border-radius: var(--shape-corner-xs)
             &:hover
-                border-color: var(--outline)
+                box-shadow: 0 0 0 1px var(--outline)
 
     &__field
         flex: 1

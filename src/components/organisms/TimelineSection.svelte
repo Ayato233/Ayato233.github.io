@@ -51,7 +51,7 @@ const filteredItems = $derived(
 );
 </script>
 
-<Card color="var(--card-bg)" radius="l" class="timeline-section px-8 py-6">
+<div class="timeline-section px-8 py-6">
 	<!-- 页面大标题 -->
 	<PageHeader
 		icon="material-symbols:timeline-rounded"
@@ -98,7 +98,7 @@ const filteredItems = $derived(
 			<span>{i18n(I18nKey.timelineNoResults)}</span>
 		</div>
 	{/if}
-</Card>
+</div>
 
 <style lang="stylus">
 @import "../../styles/breakpoints.styl"

@@ -212,11 +212,11 @@ function onBlur() {
 	&--outlined
 		.m3-autocomplete__field
 			border-radius: var(--shape-corner-xs)
-			border: 1px solid var(--outline-variant)
-			background: var(--surface)
+			border: none
+			background: var(--surface-container-low)
 
 		&:hover .m3-autocomplete__field
-			border-color: var(--outline)
+			box-shadow: 0 0 0 1px var(--outline)
 
 		&.m3-autocomplete--focused .m3-autocomplete__field
 			border-color: var(--primary)

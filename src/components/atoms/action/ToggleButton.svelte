@@ -118,9 +118,9 @@ function handleClick() {
             --m3e-state-color: var(--on-secondary)
 
     &--outlined
-        background: transparent
+        background: var(--surface-container-high)
         color: var(--on-surface-variant)
-        border: 1px solid var(--outline)
+        border: none
         --m3e-state-color: var(--on-surface-variant)
         &.m3-toggle-button--checked
             background: var(--inverse-surface)
