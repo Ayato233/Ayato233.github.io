@@ -146,6 +146,13 @@ const hasMonoFont =
 			}
 
 			document.documentElement.setAttribute('data-theme', isDark ? darkTheme : lightTheme);
+			const cardOpacity = localStorage.getItem('shirone:card-opacity');
+			if (cardOpacity !== null && Number.isFinite(Number(cardOpacity))) {
+				const v = Number(cardOpacity);
+				if (v >= 0.3 && v <= 1) {
+					document.documentElement.style.setProperty('--card-opacity', String(v));
+				}
+			}
 			const hue = localStorage.getItem('hue') || configHue;
 			document.documentElement.style.setProperty('--hue', hue);
 			if (localStorage.getItem('mc-motion') === 'reduced') {

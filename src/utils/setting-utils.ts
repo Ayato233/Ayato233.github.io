@@ -115,6 +115,26 @@ export function getDefaultHue(): number {
 	return Number.parseInt(configCarrier?.dataset.hue || fallback, 10);
 }
 
+/** 全站卡片不透明度（滑块设置，persist 到 localStorage + --card-opacity 变量） */
+const CARD_OPACITY_KEY = "shirone:card-opacity";
+export const DEFAULT_CARD_OPACITY = 1;
+
+export function getCardOpacity(): number {
+	const raw = localStorage.getItem(CARD_OPACITY_KEY);
+	const v = raw === null ? DEFAULT_CARD_OPACITY : Number.parseFloat(raw);
+	return Number.isFinite(v) && v >= 0.3 && v <= 1
+		? v
+		: DEFAULT_CARD_OPACITY;
+}
+
+export function setCardOpacity(opacity: number): void {
+	localStorage.setItem(CARD_OPACITY_KEY, String(opacity));
+	document.documentElement.style.setProperty(
+		"--card-opacity",
+		String(opacity),
+	);
+}
+
 export function getHue(): number {
 	const stored = localStorage.getItem("hue");
 	return stored ? Number.parseInt(stored, 10) : getDefaultHue();

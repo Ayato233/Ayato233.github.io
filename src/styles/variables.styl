@@ -164,17 +164,19 @@ define({
   --shape-corner-full: 999px
   --radius-large: var(--shape-corner-l)
   --page-bg: var(--surface-container-low)
-  --card-bg: unquote("color-mix(in srgb, var(--surface-container) 72%, transparent)")
+  --card-bg: unquote("color-mix(in srgb, #ffffff calc(var(--card-opacity, 1) * 100%), transparent)")
   --card-blur: 16px
+  /* 全站卡片不透明度（默认 1= 实体白卡；设置面板滑块可往下调出通透玻璃感） */
+  --card-opacity: 1
   /* 卡片柔和阴影（全站卡片统一层次感）：散射大、透明度低的双影；
      8 位 hex 避免 Stylus 对 rgba 空格语法/除号的解析坑 */
-  --card-shadow: 0 2px 12px #00000014, 0 1px 3px #0000000d
+  --card-shadow: 0 2px 12px #0000001d, 0 1px 3px #00000012
   --float-panel-bg: unquote("color-mix(in srgb, var(--surface-container) 78%, transparent)")
 :root.dark
   --page-bg: var(--surface)
-  --card-bg: unquote("color-mix(in srgb, var(--surface-container-high) 72%, transparent)")
+  --card-bg: unquote("color-mix(in srgb, var(--surface-container-high) calc(var(--card-opacity, 1) * 100%), transparent)")
   --card-blur: 16px
-  --card-shadow: 0 2px 12px #00000047, 0 1px 3px #0000002e
+  --card-shadow: 0 2px 12px #00000057, 0 1px 3px #00000038
   --float-panel-bg: unquote("color-mix(in srgb, var(--surface-container) 78%, transparent)")
 
 /* 移动端（无 hover 的触屏设备）降低玻璃模糊，守护滚动流畅 */

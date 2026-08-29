@@ -26,11 +26,13 @@ import {
 	getDefaultHue,
 	getDefaultTextureOpacity,
 	getDefaultTexturePreset,
+	getCardOpacity,
 	getHue,
 	getMotionPreference,
 	getStoredTextureOpacity,
 	getStoredTexturePreset,
 	getStoredWallpaperMode,
+	setCardOpacity,
 	setHue,
 	setMotionPreference,
 	setTextureOpacity,
@@ -57,6 +59,8 @@ const defaultHue = getDefaultHue();
 const defaultStyle = getDefaultStyle() as McStyle;
 const defaultSpec = getDefaultSpec() as McSpec;
 let hue = $state(getHue());
+/** 全站卡片不透明度（滑块 0.3~1，默认 0.72） */
+let cardOpacity = $state(getCardOpacity());
 let style = $state<McStyle>(getStyle());
 let spec = $state<McSpec>(getSpec());
 let dark = $state(
@@ -155,6 +159,9 @@ const isDirty = $derived(
 
 $effect(() => {
 	if (hue || hue === 0) setHue(hue);
+});
+$effect(() => {
+	setCardOpacity(cardOpacity);
 });
 $effect(() => {
 	setStyle(style);
@@ -268,6 +275,19 @@ const stylePreviews = $derived(
                 </div>
             </div>
             <Slider bind:value={hue} min={0} max={360} step={5} label={i18n(I18nKey.themeColor)} />
+
+            <!-- 全站卡片透明度滑块 -->
+            <div class="flex flex-col gap-2 pt-3">
+                <div class="flex gap-1 items-center">
+                    <div class="h-7 min-w-16 px-1 rounded-(--shape-corner-m) flex items-center justify-center
+                                bg-(--surface-container) text-sm font-bold text-(--on-surface)">
+                        透明度 {Math.round(cardOpacity * 100)}%
+                    </div>
+                </div>
+                <div class="card-opacity-slider">
+                    <Slider bind:value={cardOpacity} min={0.3} max={1} step={0.01} label={i18n(I18nKey.cardOpacity)} />
+                </div>
+            </div>
 
             {#if displayConfig.colorStyle}
                 <div class="flex flex-col gap-2 pt-1">
@@ -419,4 +439,14 @@ const stylePreviews = $derived(
             text-overflow: ellipsis
             white-space: nowrap
 
+/* 卡片透明度滑块：轨道改「透明→白」渐变 + 棋盘格（透明度标准示意），thumb 深描边保证可见 */
+	:global(.card-opacity-slider .m3-slider-wrap)
+		background-image: unquote("linear-gradient(90deg, transparent, color-mix(in srgb, #ffffff 92%, transparent)), conic-gradient(rgb(0 0 0 / 0.14) 25%, transparent 0 50%, rgb(0 0 0 / 0.14) 0 75%, transparent 0)")
+		background-size: unquote("100% 100%, 10px 10px")
+		box-shadow: unquote("inset 0 0 0 1px color-mix(in oklab, var(--on-surface) 12%, transparent)")
+
+	:global(.card-opacity-slider .m3-slider::-webkit-slider-thumb),
+	:global(.card-opacity-slider .m3-slider::-moz-range-thumb)
+		background: #fff
+		box-shadow: unquote("0 0 0 1px color-mix(in oklab, var(--on-surface) 45%, transparent)")
 </style>
