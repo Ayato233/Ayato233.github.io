@@ -308,4 +308,7 @@ export const es: Translation = {
 	[Key.feedOpenXml]: "Ver XML original",
 	[Key.feedRecentPosts]: "Artículos recientes del canal",
 	[Key.guestbook]: "Libro de visitas",
+	[Key.social]: "Social",
+	[Key.articles]: "Artículos",
+	[Key.cardOpacity]: "Opacidad de tarjetas",
 };

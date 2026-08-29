@@ -309,4 +309,7 @@ export const tr: Translation = {
 	[Key.feedOpenXml]: "Ham XML'i Görüntüle",
 	[Key.feedRecentPosts]: "Akıştaki Son Yazılar",
 	[Key.guestbook]: "Misafir defteri",
+	[Key.social]: "Sosyal",
+	[Key.articles]: "Makaleler",
+	[Key.cardOpacity]: "Kart opakliği",
 };

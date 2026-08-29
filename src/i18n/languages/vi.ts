@@ -308,4 +308,7 @@ export const vi: Translation = {
 	[Key.feedOpenXml]: "Xem XML gốc",
 	[Key.feedRecentPosts]: "Bài viết mới nhất trong nguồn cấp",
 	[Key.guestbook]: "Sổ lưu bút",
+	[Key.social]: "Mạng xã hội",
+	[Key.articles]: "Bài viết",
+	[Key.cardOpacity]: "Độ mờ của thẻ",
 };

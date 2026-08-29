@@ -295,4 +295,7 @@ export const th: Translation = {
 	[Key.feedOpenXml]: "ดู XML ต้นฉบับ",
 	[Key.feedRecentPosts]: "บทความล่าสุดในฟีด",
 	[Key.guestbook]: "สมุดเยี่ยม",
+	[Key.social]: "โซเชียล",
+	[Key.articles]: "บทความ",
+	[Key.cardOpacity]: "ความทึบของการ์ด",
 };

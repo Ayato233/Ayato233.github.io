@@ -310,4 +310,7 @@ export const id: Translation = {
 	[Key.feedOpenXml]: "Lihat XML Asli",
 	[Key.feedRecentPosts]: "Artikel Terbaru di Umpan",
 	[Key.guestbook]: "Buku tamu",
+	[Key.social]: "Sosial",
+	[Key.articles]: "Artikel",
+	[Key.cardOpacity]: "Opasitas kartu",
 };

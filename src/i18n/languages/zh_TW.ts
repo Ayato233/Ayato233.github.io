@@ -296,4 +296,7 @@ export const zh_TW: Translation = {
 	[Key.feedOpenXml]: "檢視原始 XML",
 	[Key.feedRecentPosts]: "最新推送文章",
 	[Key.guestbook]: "留言板",
+	[Key.social]: "社交",
+	[Key.articles]: "文章",
+	[Key.cardOpacity]: "卡片透明度",
 };

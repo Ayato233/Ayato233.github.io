@@ -306,4 +306,7 @@ export const ja: Translation = {
 	[Key.feedOpenXml]: "XML を直接表示",
 	[Key.feedRecentPosts]: "最新の配信記事",
 	[Key.guestbook]: "ゲストブック",
+	[Key.social]: "ソーシャル",
+	[Key.articles]: "記事",
+	[Key.cardOpacity]: "カードの不透明度",
 };

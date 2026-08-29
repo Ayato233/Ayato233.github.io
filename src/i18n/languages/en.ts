@@ -306,4 +306,7 @@ export const en: Translation = {
 	[Key.feedOpenXml]: "View Raw XML",
 	[Key.feedRecentPosts]: "Recent Posts in Feed",
 	[Key.guestbook]: "Guestbook",
+	[Key.social]: "Social",
+	[Key.articles]: "Posts",
+	[Key.cardOpacity]: "Card opacity",
 };

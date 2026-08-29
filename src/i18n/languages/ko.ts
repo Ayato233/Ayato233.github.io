@@ -305,4 +305,7 @@ export const ko: Translation = {
 	[Key.feedOpenXml]: "원본 XML 보기",
 	[Key.feedRecentPosts]: "피드 최신 글",
 	[Key.guestbook]: "방명록",
+	[Key.social]: "소셜",
+	[Key.articles]: "게시물",
+	[Key.cardOpacity]: "카드 불투명도",
 };
