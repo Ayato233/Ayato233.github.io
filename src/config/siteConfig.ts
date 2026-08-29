@@ -11,8 +11,8 @@ import type {
 export const siteConfig: SiteConfig = {
 	site: "https://Ayato233.github.io/",
 	base: "/",
-	title: "Furina",
-	subtitle: "芙卡洛斯",
+	title: "Shigure",
+	subtitle: "时雨",
 	// 电脑端顶栏标题与导航内容区域："left" 左对齐，"center" 居中。
 	topAppBar: {
 		contentAlign: "center",
@@ -54,8 +54,17 @@ export const siteConfig: SiteConfig = {
 		// desktop 用于 >= 1024px；mobile 仅用于 < 1024px 的首页，手机非首页不显示壁纸。
 		// 数组顺序就是轮播顺序；只需要静态 Banner 时，每组保留一张图片即可。
 		src: {
-			desktop: ["assets/images/banner/desktop/1.webp"],
-			mobile: ["assets/images/banner/mobile/1.webp"],
+			// 桌面 banner 轮播（数组顺序 = 轮播顺序）：2→3，走 src/assets 管线
+			desktop: [
+				"assets/images/banner/desktop/2.png",
+				"assets/images/banner/desktop/3.png",
+			],
+			// 按主题固定单图（亮色用图3、暗色用图2）；配置后 banner 退化为单图、不再轮播
+			themeImages: {
+				light: "assets/images/banner/desktop/3.png",
+				dark: "assets/images/banner/desktop/2.png",
+			},
+			mobile: ["assets/images/banner/mobile/1.png"],
 		},
 		// 图片裁切焦点："top"、"center" 或 "bottom"。
 		position: "center",
@@ -67,7 +76,7 @@ export const siteConfig: SiteConfig = {
 		homeText: {
 			// 仅在首页 Banner 中显示，标题与副标题会上下居中排列。
 			enable: true,
-			title: "Shirone",
+			title: "Shigure",
 			subtitle: [
 				"特別なことはないけど、君がいると十分です",
 				"今でもあなたは私の光",

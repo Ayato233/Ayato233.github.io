@@ -5,8 +5,8 @@ import type { ProfileConfig } from "@/types/config";
  * 类型见 src/types/config.ts。
  */
 export const profileConfig: ProfileConfig = {
-	avatar: "/images/site/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-	name: "Furina",
+	avatar: "/images/site/avatar.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	name: "Shigure",
 	bio: "生活明朗，万物可爱。",
 	links: [
 		{

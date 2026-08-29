@@ -1,6 +1,6 @@
 # 关于我
 
-你好呀，我是 **Furina**，一名记录技术学习与生活思考的博客作者。
+你好呀，我是 **Shigure**，一名记录技术学习与生活思考的博客作者。
 
 > 生活明朗，万物可爱。
 
@@ -20,7 +20,7 @@
 
 - **GitHub**: [Ayato233](https://github.com/Ayato233)
 - **Gitee**: [Aizen233](https://gitee.com/Aizen233)
-- **主页导航站**: [Furina 的个人导航](https://homepage-3yy.pages.dev/)
+- **主页导航站**: [Shigure 的个人导航](https://homepage-3yy.pages.dev/)
 - **邮箱**: [2783885223@qq.com](mailto:2783885223@qq.com)
 
 ## 📝 关于本站

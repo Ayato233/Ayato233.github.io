@@ -6,7 +6,7 @@ import type { AnnouncementConfig } from "@/types/announcementConfig";
  */
 export const announcementConfig: AnnouncementConfig = {
 	title: "", // 公告标题，填空使用 i18n 字符串 Key.announcement
-	content: "欢迎来到 Furina 的小站，这里记录技术笔记与生活随想。", // 公告内容
+	content: "欢迎来到 Shigure 的小站，这里记录技术笔记与生活随想。", // 公告内容
 	closable: true, // 允许用户关闭公告
 	link: {
 		enable: true, // 启用链接

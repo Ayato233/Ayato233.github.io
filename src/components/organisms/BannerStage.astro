@@ -91,6 +91,18 @@ const mobileResponsiveImages = await Promise.all(
 );
 const desktopImages = desktopResponsiveImages.map(({ fallback }) => fallback);
 const mobileImages = mobileResponsiveImages.map(({ fallback }) => fallback);
+// 按主题固定单图（themeImages）：亮色用 light、暗色用 dark；配置后不走轮播
+const themeLightImage = siteConfig.banner.src.themeImages?.light
+	? await optimizeBannerImage(siteConfig.banner.src.themeImages.light, "desktop")
+	: null;
+const themeDarkImage = siteConfig.banner.src.themeImages?.dark
+	? await optimizeBannerImage(siteConfig.banner.src.themeImages.dark, "desktop")
+	: null;
+const hasThemeImages = Boolean(themeLightImage || themeDarkImage);
+// 非主题模式的随机起点（每次进入 banner 预留：避免恒从第 1 张开始；主题模式由 JS 按主题选图）
+const desktopStartIndex = Math.floor(
+	Math.random() * desktopResponsiveImages.length,
+);
 const dimOpacity = Math.min(Math.max(siteConfig.banner.dim.opacity, 0), 1);
 const rawSubtitles = siteConfig.banner.homeText.subtitle;
 const subtitleArray = Array.isArray(rawSubtitles)
@@ -103,10 +115,17 @@ const carouselFadeDuration = Math.min(
 	3000,
 );
 const carouselAnimation = siteConfig.banner.carousel?.animation ?? "ken-burns";
-const initialDesktopSrc = desktopImages[0] ?? "";
+// SSR 首图：主题模式下默认亮色图（视觉优先，暗色访客首帧见图3后由 JS 切图2）；
+// 非主题模式随机起点，避免静态首帧恒为第 1 张
+const themeInitialImage = themeLightImage ?? themeDarkImage ?? desktopResponsiveImages[0];
+const initialDesktopSrc = hasThemeImages
+	? (themeInitialImage?.fallback ?? "")
+	: (desktopImages[desktopStartIndex] ?? "");
 const initialMobileSrc = mobileImages[0] ?? "";
 const initialSrc = initialDesktopSrc || initialMobileSrc;
-const initialDesktopImage = desktopResponsiveImages[0];
+const initialDesktopImage = hasThemeImages
+	? themeInitialImage
+	: desktopResponsiveImages[desktopStartIndex];
 const initialMobileImage = mobileResponsiveImages[0];
 const initialImage = initialDesktopImage ?? initialMobileImage;
 const initialMobileBanner = page === "home";
@@ -120,6 +139,9 @@ const initialMobileBanner = page === "home";
 	data-context-motion="idle"
 	data-desktop-images={JSON.stringify(desktopImages)}
 	data-mobile-images={JSON.stringify(mobileImages)}
+	data-theme-mode={String(hasThemeImages)}
+	data-theme-light={themeLightImage?.fallback ?? ""}
+	data-theme-dark={themeDarkImage?.fallback ?? ""}
 	data-carousel-enabled={String(siteConfig.banner.carousel.enable)}
 	data-carousel-interval={String(Math.max(siteConfig.banner.carousel.interval, 3000))}
 	data-carousel-fade-duration={String(carouselFadeDuration)}
@@ -135,38 +157,95 @@ const initialMobileBanner = page === "home";
 	data-subtitle-typewriter-pause-time={String(Math.max(typewriter.pauseTime ?? 2000, 0))}
 >
 	<div class="banner-stage__media" aria-hidden="true">
-		<picture>
-			{initialDesktopImage?.avifSrcset && (
-				<source media="(min-width: 1024px)" type="image/avif" srcset={initialDesktopImage.avifSrcset} sizes="100vw" />
-			)}
-			{initialDesktopImage?.webpSrcset && (
-				<source media="(min-width: 1024px)" type="image/webp" srcset={initialDesktopImage.webpSrcset} sizes="100vw" />
-			)}
-			{initialDesktopImage && !initialDesktopImage.avifSrcset && !initialDesktopImage.webpSrcset && (
-				<source media="(min-width: 1024px)" srcset={initialDesktopImage.fallback} />
-			)}
-			{initialMobileBanner && initialMobileImage?.avifSrcset && (
-				<source media="(max-width: 1023.98px)" type="image/avif" srcset={initialMobileImage.avifSrcset} sizes="100vw" />
-			)}
-			{initialMobileBanner && initialMobileImage?.webpSrcset && (
-				<source media="(max-width: 1023.98px)" type="image/webp" srcset={initialMobileImage.webpSrcset} sizes="100vw" />
-			)}
-			{initialMobileBanner && initialMobileImage && !initialMobileImage.avifSrcset && !initialMobileImage.webpSrcset && (
-				<source media="(max-width: 1023.98px)" srcset={initialMobileImage.fallback} />
-			)}
-			<img
-				class="banner-stage__image banner-stage__image--front banner-stage__image--active"
-				src={initialMobileBanner ? initialSrc || undefined : undefined}
-				width={initialImage?.width}
-				height={initialImage?.height}
-				fetchpriority="high"
-				loading="eager"
-				decoding="async"
-				alt=""
-				style={`object-position: ${siteConfig.banner.position ?? "center"};`}
-			/>
-		</picture>
-		<img class="banner-stage__image banner-stage__image--back" alt="" />
+		{hasThemeImages ? (
+			<>
+				{/* 主题模式：亮/暗双图层，CSS 按 html.dark 显隐；display:none 的层不会下载图片
+				   （Layout head 内联脚本已在解析前设置 html.dark → 暗色首帧即图2、图3 零请求） */}
+				{themeLightImage && (
+					<picture class="banner-stage__layer" data-theme-layer="light">
+						{themeLightImage.avifSrcset && (
+							<source media="(min-width: 1024px)" type="image/avif" srcset={themeLightImage.avifSrcset} sizes="100vw" />
+						)}
+						{themeLightImage.webpSrcset && (
+							<source media="(min-width: 1024px)" type="image/webp" srcset={themeLightImage.webpSrcset} sizes="100vw" />
+						)}
+						{themeLightImage && !themeLightImage.avifSrcset && !themeLightImage.webpSrcset && (
+							<source media="(min-width: 1024px)" srcset={themeLightImage.fallback} />
+						)}
+						<img
+							class="banner-stage__image banner-stage__image--front banner-stage__image--active"
+							src={themeLightImage.fallback}
+							width={themeLightImage.width}
+							height={themeLightImage.height}
+							fetchpriority="high"
+							loading="eager"
+							decoding="async"
+							alt=""
+							style={`object-position: ${siteConfig.banner.position ?? "center"};`}
+						/>
+					</picture>
+				)}
+				{themeDarkImage && (
+					<picture class="banner-stage__layer" data-theme-layer="dark">
+						{themeDarkImage.avifSrcset && (
+							<source media="(min-width: 1024px)" type="image/avif" srcset={themeDarkImage.avifSrcset} sizes="100vw" />
+						)}
+						{themeDarkImage.webpSrcset && (
+							<source media="(min-width: 1024px)" type="image/webp" srcset={themeDarkImage.webpSrcset} sizes="100vw" />
+						)}
+						{themeDarkImage && !themeDarkImage.avifSrcset && !themeDarkImage.webpSrcset && (
+							<source media="(min-width: 1024px)" srcset={themeDarkImage.fallback} />
+						)}
+						<img
+							class="banner-stage__image banner-stage__image--back"
+							src={themeDarkImage.fallback}
+							width={themeDarkImage.width}
+							height={themeDarkImage.height}
+							fetchpriority="high"
+							loading="eager"
+							decoding="async"
+							alt=""
+							style={`object-position: ${siteConfig.banner.position ?? "center"};`}
+						/>
+					</picture>
+				)}
+			</>
+		) : (
+			<>
+				<picture>
+					{initialDesktopImage?.avifSrcset && (
+						<source media="(min-width: 1024px)" type="image/avif" srcset={initialDesktopImage.avifSrcset} sizes="100vw" />
+					)}
+					{initialDesktopImage?.webpSrcset && (
+						<source media="(min-width: 1024px)" type="image/webp" srcset={initialDesktopImage.webpSrcset} sizes="100vw" />
+					)}
+					{initialDesktopImage && !initialDesktopImage.avifSrcset && !initialDesktopImage.webpSrcset && (
+						<source media="(min-width: 1024px)" srcset={initialDesktopImage.fallback} />
+					)}
+					{initialMobileBanner && initialMobileImage?.avifSrcset && (
+						<source media="(max-width: 1023.98px)" type="image/avif" srcset={initialMobileImage.avifSrcset} sizes="100vw" />
+					)}
+					{initialMobileBanner && initialMobileImage?.webpSrcset && (
+						<source media="(max-width: 1023.98px)" type="image/webp" srcset={initialMobileImage.webpSrcset} sizes="100vw" />
+					)}
+					{initialMobileBanner && initialMobileImage && !initialMobileImage.avifSrcset && !initialMobileImage.webpSrcset && (
+						<source media="(max-width: 1023.98px)" srcset={initialMobileImage.fallback} />
+					)}
+					<img
+						class="banner-stage__image banner-stage__image--front banner-stage__image--active"
+						src={initialMobileBanner ? initialSrc || undefined : undefined}
+						width={initialImage?.width}
+						height={initialImage?.height}
+						fetchpriority="high"
+						loading="eager"
+						decoding="async"
+						alt=""
+						style={`object-position: ${siteConfig.banner.position ?? "center"};`}
+					/>
+				</picture>
+				<img class="banner-stage__image banner-stage__image--back" alt="" />
+			</>
+		)}
 	</div>
 	{siteConfig.banner.dim.enable && (
 		<div class="banner-stage__scrim" style={`--banner-dim-opacity: ${dimOpacity}`}></div>
@@ -608,6 +687,35 @@ const initialMobileBanner = page === "home";
 		stage.dataset.contextMotion = "idle";
 	}
 
+	/* 主题模式：亮/暗图层按 html.dark 显隐；display:none 的层浏览器不会下载图片，
+	填空层无需运行时换 src —— 主题切换由 CSS 完成，此处仅同步 activeLayer 语义 */
+	const themeMode = stage?.dataset.themeMode === "true";
+	const themeLightUrl = stage?.dataset.themeLight || "";
+	const themeDarkUrl = stage?.dataset.themeDark || "";
+	const currentThemeUrl = () =>
+		document.documentElement.classList.contains("dark")
+			? themeDarkUrl
+			: themeLightUrl;
+
+	function syncThemeLayer() {
+		if (!themeMode || !stage) return;
+		const isDark = document.documentElement.classList.contains("dark");
+		runtime.activeLayer = isDark ? 1 : 0; // 0=亮图层(front) 1=暗图层(back)
+		layers.forEach((layer, i) => {
+			layer.classList.toggle("banner-stage__image--active", i === runtime.activeLayer);
+		});
+	}
+
+	const themeObserver =
+		typeof MutationObserver !== "undefined"
+			? new MutationObserver(() => syncThemeLayer())
+			: null;
+	themeObserver?.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["class"],
+	});
+	syncThemeLayer(); // 首帧按当前主题校准（暗色直接落在暗图层）
+
 	function animateContextOut() {
 		runtime.contextTransitionPending = canAnimateBannerContext();
 		settleContextAnimation();
@@ -741,6 +849,13 @@ const initialMobileBanner = page === "home";
 
 	function syncBanner(pageOverride?: SidebarPage, contextOverride?: BannerContext) {
 		if (!stage) return;
+		// 主题模式：桌面图集固定为当前主题的单张
+		if (themeMode) {
+			const themeUrl = currentThemeUrl();
+			if (themeUrl && runtime.images.desktop[0] !== themeUrl) {
+				runtime.images.desktop = [themeUrl];
+			}
+		}
 		const viewport = currentViewport();
 		const images = runtime.images[viewport];
 		const page = pageOverride ?? currentPage();
@@ -779,13 +894,18 @@ const initialMobileBanner = page === "home";
 
 		if (runtime.activeGroup !== state.assetGroup) {
 			runtime.activeGroup = state.assetGroup;
-			runtime.activeIndex = 0;
-			showImage(images[0], true);
+			// 首图起点：主题模式为单图（随机无意义，取 0）；非主题模式随机起点，
+			// 避免刷新/切页总从第 1 张开始（轮播顺序仍按数组推进）
+			const startIndex = themeMode
+				? 0
+				: Math.floor(Math.random() * images.length);
+			runtime.activeIndex = startIndex;
+			showImage(images[startIndex], true);
 			layers[runtime.activeLayer]?.setAttribute("fetchpriority", "high");
-			preloadNext(images, 0);
+			preloadNext(images, startIndex);
 		}
 
-		if (state.rotate && !document.hidden) scheduleRotation(images);
+		if (state.rotate && !document.hidden && !themeMode) scheduleRotation(images);
 		else stopRotation();
 	}
 
@@ -856,6 +976,28 @@ const initialMobileBanner = page === "home";
 		.banner-stage__copy
 			position: absolute
 			inset: 0
+
+		/* 主题图层显隐：亮色显示 light 层、暗色显示 dark 层；
+		   display:none 的 <picture> 不会下载图片（首帧即按主题加载单图） */
+		.banner-stage__layer[data-theme-layer="dark"]
+			display: none
+
+		:global(html.dark) .banner-stage__layer[data-theme-layer="light"]
+			display: none
+
+		:global(html.dark) .banner-stage__layer[data-theme-layer="dark"]
+			display: block
+
+		/* 图片加载前的占位底色（避免黑屏）：亮色用主题纸色渐变、暗色用带紫调的深色渐变（非纯黑） */
+		.banner-stage
+			background: linear-gradient(
+				160deg,
+				var(--surface-container-high),
+				var(--surface-container-lowest)
+			)
+
+		:global(html.dark) .banner-stage
+			background: linear-gradient(160deg, #241f3d, #0c0b14)
 
 		.banner-stage__image
 			position: absolute

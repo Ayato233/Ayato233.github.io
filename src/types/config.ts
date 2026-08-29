@@ -60,6 +60,12 @@ export type SiteConfig = {
 		src: {
 			desktop: string[];
 			mobile: string[];
+			/** 可选：按主题固定单图（亮/暗各一张）。配置后 banner 不再轮播，
+			 *  亮色用 light、暗色用 dark；未配置则走 desktop/mobile 数组轮播。 */
+			themeImages?: {
+				light?: string;
+				dark?: string;
+			};
 		};
 		position?: "top" | "center" | "bottom";
 		dim: {
