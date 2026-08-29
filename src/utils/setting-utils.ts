@@ -117,7 +117,7 @@ export function getDefaultHue(): number {
 
 /** 全站卡片不透明度（滑块设置，persist 到 localStorage + --card-opacity 变量） */
 const CARD_OPACITY_KEY = "shirone:card-opacity";
-export const DEFAULT_CARD_OPACITY = 1;
+export const DEFAULT_CARD_OPACITY = 0.39;
 
 export function getCardOpacity(): number {
 	const raw = localStorage.getItem(CARD_OPACITY_KEY);

@@ -63,7 +63,7 @@ export const musicConfig: MusicConfig = {
 		type: "playlist",
 		id: "",
 	},
-	defaultVolume: 0.7,
+	defaultVolume: 1,
 	defaultMode: "sequence",
 };
 

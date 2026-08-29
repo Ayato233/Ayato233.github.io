@@ -166,8 +166,8 @@ define({
   --page-bg: var(--surface-container-low)
   --card-bg: unquote("color-mix(in srgb, #ffffff calc(var(--card-opacity, 1) * 100%), transparent)")
   --card-blur: 16px
-  /* 全站卡片不透明度（默认 1= 实体白卡；设置面板滑块可往下调出通透玻璃感） */
-  --card-opacity: 1
+  /* 全站卡片不透明度（默认 0.39：半透明玻璃；滑块往上拉更实） */
+  --card-opacity: 0.39
   /* 卡片柔和阴影（全站卡片统一层次感）：散射大、透明度低的双影；
      8 位 hex 避免 Stylus 对 rgba 空格语法/除号的解析坑 */
   --card-shadow: 0 2px 12px #0000001d, 0 1px 3px #00000012
