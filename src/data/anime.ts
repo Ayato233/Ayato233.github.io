@@ -44,4 +44,6 @@ export interface AnimeItem {
 	identity?: AnimeIdentity;
 }
 
+
 export const animeData: AnimeItem[] = [];
+

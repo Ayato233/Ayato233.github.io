@@ -1,16 +1,17 @@
 <script lang="ts">
 /**
- * 番剧页主体（有机体）：页头 + 状态筛选 chips + 实时搜索 + 双布局（grid/list）+ 加载更多。
+ * 番剧页主体（有机体）：页头 + 实时搜索 + 双布局（grid/list）。
  * 数据由页面层经 utils/anime-data.getAnimeList() 构建期取得后以 props 传入；
- * 筛选状态与搜索同步 URL（?status= / ?q=），与友链/动态/相册页同一交互语言。
+ * 搜索词同步 URL（?q=）。
+ *
+ * 状态分区：按状态对全量数据分组（看状态分类陈列，每区独立分页「加载更多」），
+ * 因此首屏即可露出全部状态分区标题与计数，不会被全局分页截断。
  *
  * 布局形态：番剧页独立偏好（localStorage `shirone:anime-layout-mode`，默认 grid 海报网格），
  * 不与博客文章列表偏好耦合；工具栏提供快速切换按钮，切类后逐卡 FLIP 平移。
  */
 import Button from "@components/atoms/action/Button.svelte";
-import Chips from "@components/atoms/action/Chips.svelte";
 import Card from "@components/atoms/display/Card.svelte";
-import LoadingIndicator from "@components/atoms/feedback/LoadingIndicator.svelte";
 import TextField from "@components/atoms/input/TextField.svelte";
 import AnimeCard from "@components/molecules/AnimeCard.svelte";
 import PageHeader from "@components/molecules/PageHeader.svelte";
@@ -20,7 +21,7 @@ import Icon from "@iconify/svelte";
 import { ANIME_STATUS_META } from "@utils/anime/status";
 import { flipFromRect } from "@utils/motion";
 import { onMount } from "svelte";
-import type { AnimeItem } from "../../data/anime";
+import type { AnimeItem, AnimeStatus } from "../../data/anime";
 
 export type AnimeLayoutMode = "grid" | "list";
 
@@ -30,13 +31,11 @@ const ANIME_PAGE_SIZE = 12;
 const ANIME_LAYOUT_KEY = "shirone:anime-layout-mode";
 
 let query = $state("");
-let selectedStatus = $state("");
-let shownCount = $state(ANIME_PAGE_SIZE);
 let initialized = false;
-/** 状态筛选过渡三段态：loading 展示指示器 → out 指示器淡出 → idle 列表 stagger 揭幕 */
-type FilterPhase = "idle" | "loading" | "out";
-let phase = $state<FilterPhase>("idle");
-let phaseTimers: ReturnType<typeof setTimeout>[] = [];
+/** 每个状态分区已展示条数（分区独立"加载更多"，避免首屏只剩单一分区） */
+let groupShown = $state<Partial<Record<AnimeStatus, number>>>({});
+/** 当前激活的状态 Tab（默认第一个有内容的；URL ?tab= 可直达） */
+let selectedTab = $state<AnimeStatus>("");
 
 /** 布局形态：番剧页专属独立偏好，默认海报网格 (grid) */
 let listMode = $state<AnimeLayoutMode>("grid");
@@ -47,19 +46,18 @@ const LIST_MODE_CLASS: Record<AnimeLayoutMode, string> = {
 	list: "anime-list--list",
 };
 
-/** 状态筛选 chips：只列数据中出现的状态（单选，再点取消 = 全部） */
-const statusItems = $derived(
-	Array.from(new Set(animes.map((anime) => anime.status))).map((status) => ({
-		value: status,
-		label: i18n(ANIME_STATUS_META[status].key),
-		leadingIcon: ANIME_STATUS_META[status].icon,
-	})),
-);
+/** 状态分区顺序：正在看 → 已看完 → 想看 → 搁置 → 弃番（有内容的区才渲染） */
+const STATUS_ORDER: AnimeItem["status"][] = [
+	"watching",
+	"completed",
+	"planned",
+	"onHold",
+	"dropped",
+];
 
 const filtered = $derived.by(() => {
 	const normalizedQuery = query.trim().toLowerCase();
 	return animes.filter((anime) => {
-		if (selectedStatus && anime.status !== selectedStatus) return false;
 		if (!normalizedQuery) return true;
 		return [
 			anime.title,
@@ -71,21 +69,47 @@ const filtered = $derived.by(() => {
 	});
 });
 
-const visibleAnimes = $derived(filtered.slice(0, shownCount));
-const hasMore = $derived(filtered.length > shownCount);
+/** 状态分区：对全量过滤后数据按 STATUS_ORDER 分红，每区独立分页展示首段 */
+const statusGroups = $derived(
+	STATUS_ORDER.flatMap((status) => {
+		const all = filtered.filter((anime) => anime.status === status);
+		if (all.length === 0) return [];
+		const shown = Math.min(groupShown[status] ?? ANIME_PAGE_SIZE, all.length);
+		return [
+			{
+				status,
+				total: all.length,
+				hasMore: shown < all.length,
+				items: all.slice(0, shown),
+			},
+		];
+	}),
+);
 
-function countLabel(count: number) {
-	return `${count} ${i18n(I18nKey.animeCounts)}`;
-}
+/** Tab 列表：有内容的状态 + 总数（STATUS_ORDER 序，前端分页用的计数来自全量过滤结果） */
+const tabs = $derived(
+	STATUS_ORDER.flatMap((status) => {
+		const total = filtered.filter((anime) => anime.status === status).length;
+		return total > 0 ? [{ status, total }] : [];
+	}),
+);
 
-/** 状态筛选：指示器展示 → 淡出 → 网格 stagger 揭幕 */
-function onStatusChange() {
-	phaseTimers.forEach(clearTimeout);
-	phase = "loading";
-	phaseTimers = [
-		setTimeout(() => (phase = "out"), 300),
-		setTimeout(() => (phase = "idle"), 300 + 150),
-	];
+/** 当前 Tab：URL/点击指定（且在 tabs 内），否则默认第一个有内容的 */
+const activeTab = $derived(
+	tabs.some((tab) => tab.status === selectedTab)
+		? selectedTab
+		: (tabs[0]?.status ?? ""),
+);
+
+/** 当前 Tab 的组（复用分区数据结构，单组渲染 + 独立加载更多） */
+const activeGroup = $derived(
+	statusGroups.find((group) => group.status === activeTab) ?? null,
+);
+
+/** 加载某状态分区的下一段 */
+function loadMore(status: AnimeStatus) {
+	groupShown[status] =
+		(groupShown[status] ?? ANIME_PAGE_SIZE) + ANIME_PAGE_SIZE;
 }
 
 function readStoredLayoutMode(): AnimeLayoutMode {
@@ -112,41 +136,39 @@ function switchLayoutMode(mode: AnimeLayoutMode) {
 		/* Ignore local storage access failure */
 	}
 	requestAnimationFrame(() => {
-		cards.forEach((card, index) => flipFromRect(card, before[index], 400));
+		cards.forEach((card, index) => {
+			void flipFromRect(card, before[index], 400);
+		});
 	});
 }
 
-// 筛选/搜索变化时重置已加载数
+/** 搜索变化时重置已加载数 */
 $effect(() => {
-	const s = selectedStatus;
 	const q = query;
 	if (!initialized) return;
-	shownCount = ANIME_PAGE_SIZE;
+	groupShown = {};
 });
 
-// 筛选状态与搜索词同步到 URL（?status= / ?q=），刷新/分享/回退保留
+// 搜索词与状态 Tab 同步到 URL（?q= / ?tab=），刷新/分享/回退保留
 $effect(() => {
-	const s = selectedStatus;
 	const q = query;
+	const tab = activeTab;
 	if (!initialized) return;
 	const params = new URLSearchParams(window.location.search);
-	params.delete("status");
 	params.delete("q");
-	if (s) params.set("status", s);
+	params.delete("tab");
 	if (q.trim()) params.set("q", q.trim());
+	if (tab) params.set("tab", tab);
 	const qs = params.toString();
 	history.replaceState(null, "", qs ? `?${qs}` : window.location.pathname);
 });
 
 onMount(() => {
 	const params = new URLSearchParams(window.location.search);
-	selectedStatus = params.get("status") || "";
 	query = params.get("q") || "";
+	selectedTab = (params.get("tab") as AnimeStatus) || "";
 	listMode = readStoredLayoutMode();
 	initialized = true;
-	return () => {
-		phaseTimers.forEach(clearTimeout);
-	};
 });
 </script>
 
@@ -167,7 +189,7 @@ onMount(() => {
 						placeholder={i18n(I18nKey.search)}
 						label={i18n(I18nKey.search)}
 						hideLabel
-						variant="outlined"
+						variant="filled"
 						class="!rounded-(--shape-corner-l)"
 					>
 						<Icon slot="leading" icon="material-symbols:search-rounded" aria-hidden="true" />
@@ -209,52 +231,49 @@ onMount(() => {
 					</button>
 				</div>
 			</div>
-
-			<div class="anime-section__filter-row">
-				{#if statusItems.length > 1}
-					<div class="anime-section__chips">
-						<Chips
-							items={statusItems}
-							variant="filter"
-							bind:value={selectedStatus}
-							onchange={onStatusChange}
-						/>
-					</div>
-				{/if}
-
-				{#if filtered.length > 0}
-					<p class="anime-section__count" aria-live="polite">{countLabel(filtered.length)}</p>
-				{/if}
-			</div>
 		</div>
 	{/if}
 
-	{#if phase !== "idle"}
-		<!-- 状态筛选过渡：contained 指示器展示后淡出，再由网格 stagger 揭幕 -->
-		<div
-			class="anime-section__loading"
-			class:anime-section__loading--out={phase === "out"}
-		>
-			<LoadingIndicator contained size={64} />
+	{#if tabs.length > 0}
+		<div class="anime-section__tabs" role="tablist" aria-label={i18n(I18nKey.anime)}>
+			{#each tabs as tab (tab.status)}
+				<button
+					type="button"
+					role="tab"
+					class="anime-section__tab"
+					class:anime-section__tab--active={tab.status === activeTab}
+					aria-selected={tab.status === activeTab}
+					onclick={() => (selectedTab = tab.status)}
+				>
+					<span class="anime-section__tab-label">{i18n(ANIME_STATUS_META[tab.status].key)}</span>
+					<span class="anime-section__tab-count">{tab.total}</span>
+				</button>
+			{/each}
 		</div>
-	{:else if visibleAnimes.length > 0}
-		{#key `${selectedStatus}|${query}`}
-			<div class="anime-list {LIST_MODE_CLASS[listMode]}" bind:this={listEl}>
-				{#each visibleAnimes as anime, i (anime.title)}
-					<AnimeCard {anime} delay={Math.min(i, 7) * 45} />
-				{/each}
+	{/if}
+
+	{#if activeGroup}
+		{#key `${activeTab}|${query}`}
+			<div class="anime-section__groups" bind:this={listEl}>
+				<section class="anime-section__group">
+					<div class="anime-list {LIST_MODE_CLASS[listMode]}">
+						{#each activeGroup.items as anime, i (anime.title)}
+							<AnimeCard {anime} delay={Math.min(i, 7) * 45} />
+						{/each}
+					</div>
+					{#if activeGroup.hasMore}
+						<div class="anime-section__more">
+							<Button
+								variant="outlined"
+								icon="material-symbols:expand-more-rounded"
+								label={i18n(I18nKey.loadMore)}
+								onclick={() => loadMore(activeTab)}
+							/>
+						</div>
+					{/if}
+				</section>
 			</div>
 		{/key}
-		{#if hasMore}
-			<div class="anime-section__more">
-				<Button
-					variant="outlined"
-					icon="material-symbols:expand-more-rounded"
-					label={i18n(I18nKey.loadMore)}
-					onclick={() => (shownCount += ANIME_PAGE_SIZE)}
-				/>
-			</div>
-		{/if}
 	{:else}
 		<div class="anime-section__empty">
 			{#if animes.length === 0}
@@ -281,6 +300,78 @@ onMount(() => {
 		.anime-list--grid, .anime-list--list
 			padding-top: 1rem
 			gap: 0.625rem
+
+	/* 状态 Tab（M3 tabs：文字 + 底部指示条 + 计数徽标） */
+	&__tabs
+		display: flex
+		gap: 0.25rem
+		overflow-x: auto
+		scrollbar-width: none
+		border-bottom: 1px solid unquote("color-mix(in oklab, var(--on-surface) 10%, transparent)")
+		margin: 0.25rem 0 1.25rem
+
+		::-webkit-scrollbar
+			display: none
+
+	&__tab
+		flex: none
+		position: relative
+		display: inline-flex
+		align-items: center
+		gap: 0.375rem
+		padding: 0.625rem 0.875rem 0.5rem
+		border: none
+		background: transparent
+		color: var(--on-surface-variant)
+		font: var(--m3e-type-label-large)
+		font-weight: 600
+		cursor: pointer
+		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
+
+		&::after
+			content: ""
+			position: absolute
+			left: 0.5rem
+			right: 0.5rem
+			bottom: 0
+			height: 3px
+			border-radius: var(--shape-corner-full)
+			background: var(--primary)
+			transform: scaleX(0)
+			transform-origin: center
+			transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
+
+		&--active
+			color: var(--primary)
+
+			&::after
+				transform: scaleX(1)
+
+		&:hover:not(&--active)
+			color: var(--on-surface)
+			background: unquote("color-mix(in oklab, var(--on-surface) 5%, transparent)")
+			border-radius: var(--shape-corner-s)
+
+		&:focus-visible
+			outline: 2px solid var(--primary)
+			outline-offset: 2px
+			border-radius: var(--shape-corner-s)
+
+	&__tab-count
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		min-width: 1.25rem
+		padding: 0.0625rem 0.375rem
+		border-radius: var(--shape-corner-full)
+		background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
+		color: var(--on-surface-variant)
+		font: var(--m3e-type-label-small)
+		line-height: 1.4
+
+		.anime-section__tab--active &
+			background: unquote("color-mix(in oklab, var(--primary) 14%, transparent)")
+			color: var(--primary)
 
 	&__tools
 		display: flex
@@ -356,7 +447,6 @@ onMount(() => {
 		padding: 0.125rem
 		border-radius: var(--shape-corner-m)
 		background: var(--surface-container-high)
-		border: 1px solid var(--outline-variant)
 
 	&__layout-btn
 		display: inline-flex
@@ -386,6 +476,45 @@ onMount(() => {
 			&:hover
 				background: var(--primary-container)
 				color: var(--on-primary-container)
+
+	/* ===== 状态分区陈列 ===== */
+	&__groups
+		display: flex
+		flex-direction: column
+		gap: 1.75rem
+
+	&__group
+		display: flex
+		flex-direction: column
+		gap: 0.75rem
+
+	&__group-head
+		display: inline-flex
+		align-items: center
+		gap: 0.5rem
+		min-width: 0
+
+	&__group-dot
+		flex-shrink: 0
+		width: 0.5rem
+		height: 0.5rem
+		border-radius: var(--shape-corner-full)
+		background: var(--anime-status-color)
+		box-shadow: 0 0 0 4px unquote("color-mix(in oklab, var(--anime-status-color) 18%, transparent)")
+
+	&__group-name
+		margin: 0
+		color: var(--on-surface)
+		font: var(--m3e-type-title-medium)
+		font-weight: 600
+		line-height: 1.3
+
+	&__group-count
+		color: var(--on-surface-variant)
+		font: var(--m3e-type-label-medium)
+		background: unquote("color-mix(in oklab, var(--on-surface) 7%, transparent)")
+		border-radius: var(--shape-corner-full)
+		padding: 0.125rem 0.5rem
 
 	/* 状态筛选过渡：区块位置的大号 contained LoadingIndicator（out = 淡出退场） */
 	&__loading

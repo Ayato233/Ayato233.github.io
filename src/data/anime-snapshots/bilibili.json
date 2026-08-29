@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "provider": "bilibili",
-  "fetchedAt": "2026-08-28T04:36:39.100Z",
+  "fetchedAt": "2026-08-29T05:54:50.512Z",
   "accountRef": "24769766",
   "items": [
     {
@@ -9,7 +9,7 @@
       "status": "completed",
       "rating": 5.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2025",
@@ -34,7 +34,7 @@
       "status": "completed",
       "rating": 8.2,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2025",
@@ -58,7 +58,7 @@
       "status": "completed",
       "rating": 5.3,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 13
       },
       "year": "2025",
@@ -83,7 +83,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2025",
@@ -107,7 +107,7 @@
       "status": "completed",
       "rating": 4.7,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2025",
@@ -131,7 +131,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 13
       },
       "year": "2025",
@@ -156,7 +156,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2025",
@@ -182,7 +182,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2025",
@@ -231,7 +231,7 @@
       "status": "completed",
       "rating": 7.7,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2024",
@@ -255,7 +255,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 16,
         "total": 16
       },
       "year": "2024",
@@ -279,7 +279,7 @@
       "status": "completed",
       "rating": 8.8,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2024",
@@ -304,7 +304,7 @@
       "status": "completed",
       "rating": 9,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2024",
@@ -328,7 +328,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 23,
         "total": 25
       },
       "year": "2024",
@@ -353,7 +353,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 8
       },
       "year": "2024",
@@ -377,7 +377,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2024",
@@ -402,7 +402,7 @@
       "status": "completed",
       "rating": 8.4,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2024",
@@ -426,7 +426,7 @@
       "status": "completed",
       "rating": 9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 11
       },
       "year": "2024",
@@ -450,7 +450,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2023",
@@ -475,7 +475,7 @@
       "status": "completed",
       "rating": 7.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 15
       },
       "year": "2023",
@@ -500,7 +500,7 @@
       "status": "completed",
       "rating": 5.4,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2023",
@@ -527,7 +527,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 23,
         "total": 23
       },
       "year": "2023",
@@ -552,7 +552,7 @@
       "status": "completed",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2023",
@@ -579,7 +579,7 @@
       "status": "completed",
       "rating": 7.2,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 11
       },
       "year": "2023",
@@ -603,7 +603,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2023",
@@ -628,7 +628,7 @@
       "status": "completed",
       "rating": 8.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2023",
@@ -654,7 +654,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 24
       },
       "year": "2023",
@@ -679,7 +679,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 28
       },
       "year": "2023",
@@ -705,7 +705,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2023",
@@ -732,7 +732,7 @@
       "status": "completed",
       "rating": 7.4,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 12
       },
       "year": "2023",
@@ -757,7 +757,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2023",
@@ -781,7 +781,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 12
       },
       "year": "2023",
@@ -827,7 +827,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 13
       },
       "year": "2023",
@@ -852,7 +852,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2022",
@@ -877,7 +877,7 @@
       "status": "completed",
       "rating": 5,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2022",
@@ -903,7 +903,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 25,
         "total": 25
       },
       "year": "2022",
@@ -928,7 +928,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -952,7 +952,7 @@
       "status": "completed",
       "rating": 4.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -976,7 +976,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 13
       },
       "year": "2022",
@@ -1002,7 +1002,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -1026,7 +1026,7 @@
       "status": "completed",
       "rating": 8.6,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 82
       },
       "year": "2022",
@@ -1051,7 +1051,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2022",
@@ -1076,7 +1076,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2022",
@@ -1103,7 +1103,7 @@
       "status": "completed",
       "rating": 6.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -1127,7 +1127,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 12
       },
       "year": "2022",
@@ -1153,7 +1153,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -1178,7 +1178,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 25,
         "total": 25
       },
       "year": "2022",
@@ -1203,7 +1203,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2022",
@@ -1248,7 +1248,7 @@
       "status": "completed",
       "rating": 2.4,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -1301,7 +1301,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 34,
         "total": 38
       },
       "year": "2021",
@@ -1326,7 +1326,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2021",
@@ -1351,7 +1351,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2021",
@@ -1375,7 +1375,7 @@
       "status": "completed",
       "rating": 7.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2021",
@@ -1400,7 +1400,7 @@
       "status": "completed",
       "rating": 6.6,
       "progress": {
-        "watched": 0,
+        "watched": 16,
         "total": 16
       },
       "year": "2021",
@@ -1420,7 +1420,7 @@
       "status": "completed",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 25,
         "total": 26
       },
       "year": "2021",
@@ -1446,7 +1446,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2021",
@@ -1498,7 +1498,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 13
       },
       "year": "2021",
@@ -1595,7 +1595,7 @@
       "status": "completed",
       "rating": 7.8,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2021",
@@ -1619,7 +1619,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 4
       },
       "year": "2021",
@@ -1643,7 +1643,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2021",
@@ -1668,7 +1668,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2021",
@@ -1766,7 +1766,7 @@
       "status": "completed",
       "rating": 8.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 26
       },
       "year": "2021",
@@ -1791,7 +1791,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2021",
@@ -1817,7 +1817,7 @@
       "status": "completed",
       "rating": 7.3,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2021",
@@ -1841,7 +1841,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 14,
         "total": 20
       },
       "year": "2021",
@@ -1866,7 +1866,7 @@
       "status": "completed",
       "rating": 8.7,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2021",
@@ -1891,7 +1891,7 @@
       "status": "completed",
       "rating": 7.9,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2021",
@@ -1918,7 +1918,7 @@
       "status": "completed",
       "rating": 5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2021",
@@ -1969,7 +1969,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 7
       },
       "year": "2021",
@@ -1994,7 +1994,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2020",
@@ -2020,7 +2020,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 13
       },
       "year": "2020",
@@ -2045,7 +2045,7 @@
       "status": "completed",
       "rating": 4.7,
       "progress": {
-        "watched": 0,
+        "watched": 15,
         "total": 15
       },
       "year": "2020",
@@ -2069,7 +2069,7 @@
       "status": "completed",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 16,
         "total": 16
       },
       "year": "2020",
@@ -2143,7 +2143,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2020",
@@ -2240,7 +2240,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 11
       },
       "year": "2020",
@@ -2265,7 +2265,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 13
       },
       "year": "2020",
@@ -2315,7 +2315,7 @@
       "status": "completed",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2020",
@@ -2339,7 +2339,7 @@
       "status": "completed",
       "rating": 6.2,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2020",
@@ -2366,7 +2366,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 18,
         "total": 25
       },
       "year": "2020",
@@ -2392,7 +2392,7 @@
       "status": "completed",
       "rating": 8.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2020",
@@ -2418,7 +2418,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2020",
@@ -2445,7 +2445,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 2
       },
       "year": "2020",
@@ -2496,7 +2496,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2020",
@@ -2522,7 +2522,7 @@
       "status": "completed",
       "rating": 5.6,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2020",
@@ -2574,7 +2574,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 7
       },
       "year": "2020",
@@ -2594,7 +2594,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2020",
@@ -2646,7 +2646,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2019",
@@ -2670,7 +2670,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 13
       },
       "year": "2019",
@@ -2696,7 +2696,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 10
       },
       "year": "2019",
@@ -2742,7 +2742,7 @@
       "status": "completed",
       "rating": 6.1,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 14
       },
       "year": "2019",
@@ -2816,7 +2816,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2019",
@@ -2840,7 +2840,7 @@
       "status": "completed",
       "rating": 6.7,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 12
       },
       "year": "2019",
@@ -2867,7 +2867,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 16
       },
       "year": "2019",
@@ -2893,7 +2893,7 @@
       "status": "completed",
       "rating": 7.4,
       "progress": {
-        "watched": 0,
+        "watched": 21,
         "total": 25
       },
       "year": "2019",
@@ -2946,7 +2946,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2019",
@@ -3052,7 +3052,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2019",
@@ -3079,7 +3079,7 @@
       "status": "completed",
       "rating": 8.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2019",
@@ -3106,7 +3106,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 26
       },
       "year": "2019",
@@ -3157,7 +3157,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 39,
         "total": 39
       },
       "year": "2018",
@@ -3184,7 +3184,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2018",
@@ -3211,7 +3211,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2018",
@@ -3238,7 +3238,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 9,
         "total": 13
       },
       "year": "2018",
@@ -3258,7 +3258,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 28
       },
       "year": "2018",
@@ -3285,7 +3285,7 @@
       "status": "completed",
       "rating": 8.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 25
       },
       "year": "2018",
@@ -3312,7 +3312,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "2018",
@@ -3335,7 +3335,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2018",
@@ -3387,7 +3387,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 14
       },
       "year": "2018",
@@ -3414,7 +3414,7 @@
       "status": "completed",
       "rating": 6.9,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2018",
@@ -3441,7 +3441,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 26
       },
       "year": "2018",
@@ -3515,7 +3515,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2018",
@@ -3542,7 +3542,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 14
       },
       "year": "2018",
@@ -3569,7 +3569,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "2018",
@@ -3594,7 +3594,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2018",
@@ -3618,7 +3618,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 13
       },
       "year": "2018",
@@ -3643,7 +3643,7 @@
       "status": "completed",
       "rating": 8,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 26
       },
       "year": "2018",
@@ -3670,7 +3670,7 @@
       "status": "completed",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2018",
@@ -3716,7 +3716,7 @@
       "status": "completed",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 18,
         "total": 22
       },
       "year": "2017",
@@ -3741,7 +3741,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 24
       },
       "year": "2017",
@@ -3761,7 +3761,7 @@
       "status": "completed",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2017",
@@ -3811,7 +3811,7 @@
       "status": "completed",
       "rating": 5.5,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2017",
@@ -3831,7 +3831,7 @@
       "status": "completed",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2017",
@@ -3855,7 +3855,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2017",
@@ -3880,7 +3880,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 10,
         "total": 21
       },
       "year": "2017",
@@ -3900,7 +3900,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2017",
@@ -3927,7 +3927,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 14
       },
       "year": "2017",
@@ -3952,7 +3952,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 12
       },
       "year": "2017",
@@ -3978,7 +3978,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2017",
@@ -4030,7 +4030,7 @@
       "status": "completed",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2017",
@@ -4053,7 +4053,7 @@
       "status": "completed",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2017",
@@ -4077,7 +4077,7 @@
       "status": "completed",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 13
       },
       "year": "2017",
@@ -4102,7 +4102,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 12
       },
       "year": "2017",
@@ -4126,7 +4126,7 @@
       "status": "completed",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2017",
@@ -4150,7 +4150,7 @@
       "status": "completed",
       "rating": 5.2,
       "progress": {
-        "watched": 0,
+        "watched": 23,
         "total": 23
       },
       "year": "2017",
@@ -4197,7 +4197,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 17,
         "total": 39
       },
       "year": "2016",
@@ -4223,7 +4223,7 @@
       "status": "completed",
       "rating": 8.7,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2016",
@@ -4247,7 +4247,7 @@
       "status": "completed",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 12
       },
       "year": "2016",
@@ -4267,7 +4267,7 @@
       "status": "completed",
       "rating": 8.2,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2016",
@@ -4311,7 +4311,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 13
       },
       "year": "2016",
@@ -4335,7 +4335,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 11
       },
       "year": "2016",
@@ -4411,7 +4411,7 @@
       "status": "completed",
       "rating": 9,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 12
       },
       "year": "2016",
@@ -4458,7 +4458,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 12
       },
       "year": "2016",
@@ -4506,7 +4506,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2015",
@@ -4658,7 +4658,7 @@
       "status": "completed",
       "rating": 8.5,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2015",
@@ -4708,7 +4708,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 12
       },
       "year": "2015",
@@ -4731,7 +4731,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2015",
@@ -4755,7 +4755,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 13
       },
       "year": "2015",
@@ -4894,7 +4894,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2014",
@@ -4919,7 +4919,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2014",
@@ -4944,7 +4944,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2014",
@@ -4969,7 +4969,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2014",
@@ -4992,7 +4992,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2014",
@@ -5014,7 +5014,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2014",
@@ -5135,7 +5135,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 14
       },
       "year": "2014",
@@ -5183,7 +5183,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2014",
@@ -5209,7 +5209,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2014",
@@ -5234,7 +5234,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 13
       },
       "year": "2013",
@@ -5259,7 +5259,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2013",
@@ -5283,7 +5283,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2013",
@@ -5307,7 +5307,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "2013",
@@ -5353,7 +5353,7 @@
       "status": "completed",
       "rating": 8.4,
       "progress": {
-        "watched": 0,
+        "watched": 16,
         "total": 16
       },
       "year": "2013",
@@ -5378,7 +5378,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2013",
@@ -5403,7 +5403,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2013",
@@ -5430,7 +5430,7 @@
       "status": "completed",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2013",
@@ -5453,7 +5453,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2013",
@@ -5478,7 +5478,7 @@
       "status": "completed",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2013",
@@ -5524,7 +5524,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "2013",
@@ -5547,7 +5547,7 @@
       "status": "completed",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "2013",
@@ -5596,7 +5596,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 26,
         "total": 26
       },
       "year": "2012",
@@ -5621,7 +5621,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2012",
@@ -5646,7 +5646,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 23
       },
       "year": "2012",
@@ -5673,7 +5673,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 25
       },
       "year": "2012",
@@ -5700,7 +5700,7 @@
       "status": "completed",
       "rating": 9,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 8
       },
       "year": "2012",
@@ -5720,7 +5720,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 14
       },
       "year": "2012",
@@ -5744,7 +5744,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2012",
@@ -5791,7 +5791,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 8
       },
       "year": "2012",
@@ -5815,7 +5815,7 @@
       "status": "completed",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 11
       },
       "year": "2011",
@@ -5840,7 +5840,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 26,
         "total": 26
       },
       "year": "2011",
@@ -5865,7 +5865,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2011",
@@ -5889,7 +5889,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 28,
         "total": 43
       },
       "year": "2011",
@@ -5915,7 +5915,7 @@
       "status": "completed",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 22,
         "total": 22
       },
       "year": "2011",
@@ -5990,7 +5990,7 @@
       "status": "completed",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 15,
         "total": 16
       },
       "year": "2010",
@@ -6040,7 +6040,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 27
       },
       "year": "2010",
@@ -6066,7 +6066,7 @@
       "status": "completed",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 12
       },
       "year": "2010",
@@ -6088,7 +6088,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 13
       },
       "year": "2009",
@@ -6138,7 +6138,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 24
       },
       "year": "2009",
@@ -6163,7 +6163,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 14
       },
       "year": "2009",
@@ -6188,7 +6188,7 @@
       "status": "completed",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 23
       },
       "year": "2008",
@@ -6214,7 +6214,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2008",
@@ -6240,7 +6240,7 @@
       "status": "completed",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 24
       },
       "year": "2008",
@@ -6266,7 +6266,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 24
       },
       "year": "2008",
@@ -6315,7 +6315,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 17
       },
       "year": "2006",
@@ -6337,7 +6337,7 @@
       "status": "completed",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 26,
         "total": 26
       },
       "year": "2005",
@@ -6360,7 +6360,7 @@
       "status": "completed",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2005",
@@ -6387,7 +6387,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 62
       },
       "year": "2004",
@@ -6409,7 +6409,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "1996",
@@ -6431,7 +6431,7 @@
       "status": "completed",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 479,
         "total": 479
       },
       "year": "1992",
@@ -6453,7 +6453,7 @@
       "status": "watching",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2026",
@@ -6478,7 +6478,7 @@
       "status": "watching",
       "rating": 8.8,
       "progress": {
-        "watched": 0,
+        "watched": 10,
         "total": 16
       },
       "year": "2025",
@@ -6500,9 +6500,9 @@
     {
       "title": "光死去的夏天",
       "status": "watching",
-      "rating": 9.8,
+      "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2025",
@@ -6528,7 +6528,7 @@
       "status": "watching",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 15,
         "total": 26
       },
       "year": "2025",
@@ -6552,7 +6552,7 @@
       "status": "watching",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2025",
@@ -6576,7 +6576,7 @@
       "status": "watching",
       "rating": 7.9,
       "progress": {
-        "watched": 0,
+        "watched": 9,
         "total": 12
       },
       "year": "2024",
@@ -6602,7 +6602,7 @@
       "status": "watching",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 13
       },
       "year": "2024",
@@ -6626,7 +6626,7 @@
       "status": "watching",
       "rating": 0,
       "progress": {
-        "watched": 0,
+        "watched": 81,
         "total": 152
       },
       "year": "2024",
@@ -6650,7 +6650,7 @@
       "status": "watching",
       "rating": 7.4,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 12
       },
       "year": "2024",
@@ -6675,7 +6675,7 @@
       "status": "watching",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2023",
@@ -6700,7 +6700,7 @@
       "status": "watching",
       "rating": 6.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2023",
@@ -6725,7 +6725,7 @@
       "status": "watching",
       "rating": 8.3,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 12
       },
       "year": "2022",
@@ -6749,7 +6749,7 @@
       "status": "watching",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 13
       },
       "year": "2022",
@@ -6773,7 +6773,7 @@
       "status": "watching",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 13,
         "total": 0
       },
       "year": "2020",
@@ -6800,7 +6800,7 @@
       "status": "watching",
       "rating": 8,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 12
       },
       "year": "2016",
@@ -6824,7 +6824,7 @@
       "status": "watching",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 25
       },
       "year": "2007",
@@ -6849,7 +6849,7 @@
       "status": "watching",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 26
       },
       "year": "2006",
@@ -6871,7 +6871,7 @@
       "status": "watching",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 13
       },
       "year": "1998",
@@ -6918,7 +6918,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2025",
@@ -6941,7 +6941,7 @@
       "status": "planned",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2025",
@@ -6991,7 +6991,7 @@
       "status": "planned",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 24
       },
       "year": "2025",
@@ -7066,7 +7066,7 @@
       "status": "planned",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2025",
@@ -7091,7 +7091,7 @@
       "status": "planned",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2025",
@@ -7116,7 +7116,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2025",
@@ -7167,7 +7167,7 @@
       "status": "planned",
       "rating": 6.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2025",
@@ -7191,7 +7191,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2025",
@@ -7267,7 +7267,7 @@
       "status": "planned",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 22
       },
       "year": "2025",
@@ -7291,7 +7291,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2025",
@@ -7339,7 +7339,7 @@
       "status": "planned",
       "rating": 7.8,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 10
       },
       "year": "2024",
@@ -7410,7 +7410,7 @@
       "status": "planned",
       "rating": 8.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2024",
@@ -7436,7 +7436,7 @@
       "status": "planned",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2024",
@@ -7486,7 +7486,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2024",
@@ -7534,7 +7534,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2024",
@@ -7660,7 +7660,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 22,
         "total": 22
       },
       "year": "2023",
@@ -7686,7 +7686,7 @@
       "status": "planned",
       "rating": 8.5,
       "progress": {
-        "watched": 0,
+        "watched": 12,
         "total": 12
       },
       "year": "2023",
@@ -7711,7 +7711,7 @@
       "status": "planned",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 10
       },
       "year": "2023",
@@ -7731,7 +7731,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2023",
@@ -7782,7 +7782,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2023",
@@ -7859,7 +7859,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 16
       },
       "year": "2023",
@@ -7905,7 +7905,7 @@
       "status": "planned",
       "rating": 7.2,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 30
       },
       "year": "2023",
@@ -7945,7 +7945,7 @@
       "status": "planned",
       "rating": 7.1,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2023",
@@ -8020,7 +8020,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2023",
@@ -8046,7 +8046,7 @@
       "status": "planned",
       "rating": 8.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2023",
@@ -8123,7 +8123,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 2
       },
       "year": "2022",
@@ -8294,7 +8294,7 @@
       "status": "planned",
       "rating": 6.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 16
       },
       "year": "2022",
@@ -8414,7 +8414,7 @@
       "status": "planned",
       "rating": 8.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -8459,7 +8459,7 @@
       "status": "planned",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -8484,7 +8484,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2022",
@@ -8534,7 +8534,7 @@
       "status": "planned",
       "rating": 8.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 16
       },
       "year": "2022",
@@ -8554,7 +8554,7 @@
       "status": "planned",
       "rating": 7.5,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 24
       },
       "year": "2022",
@@ -8605,7 +8605,7 @@
       "status": "planned",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -8630,7 +8630,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -8680,7 +8680,7 @@
       "status": "planned",
       "rating": 6.1,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 13
       },
       "year": "2022",
@@ -8707,7 +8707,7 @@
       "status": "planned",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 20
       },
       "year": "2022",
@@ -8759,7 +8759,7 @@
       "status": "planned",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2022",
@@ -8810,7 +8810,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 11,
         "total": 11
       },
       "year": "2021",
@@ -8979,7 +8979,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2021",
@@ -9201,7 +9201,7 @@
       "status": "planned",
       "rating": 8.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2021",
@@ -9225,7 +9225,7 @@
       "status": "planned",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 10,
         "total": 14
       },
       "year": "2021",
@@ -9322,7 +9322,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2021",
@@ -9372,7 +9372,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 12
       },
       "year": "2021",
@@ -9565,7 +9565,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 11
       },
       "year": "2021",
@@ -9590,7 +9590,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2020",
@@ -9641,7 +9641,7 @@
       "status": "planned",
       "rating": 8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2020",
@@ -9693,7 +9693,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2020",
@@ -9718,7 +9718,7 @@
       "status": "planned",
       "rating": 6.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2020",
@@ -9813,7 +9813,7 @@
       "status": "planned",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 13
       },
       "year": "2020",
@@ -9838,7 +9838,7 @@
       "status": "planned",
       "rating": 5.4,
       "progress": {
-        "watched": 0,
+        "watched": 14,
         "total": 24
       },
       "year": "2020",
@@ -9917,7 +9917,7 @@
       "status": "planned",
       "rating": 6.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 26
       },
       "year": "2020",
@@ -9970,7 +9970,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 84
       },
       "year": "2020",
@@ -10041,7 +10041,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2020",
@@ -10092,7 +10092,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2019",
@@ -10169,7 +10169,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2019",
@@ -10239,7 +10239,7 @@
       "status": "planned",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 23
       },
       "year": "2019",
@@ -10265,7 +10265,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 24,
         "total": 24
       },
       "year": "2019",
@@ -10290,7 +10290,7 @@
       "status": "planned",
       "rating": 6.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2019",
@@ -10365,7 +10365,7 @@
       "status": "planned",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 14
       },
       "year": "2019",
@@ -10414,7 +10414,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 11
       },
       "year": "2019",
@@ -10438,7 +10438,7 @@
       "status": "planned",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 13
       },
       "year": "2019",
@@ -10508,7 +10508,7 @@
       "status": "planned",
       "rating": 8.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2019",
@@ -10532,7 +10532,7 @@
       "status": "planned",
       "rating": 8.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2019",
@@ -10688,7 +10688,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 13
       },
       "year": "2018",
@@ -10811,7 +10811,7 @@
       "status": "planned",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 26
       },
       "year": "2018",
@@ -10884,7 +10884,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2018",
@@ -10911,7 +10911,7 @@
       "status": "planned",
       "rating": 6.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 24
       },
       "year": "2018",
@@ -10937,7 +10937,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2018",
@@ -10962,7 +10962,7 @@
       "status": "planned",
       "rating": 8.4,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2017",
@@ -11038,7 +11038,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2017",
@@ -11061,7 +11061,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 12
       },
       "year": "2017",
@@ -11084,7 +11084,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "2017",
@@ -11107,7 +11107,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 12
       },
       "year": "2017",
@@ -11133,7 +11133,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 12
       },
       "year": "2017",
@@ -11159,7 +11159,7 @@
       "status": "planned",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2017",
@@ -11206,7 +11206,7 @@
       "status": "planned",
       "rating": 8.7,
       "progress": {
-        "watched": 0,
+        "watched": 4,
         "total": 50
       },
       "year": "2016",
@@ -11282,7 +11282,7 @@
       "status": "planned",
       "rating": 8.5,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 9
       },
       "year": "2016",
@@ -11383,7 +11383,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 80,
         "total": 120
       },
       "year": "2016",
@@ -11433,7 +11433,7 @@
       "status": "planned",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 24
       },
       "year": "2015",
@@ -11483,7 +11483,7 @@
       "status": "planned",
       "rating": 9.3,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 16
       },
       "year": "2015",
@@ -11507,7 +11507,7 @@
       "status": "planned",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 5,
         "total": 24
       },
       "year": "2015",
@@ -11530,7 +11530,7 @@
       "status": "planned",
       "rating": 9.2,
       "progress": {
-        "watched": 0,
+        "watched": 20,
         "total": 20
       },
       "year": "2014",
@@ -11598,7 +11598,7 @@
       "status": "planned",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 25
       },
       "year": "2014",
@@ -11625,7 +11625,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2014",
@@ -11651,7 +11651,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 1
       },
       "year": "2014",
@@ -11674,7 +11674,7 @@
       "status": "planned",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 10
       },
       "year": "2014",
@@ -11797,7 +11797,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 26
       },
       "year": "2013",
@@ -11895,7 +11895,7 @@
       "status": "planned",
       "rating": 9.6,
       "progress": {
-        "watched": 0,
+        "watched": 8,
         "total": 13
       },
       "year": "2013",
@@ -11920,7 +11920,7 @@
       "status": "planned",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 3,
         "total": 12
       },
       "year": "2013",
@@ -11972,7 +11972,7 @@
       "status": "planned",
       "rating": 9.5,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 13
       },
       "year": "2012",
@@ -12045,7 +12045,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 10
       },
       "year": "2012",
@@ -12117,7 +12117,7 @@
       "status": "planned",
       "rating": 9.1,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 25
       },
       "year": "2012",
@@ -12143,7 +12143,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 60
       },
       "year": "2011",
@@ -12269,7 +12269,7 @@
       "status": "planned",
       "rating": 8.2,
       "progress": {
-        "watched": 0,
+        "watched": 6,
         "total": 12
       },
       "year": "2011",
@@ -12344,7 +12344,7 @@
       "status": "planned",
       "rating": 9.7,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 13
       },
       "year": "2010",
@@ -12369,7 +12369,7 @@
       "status": "planned",
       "rating": 8.1,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 12
       },
       "year": "2009",
@@ -12389,7 +12389,7 @@
       "status": "planned",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 2,
         "total": 28
       },
       "year": "2009",
@@ -12415,7 +12415,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 7,
         "total": 12
       },
       "year": "2009",
@@ -12635,7 +12635,7 @@
       "status": "planned",
       "rating": 9.9,
       "progress": {
-        "watched": 0,
+        "watched": 100,
         "total": 200
       },
       "year": "2006",
@@ -12687,7 +12687,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 1,
         "total": 6
       },
       "year": "2005",
@@ -12787,7 +12787,7 @@
       "status": "planned",
       "rating": 9.8,
       "progress": {
-        "watched": 0,
+        "watched": 156,
         "total": 161
       },
       "year": "1999",
@@ -12860,7 +12860,7 @@
       "status": "planned",
       "rating": 9.4,
       "progress": {
-        "watched": 0,
+        "watched": 774,
         "total": 0
       },
       "year": "1996",
