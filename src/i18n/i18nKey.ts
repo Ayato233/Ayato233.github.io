@@ -138,6 +138,8 @@ enum I18nKey {
 	welcomeKicker = "welcomeKicker",
 	welcomeTitle = "welcomeTitle",
 
+	guestbook = "guestbook",
+
 	comments = "comments",
 	commentsLoading = "commentsLoading",
 	commentsLoadFailed = "commentsLoadFailed",

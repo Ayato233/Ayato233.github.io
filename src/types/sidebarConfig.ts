@@ -43,7 +43,8 @@ export type SidebarPage =
 	| "tags" // 标签索引
 	| "rss" // RSS 订阅指南
 	| "atom" // Atom 订阅指南
-	| "post"; // 文章详情页
+	| "post" // 文章详情页
+	| "guestbook"; // 留言板（2026-08-29 新增，spec/guestbook.md + 评论区）
 
 /** 资料卡（内容来自 profileConfig，无 WidgetLayout 标题外壳） */
 export interface ProfileWidget {

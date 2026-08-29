@@ -105,6 +105,12 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		external: true,
 		pageKey: "github",
 	},
+	Guestbook: {
+		name: i18n(I18nKey.guestbook),
+		url: "/guestbook/",
+		icon: "material-symbols:forum-outline-rounded",
+		pageKey: "guestbook",
+	},
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -129,7 +135,7 @@ export const navBarConfig: NavBarConfig = {
 				// LinkPresets.Categories,
 				// LinkPresets.Tags,
 				LinkPresets.About,
-				LinkPresets.GitHub,
+				LinkPresets.Guestbook,
 			],
 		},
 	],
