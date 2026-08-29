@@ -55,10 +55,27 @@ const metaLine = $derived(
 				<Icon icon="material-symbols:play-arrow-rounded" />
 			</span>
 		{/if}
-		<span class="anime-card__rating">
-			<Icon icon="material-symbols:star-rounded" aria-hidden="true" />
-			<span>{anime.rating}</span>
-		</span>
+		{#if anime.description || metaLine || isWatching}
+			<!-- 悬浮简介层：常态隐藏，hover（触屏恒显）淡入展示简介与元信息 -->
+			<div class="anime-card__overlay" aria-hidden="true">
+				{#if anime.description}
+					<p class="anime-card__overlay-desc">{anime.description}</p>
+				{/if}
+				<div class="anime-card__overlay-meta">
+					{#if isWatching}
+						<span class="anime-card__overlay-progress">
+							<Icon icon="material-symbols:play-arrow-rounded" />
+							{anime.progress.watched}/{anime.progress.total}
+						</span>
+					{/if}
+					<span class="anime-card__overlay-rating">
+						<Icon icon="material-symbols:star-rounded" />
+						{anime.rating}
+					</span>
+					{#if metaLine}<span>{metaLine}</span>{/if}
+				</div>
+			</div>
+		{/if}
 	{/snippet}
 
 	{#if anime.link}
@@ -78,42 +95,7 @@ const metaLine = $derived(
 	{/if}
 
 	<div class="anime-card__body">
-		<div class="anime-card__header-row">
-			<span class="anime-card__status">
-				<span class="anime-card__status-dot" aria-hidden="true"></span>
-				{i18n(statusMeta.key)}
-			</span>
-		</div>
-
 		<span class="anime-card__title" title={anime.title}>{anime.title}</span>
-
-		{#if isWatching}
-			<div class="anime-card__progress">
-				<span class="anime-card__progress-track">
-					<ProgressIndicator
-						progress={progressRatio}
-						label={`${anime.progress.watched}/${anime.progress.total}`}
-					/>
-				</span>
-				<span class="anime-card__progress-text">{anime.progress.watched}/{anime.progress.total}</span>
-			</div>
-		{/if}
-
-		{#if anime.description}
-			<p class="anime-card__desc">{anime.description}</p>
-		{/if}
-
-		{#if metaLine}
-			<p class="anime-card__meta">{metaLine}</p>
-		{/if}
-
-		{#if anime.genres.length > 0}
-			<div class="anime-card__genres">
-				{#each anime.genres as genre (genre)}
-					<span class="anime-card__genre">#{genre}</span>
-				{/each}
-			</div>
-		{/if}
 	</div>
 </article>
 
@@ -132,16 +114,18 @@ const metaLine = $derived(
 	-webkit-backdrop-filter: blur(16px)
 
 	backdrop-filter: blur(16px)
-	/* 拟态玻璃：去深色描边，换顶部微反光 + 柔和悬浮阴影（hover 浮起）；
+	/* 拟态玻璃：极淡浅边（非黑，保边界独立）+ 顶部微反光 + 柔和悬浮阴影（hover 浮起）；
 	 * 现代 rgb() 空格语法需整体 unquote，避免 Stylus 旧除法解析 */
-	border: none
-	box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.08)"), var(--card-shadow)
+	border: 1px solid unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
+	box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.08)"), var(--card-shadow), unquote("0 4px 16px rgb(0 0 0 / 0.1)")
 	transition:
-		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
+		box-shadow 0.45s var(--m3e-easing-emphasized-decelerate),
+		transform 0.45s var(--m3e-easing-emphasized-decelerate),
+		border-color 0.45s var(--m3e-easing-standard)
 	&:hover
+		border-color: unquote("color-mix(in oklab, var(--on-surface) 15%, transparent)")
 		box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.12), var(--m3e-elevation-2)")
-		transform: translateY(-2px)
+		transform: translateY(-3px)
 
 	/* 2:3 海报封面：渐变占位同时充当图片加载背景 */
 	&__cover
@@ -159,7 +143,7 @@ const metaLine = $derived(
 		width: 100%
 		height: 100%
 		object-fit: cover
-		transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
+		transition: transform 0.8s var(--m3e-easing-emphasized-decelerate)
 		.anime-card:hover &
 			transform: scale(1.05)
 
@@ -170,22 +154,22 @@ const metaLine = $derived(
 		pointer-events: none
 		background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 40%, rgba(0, 0, 0, 0.25) 100%)
 		opacity: 0.6
-		transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
+		transition: opacity 0.5s var(--m3e-easing-standard)
 		.anime-card:hover &
-			opacity: 0.8
+			opacity: 0.62
 
-	/* 悬停播放层：深色 scrim + 圆形播放钮（仅 link 卡片），hover 淡入放大 */
+	/* 悬停播放钮：保留居中圆形播放钮，但不盖全屏黑罩（封面画面保持透亮） */
 	&__play
 		position: absolute
 		inset: 0
 		display: flex
 		align-items: center
 		justify-content: center
-		background: unquote("color-mix(in srgb, #000 40%, transparent)")
+		background: transparent
 		opacity: 0
 		transition:
-			opacity var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-			transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
+			opacity 0.45s var(--m3e-easing-emphasized-decelerate),
+			transform 0.45s var(--m3e-easing-emphasized-decelerate)
 		transform: scale(0.9)
 		> :global(svg)
 			width: 2.75rem
@@ -208,29 +192,60 @@ const metaLine = $derived(
 			width: 2.5rem
 			height: 2.5rem
 
-	/* 评分 scrim pill：毛玻璃 + star 图标 + 数字 */
-	&__rating
+	/* 悬浮简介层：hover（触屏恒显）在封面底部淡入简介 + 评分/进度/年份 */
+	&__overlay
 		position: absolute
-		top: 0.5rem
-		right: 0.5rem
+		inset: 0
 		z-index: 2
-		display: inline-flex
-		align-items: center
-		gap: 0.1875rem
-		padding: 0.1875rem 0.5rem
-		border-radius: var(--shape-corner-full)
-		background: unquote("color-mix(in srgb, #000 60%, transparent)")
-		backdrop-filter: blur(0.375rem)
-		-webkit-backdrop-filter: blur(0.375rem)
+		display: flex
+		flex-direction: column
+		justify-content: flex-end
+		gap: 0.5rem
+		padding: 0.75rem
+		background: linear-gradient(
+			180deg,
+			transparent 0%,
+			transparent 50%,
+			rgba(0, 0, 0, 0.55) 78%,
+			rgba(0, 0, 0, 0.88) 100%
+		)
+		opacity: 0
+		transition: opacity 0.45s var(--m3e-easing-standard)
+		.anime-card:hover &
+			opacity: 1
+
+	&__overlay-desc
+		margin: 0
 		color: #fff
+		font: var(--m3e-type-body-small)
+		line-height: 1.5
+		display: -webkit-box
+		-webkit-line-clamp: 4
+		-webkit-box-orient: vertical
+		overflow: hidden
+
+	&__overlay-meta
+		display: flex
+		flex-wrap: wrap
+		align-items: center
+		gap: 0.375rem 0.625rem
+		color: rgba(255, 255, 255, 0.9)
 		font: var(--m3e-type-label-small)
-		font-weight: 700
+		font-weight: 500
 		font-variant-numeric: tabular-nums
-		border: 1px solid rgba(255, 255, 255, 0.15)
-		> :global(svg)
-			width: 0.875rem
-			height: 0.875rem
-			color: #facc15
+		> span
+			display: inline-flex
+			align-items: center
+			gap: 0.1875rem
+			> :global(svg)
+				width: 0.8125rem
+				height: 0.8125rem
+				color: #facc15
+
+	/* 触屏（无 hover）：简介层常显，保证可读 */
+	@media (hover: none) and (pointer: coarse)
+		.anime-card__overlay
+			opacity: 1
 
 	&__body
 		display: flex

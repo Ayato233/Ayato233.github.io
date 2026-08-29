@@ -7,11 +7,12 @@ import AnimeSection from "@components/organisms/AnimeSection.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
-import { getAnimeList } from "../utils/anime-data";
+import { getAnimeList, getAnimeSyncMeta } from "../utils/anime-data";
 
 const animes = await getAnimeList();
+const syncMeta = getAnimeSyncMeta();
 ---
 
 <MainGridLayout title={i18n(I18nKey.anime)} description={i18n(I18nKey.animeBanner)} page="anime">
-    <AnimeSection animes={animes} client:visible></AnimeSection>
+    <AnimeSection animes={animes} syncAt={syncMeta.fetchedAt} client:visible></AnimeSection>
 </MainGridLayout>

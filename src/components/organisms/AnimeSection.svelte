@@ -19,32 +19,24 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import Icon from "@iconify/svelte";
 import { ANIME_STATUS_META } from "@utils/anime/status";
-import { flipFromRect } from "@utils/motion";
 import { onMount } from "svelte";
 import type { AnimeItem, AnimeStatus } from "../../data/anime";
 
-export type AnimeLayoutMode = "grid" | "list";
+let {
+	animes = [] as AnimeItem[],
+	syncAt = "",
+}: { animes?: AnimeItem[]; syncAt?: string } = $props();
 
-let { animes = [] as AnimeItem[] }: { animes?: AnimeItem[] } = $props();
+const ANIME_PAGE_SIZE = 9;
 
-const ANIME_PAGE_SIZE = 12;
-const ANIME_LAYOUT_KEY = "shirone:anime-layout-mode";
+type AnimeTab = "all" | AnimeStatus;
 
 let query = $state("");
 let initialized = false;
-/** 每个状态分区已展示条数（分区独立"加载更多"，避免首屏只剩单一分区） */
-let groupShown = $state<Partial<Record<AnimeStatus, number>>>({});
-/** 当前激活的状态 Tab（默认第一个有内容的；URL ?tab= 可直达） */
-let selectedTab = $state<AnimeStatus>("");
-
-/** 布局形态：番剧页专属独立偏好，默认海报网格 (grid) */
-let listMode = $state<AnimeLayoutMode>("grid");
-let listEl = $state<HTMLElement | null>(null);
-
-const LIST_MODE_CLASS: Record<AnimeLayoutMode, string> = {
-	grid: "anime-list--grid",
-	list: "anime-list--list",
-};
+/** 每个 Tab 的当前页码（独立记忆；切 Tab 保留） */
+let groupPage = $state<Partial<Record<AnimeTab, number>>>({});
+/** 当前激活的 Tab（默认「全部」；URL ?tab= 可直达） */
+let selectedTab = $state<AnimeTab>("");
 
 /** 状态分区顺序：正在看 → 已看完 → 想看 → 搁置 → 弃番（有内容的区才渲染） */
 const STATUS_ORDER: AnimeItem["status"][] = [
@@ -69,84 +61,95 @@ const filtered = $derived.by(() => {
 	});
 });
 
-/** 状态分区：对全量过滤后数据按 STATUS_ORDER 分红，每区独立分页展示首段 */
+/** 状态分区：按 STATUS_ORDER 统计各状态总数（有内容的区，供翻页与 Tab 计数） */
 const statusGroups = $derived(
-	STATUS_ORDER.flatMap((status) => {
-		const all = filtered.filter((anime) => anime.status === status);
-		if (all.length === 0) return [];
-		const shown = Math.min(groupShown[status] ?? ANIME_PAGE_SIZE, all.length);
-		return [
-			{
-				status,
-				total: all.length,
-				hasMore: shown < all.length,
-				items: all.slice(0, shown),
-			},
-		];
-	}),
-);
-
-/** Tab 列表：有内容的状态 + 总数（STATUS_ORDER 序，前端分页用的计数来自全量过滤结果） */
-const tabs = $derived(
 	STATUS_ORDER.flatMap((status) => {
 		const total = filtered.filter((anime) => anime.status === status).length;
 		return total > 0 ? [{ status, total }] : [];
 	}),
 );
 
-/** 当前 Tab：URL/点击指定（且在 tabs 内），否则默认第一个有内容的 */
+/** 页头统计行文案（i18n 不代参数，手动替换占位符） */
+const metaText = $derived.by(
+	() =>
+		i18n(I18nKey.animeMeta)
+			.replace("{count}", String(animes.length))
+			.replace("{date}", syncAt || "—"),
+);
+
+/** Tab 列表：「全部」置首 + 有内容的状态（各带总数，计数来自全量过滤结果） */
+const tabs = $derived([
+	{ status: "all" as AnimeTab, total: filtered.length },
+	...STATUS_ORDER.flatMap((status) => {
+		const total = filtered.filter((anime) => anime.status === status).length;
+		return total > 0 ? [{ status: status as AnimeTab, total }] : [];
+	}),
+]);
+
+/** 当前 Tab：URL/点击指定（且在 tabs 内），否则默认第一个（全部） */
 const activeTab = $derived(
 	tabs.some((tab) => tab.status === selectedTab)
 		? selectedTab
 		: (tabs[0]?.status ?? ""),
 );
 
-/** 当前 Tab 的组（复用分区数据结构，单组渲染 + 独立加载更多） */
-const activeGroup = $derived(
-	statusGroups.find((group) => group.status === activeTab) ?? null,
-);
+/** 当前 Tab 的分页内容：每页 9 条，前后翻页（各 Tab 独立记忆页码） */
+const activeGroup = $derived.by(() => {
+	const total =
+		activeTab === "all"
+			? filtered.length
+			: (statusGroups.find((g) => g.status === activeTab)?.total ?? 0);
+	const totalPages = Math.max(1, Math.ceil(total / ANIME_PAGE_SIZE));
+	const page = Math.min(Math.max(groupPage[activeTab] ?? 1, 1), totalPages);
+	const base =
+		activeTab === "all"
+			? filtered
+			: filtered.filter((a) => a.status === activeTab);
+	return {
+		status: activeTab,
+		total,
+		page,
+		totalPages,
+		hasPrev: page > 1,
+		hasNext: page < totalPages,
+		items: base.slice((page - 1) * ANIME_PAGE_SIZE, page * ANIME_PAGE_SIZE),
+	};
+});
 
-/** 加载某状态分区的下一段 */
-function loadMore(status: AnimeStatus) {
-	groupShown[status] =
-		(groupShown[status] ?? ANIME_PAGE_SIZE) + ANIME_PAGE_SIZE;
-}
-
-function readStoredLayoutMode(): AnimeLayoutMode {
-	try {
-		const stored = localStorage.getItem(ANIME_LAYOUT_KEY);
-		if (stored === "list" || stored === "grid") return stored;
-	} catch {
-		/* Ignore local storage access failure */
+/** 分页页码集合：< 1 … p-2 p-1 p p+1 p+2 … N >（首尾固定 + 当前 ±2，断档补省略号） */
+const pageItems = $derived.by(() => {
+	const p = activeGroup.page;
+	const n = activeGroup.totalPages;
+	const set = new Set<number>([1, n]);
+	for (let i = p - 2; i <= p + 2; i++) {
+		if (i >= 1 && i <= n) set.add(i);
 	}
-	return "grid";
-}
-
-/** 切布局：切类前记录卡片位置，下一帧逐卡 FLIP 平移（reduced-motion 跳变） */
-function switchLayoutMode(mode: AnimeLayoutMode) {
-	if (mode === listMode) return;
-	const cards = Array.from(
-		listEl?.querySelectorAll<HTMLElement>(".anime-card") ?? [],
-	);
-	const before = cards.map((card) => card.getBoundingClientRect());
-	listMode = mode;
-	try {
-		localStorage.setItem(ANIME_LAYOUT_KEY, mode);
-	} catch {
-		/* Ignore local storage access failure */
+	const sorted = [...set].sort((a, b) => a - b);
+	const items: { type: "page" | "gap"; value?: number; key: string }[] = [];
+	let prev = 0;
+	for (const v of sorted) {
+		if (prev > 0 && v - prev > 1) items.push({ type: "gap", key: `g${v}` });
+		items.push({ type: "page", value: v, key: `p${v}` });
+		prev = v;
 	}
-	requestAnimationFrame(() => {
-		cards.forEach((card, index) => {
-			void flipFromRect(card, before[index], 400);
-		});
-	});
+	return items;
+});
+
+/** 跳页（clamp 到 [1, 总页数]） */
+function setPage(status: AnimeTab, page: number) {
+	const total =
+		status === "all"
+			? filtered.length
+			: (statusGroups.find((g) => g.status === status)?.total ?? 0);
+	const totalPages = Math.max(1, Math.ceil(total / ANIME_PAGE_SIZE));
+	groupPage[status] = Math.min(Math.max(page, 1), totalPages);
 }
 
-/** 搜索变化时重置已加载数 */
+/** 搜索变化时重置页码 */
 $effect(() => {
 	const q = query;
 	if (!initialized) return;
-	groupShown = {};
+	groupPage = {};
 });
 
 // 搜索词与状态 Tab 同步到 URL（?q= / ?tab=），刷新/分享/回退保留
@@ -167,7 +170,6 @@ onMount(() => {
 	const params = new URLSearchParams(window.location.search);
 	query = params.get("q") || "";
 	selectedTab = (params.get("tab") as AnimeStatus) || "";
-	listMode = readStoredLayoutMode();
 	initialized = true;
 });
 </script>
@@ -180,6 +182,9 @@ onMount(() => {
 	/>
 
 	{#if animes.length > 0}
+		<p class="anime-section__meta" aria-live="polite">
+			{metaText}
+		</p>
 		<div class="anime-section__tools">
 			<div class="anime-section__search-row">
 				<div class="anime-section__search">
@@ -205,31 +210,6 @@ onMount(() => {
 						</button>
 					{/if}
 				</div>
-
-				<div class="anime-section__layout-switch" role="group" aria-label={i18n(I18nKey.layoutMode)}>
-					<button
-						type="button"
-						class="anime-section__layout-btn"
-						class:anime-section__layout-btn--active={listMode === "grid"}
-						aria-label={i18n(I18nKey.layoutGrid)}
-						title={i18n(I18nKey.layoutGrid)}
-						aria-pressed={listMode === "grid"}
-						onclick={() => switchLayoutMode("grid")}
-					>
-						<Icon icon="material-symbols:grid-view-rounded" aria-hidden="true" />
-					</button>
-					<button
-						type="button"
-						class="anime-section__layout-btn"
-						class:anime-section__layout-btn--active={listMode === "list"}
-						aria-label={i18n(I18nKey.layoutList)}
-						title={i18n(I18nKey.layoutList)}
-						aria-pressed={listMode === "list"}
-						onclick={() => switchLayoutMode("list")}
-					>
-						<Icon icon="material-symbols:view-list-rounded" aria-hidden="true" />
-					</button>
-				</div>
 			</div>
 		</div>
 	{/if}
@@ -245,7 +225,7 @@ onMount(() => {
 					aria-selected={tab.status === activeTab}
 					onclick={() => (selectedTab = tab.status)}
 				>
-					<span class="anime-section__tab-label">{i18n(ANIME_STATUS_META[tab.status].key)}</span>
+					<span class="anime-section__tab-label">{i18n(tab.status === "all" ? I18nKey.animeAll : ANIME_STATUS_META[tab.status as AnimeStatus].key)}</span>
 					<span class="anime-section__tab-count">{tab.total}</span>
 				</button>
 			{/each}
@@ -254,23 +234,84 @@ onMount(() => {
 
 	{#if activeGroup}
 		{#key `${activeTab}|${query}`}
-			<div class="anime-section__groups" bind:this={listEl}>
+			<div class="anime-section__groups">
 				<section class="anime-section__group">
-					<div class="anime-list {LIST_MODE_CLASS[listMode]}">
+					<div class="anime-list anime-list--grid">
 						{#each activeGroup.items as anime, i (anime.title)}
 							<AnimeCard {anime} delay={Math.min(i, 7) * 45} />
 						{/each}
 					</div>
-					{#if activeGroup.hasMore}
-						<div class="anime-section__more">
-							<Button
-								variant="outlined"
-								icon="material-symbols:expand-more-rounded"
-								label={i18n(I18nKey.loadMore)}
-								onclick={() => loadMore(activeTab)}
-							/>
+					{#if activeGroup.totalPages > 1}
+					<div class="anime-section__pagination">
+						<!-- 移动端简化：箭头 + 当前/总页 -->
+						<div class="anime-section__pagination-mobile">
+							<button
+								type="button"
+								class="anime-section__page-arrow"
+								aria-label="上一页"
+								disabled={!activeGroup.hasPrev}
+								onclick={() => setPage(activeTab, activeGroup.page - 1)}
+							>
+								<Icon icon="material-symbols:chevron-left-rounded" />
+							</button>
+							<span class="anime-section__page-jump">
+								<span class="anime-section__page-jump-current">{activeGroup.page}</span>
+								<span class="anime-section__page-jump-sep" aria-hidden="true">/</span>
+								<span class="anime-section__page-jump-total">{activeGroup.totalPages}</span>
+							</span>
+							<button
+								type="button"
+								class="anime-section__page-arrow"
+								aria-label="下一页"
+								disabled={!activeGroup.hasNext}
+								onclick={() => setPage(activeTab, activeGroup.page + 1)}
+							>
+								<Icon icon="material-symbols:chevron-right-rounded" />
+							</button>
 						</div>
-					{/if}
+						<!-- 桌面端完整：箭头 + 页码窗口（省略折叠） -->
+						<div class="anime-section__pagination-desktop">
+							<button
+								type="button"
+								class="anime-section__page-arrow"
+								aria-label="上一页"
+								disabled={!activeGroup.hasPrev}
+								onclick={() => setPage(activeTab, activeGroup.page - 1)}
+							>
+								<Icon icon="material-symbols:chevron-left-rounded" />
+							</button>
+							<div class="anime-section__page-nums">
+								{#each pageItems as item (item.key)}
+									{#if item.type === "gap"}
+										<span class="anime-section__page-ellipsis" aria-hidden="true">
+											<Icon icon="material-symbols:more-horiz" />
+										</span>
+									{:else}
+										<button
+											type="button"
+											class="anime-section__page-num"
+											class:anime-section__page-num--active={item.value === activeGroup.page}
+											aria-current={item.value === activeGroup.page ? "page" : undefined}
+											aria-label={`第 ${item.value} 页`}
+											onclick={() => setPage(activeTab, item.value!)}
+										>
+											{item.value}
+										</button>
+									{/if}
+								{/each}
+							</div>
+							<button
+								type="button"
+								class="anime-section__page-arrow"
+								aria-label="下一页"
+								disabled={!activeGroup.hasNext}
+								onclick={() => setPage(activeTab, activeGroup.page + 1)}
+							>
+								<Icon icon="material-symbols:chevron-right-rounded" />
+							</button>
+						</div>
+					</div>
+				{/if}
 				</section>
 			</div>
 		{/key}
@@ -297,9 +338,9 @@ onMount(() => {
 		/* 卡片容器（Card 原子根）移动端收窄内边距 */
 		padding: 1rem 0.75rem
 
-		.anime-list--grid, .anime-list--list
+		.anime-list--grid
 			padding-top: 1rem
-			gap: 0.625rem
+			gap: 1rem
 
 	/* 状态 Tab（M3 tabs：文字 + 底部指示条 + 计数徽标） */
 	&__tabs
@@ -372,6 +413,13 @@ onMount(() => {
 		.anime-section__tab--active &
 			background: unquote("color-mix(in oklab, var(--primary) 14%, transparent)")
 			color: var(--primary)
+
+	/* 页头统计行（动画 N 部 · 数据更新于 …） */
+	&__meta
+		margin: 0.375rem 0 0.75rem
+		color: var(--on-surface-variant)
+		font: var(--m3e-type-body-small)
+		line-height: 1.5
 
 	&__tools
 		display: flex
@@ -527,6 +575,135 @@ onMount(() => {
 		&--out
 			animation: anime-loading-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both
 
+	/* 分页条（与主页文章分页 PagePagination 同款：移动简化 / 桌面页码窗口） */
+	&__pagination
+		display: flex
+		align-items: center
+		justify-content: center
+		gap: 0.75rem
+		padding-top: 1.5rem
+
+	&__pagination-mobile
+		display: flex
+		align-items: center
+		gap: 0.75rem
+
+	&__pagination-desktop
+		display: none
+
+	@media (min-width: 1024px)
+		&__pagination-mobile
+			display: none
+
+		&__pagination-desktop
+			display: flex
+			align-items: center
+			gap: 0.75rem
+
+	&__page-arrow
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		width: 2.75rem
+		height: 2.75rem
+		border: none
+		border-radius: var(--shape-corner-l)
+		background: var(--surface-container-low)
+		color: var(--primary)
+		cursor: pointer
+		transition:
+			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
+			transform var(--m3e-duration-short) var(--m3e-easing-standard)
+
+		> :global(svg)
+			width: 1.75rem
+			height: 1.75rem
+
+		&:hover:not(:disabled)
+			background: var(--surface-container-high)
+
+		&:active:not(:disabled)
+			transform: scale(0.96)
+
+		&:disabled
+			opacity: 0.38
+			pointer-events: none
+
+	/* 移动端「当前 / 总页」徽标 */
+	&__page-jump
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		gap: 0.375rem
+		min-width: 5.5rem
+		height: 2.75rem
+		padding: 0 1rem
+		border-radius: var(--shape-corner-l)
+		background: var(--surface-container-low)
+		color: var(--on-surface)
+		font: var(--m3e-type-label-large)
+
+		&-current
+			font-weight: 700
+			color: var(--primary)
+
+		&-sep
+			color: var(--on-surface-variant)
+
+		&-total
+			color: var(--on-surface-variant)
+			font-variant-numeric: tabular-nums
+
+	/* 桌面端页码窗口 */
+	&__page-nums
+		display: flex
+		align-items: center
+		gap: 0.5rem
+
+	&__page-num
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		width: 2.75rem
+		height: 2.75rem
+		border: none
+		border-radius: var(--shape-corner-l)
+		background: var(--surface-container-low)
+		color: var(--on-surface-variant)
+		font: var(--m3e-type-label-large)
+		font-weight: 700
+		font-variant-numeric: tabular-nums
+		cursor: pointer
+		transition:
+			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
+			color var(--m3e-duration-short) var(--m3e-easing-standard),
+			transform var(--m3e-duration-short) var(--m3e-easing-standard)
+
+		&:hover:not(.anime-section__page-num--active)
+			background: var(--surface-container-high)
+
+		&:active
+			transform: scale(0.96)
+
+		&--active
+			background: var(--primary)
+			color: var(--on-primary)
+
+			&:hover
+				background: var(--primary)
+
+	&__page-ellipsis
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		width: 1.75rem
+		height: 2.75rem
+		color: var(--on-surface-variant)
+
+		> :global(svg)
+			width: 1.25rem
+			height: 1.25rem
+
 	&__more
 		display: flex
 		justify-content: center
@@ -547,50 +724,16 @@ onMount(() => {
 			height: 2.75rem
 			color: var(--outline)
 
-/* 海报网格（grid）：手机 2 列、平板 3 列、电脑端精准 4 列，紧凑美观 */
+/* 海报网格（grid，唯一布局）：手机 2 列、平板及以上 3 列大封面；卡间距留白充足 */
 .anime-list--grid
 	display: grid
 	grid-template-columns: repeat(2, 1fr)
-	gap: 0.875rem
+	gap: 1.125rem
 	padding-top: 1.25rem
 
 	@media (min-width: 32rem)
 		grid-template-columns: repeat(3, 1fr)
-		gap: 0.875rem
-
-	@media (min-width: bp-md)
-		grid-template-columns: repeat(4, 1fr)
-		gap: 1rem
-
-/* 横向列表（list）：单列，超宽视口双列；卡片横排（封面固定宽 + 正文铺开）。
-   跨组件边界覆盖卡片内部类，统一走 :global（容器级驱动，规则集中在布局拥有方）。 */
-.anime-list--list
-	display: grid
-	grid-template-columns: 1fr
-	gap: 1rem
-	padding-top: 1.25rem
-
-	@media (min-width: 88rem)
-		grid-template-columns: repeat(2, 1fr)
-
-	:global(.anime-card)
-		flex-direction: row
-
-	:global(.anime-card__cover)
-		width: 8.5rem
-		flex-shrink: 0
-
-		@media (min-width: 48rem)
-			width: 11rem
-
-	:global(.anime-card__body)
-		flex: 1
-		min-width: 0
-		padding: 1.125rem 1.25rem
-		justify-content: space-between
-
-	:global(.anime-card__desc)
-		-webkit-line-clamp: 3
+		gap: 1.5rem
 
 /* 指示器退场：淡出 + 轻微收拢（reduced-motion 由全局规则压至终态） */
 @keyframes anime-loading-out

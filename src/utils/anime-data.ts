@@ -215,3 +215,34 @@ function handleFallback(
 	}
 	return [];
 }
+
+/** 快照元数据（构建期读）：当前数据源提供方与上次同步时间（用于页头「数据更新于」） */
+export function getAnimeSyncMeta(): {
+	provider?: string;
+	fetchedAt?: string;
+} {
+	try {
+		const options = resolveAnimeOptions(animeConfig);
+		if (options.source.kind !== "snapshot" || !options.source.file) {
+			return {};
+		}
+		const dir = isAbsolute(options.snapshot.directory)
+			? options.snapshot.directory
+			: resolve(process.cwd(), options.snapshot.directory);
+		const filePath = join(dir, options.source.file);
+		if (!existsSync(filePath)) return {};
+		const result = parseAnimeSnapshot(readFileSync(filePath, "utf-8"));
+		const raw = result?.envelope?.fetchedAt;
+		let fetchedAt: string | undefined;
+		if (raw) {
+			const d = new Date(raw);
+			if (!Number.isNaN(d.getTime())) {
+				const p2 = (n: number) => String(n).padStart(2, "0");
+				fetchedAt = `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())} ${p2(d.getHours())}:${p2(d.getMinutes())}`;
+			}
+		}
+		return { provider: options.source.provider, fetchedAt };
+	} catch {
+		return {};
+	}
+}
