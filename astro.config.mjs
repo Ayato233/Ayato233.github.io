@@ -149,7 +149,9 @@ export default defineConfig({
 			preload: true,
 			accessibility: true,
 			updateHead: {
-				awaitAssets: false,
+				// 切页等新页面样式下载就绪再替换内容，避免首次访问出现无样式闪烁（FOUC）；
+				// 站点体量小、CSS 总量有限，等待成本在缓存命中后几乎为零。
+				awaitAssets: true,
 				persistTags: "link[rel=stylesheet], style",
 			},
 			updateBodyClass: false,
