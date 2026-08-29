@@ -1,4 +1,4 @@
-﻿# build output
+# build output
 dist/
 
 # generated types
@@ -53,4 +53,7 @@ tests/site/visual.spec.ts-snapshots/
 artifacts/lighthouse/*
 !artifacts/lighthouse/.gitkeep
 .lighthouseci/
+
+# 本地改造计划文档（不纳入版本控制）
+/MyBlog改造计划.md
 
