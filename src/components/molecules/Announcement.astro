@@ -31,7 +31,7 @@ const closeDuration = Number(config.closeDuration ?? 86400);
 		class={className}
 		style={style}
 	>
-		<div class="announcement-wrapper flex flex-col" data-close-duration={String(closeDuration)}>
+		<div class="announcement-wrapper flex flex-col" data-close-duration={String(closeDuration)} data-closable={String(config.closable)}>
 			<!-- 公告栏内容 -->
 			<div class="text-75 leading-relaxed mb-3 break-words whitespace-pre-line text-sm">
 				{contentText}
@@ -113,7 +113,23 @@ const closeDuration = Number(config.closeDuration ?? 86400);
 		if (widgetLayouts.length === 0) return;
 
 		const wrapper = document.querySelector<HTMLElement>(".announcement-wrapper");
-		const durationAttr = wrapper?.getAttribute("data-close-duration");
+		if (!wrapper) return;
+
+		// 无关闭按钮（closable=false）：公告恒显示，且清理历史关闭标记，
+		// 避免用户之前在配置改动前点过「关闭」导致永远隐藏
+		if (wrapper.getAttribute("data-closable") !== "true") {
+			localStorage.removeItem(STORAGE_KEY_CLOSED);
+			localStorage.removeItem(STORAGE_KEY_TIME);
+			widgetLayouts.forEach((widget) => {
+				const container =
+					widget.closest<HTMLElement>(".sidebar-widget") || widget;
+				container.style.display = "";
+				widget.style.display = "";
+			});
+			return;
+		}
+
+		const durationAttr = wrapper.getAttribute("data-close-duration");
 		const durationSeconds = durationAttr ? Number.parseFloat(durationAttr) : 86400;
 
 		const isClosed = localStorage.getItem(STORAGE_KEY_CLOSED) === "true";
