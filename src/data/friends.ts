@@ -12,34 +12,21 @@ export interface FriendItem {
 	desc: string;
 	siteurl: string;
 	tags: string[];
+	/** 可选：站点首页截图（预览图），省略则不显示预览区 */
+	preview?: string;
 }
 
 // 友情链接数据（示例占位，等待替换为真实友链）
 export const friendsData: FriendItem[] = [
-	{
-		id: 1,
-		title: "示例博客",
-		imgurl: "https://ui-avatars.com/api/?name=%E7%A4%BA%E4%BE%8B%E5%8D%9A%E5%AE%A2&size=128&background=7c4dff&color=fff",
-		desc: "示例友链占位：一位爱写长文的博主",
-		siteurl: "https://example.com/blog",
-		tags: ["示例", "博客"],
-	},
-	{
-		id: 2,
-		title: "示例图库",
-		imgurl: "https://ui-avatars.com/api/?name=%E7%A4%BA%E4%BE%8B%E5%9B%BE%E5%BA%93&size=128&background=2f9e6e&color=fff",
-		desc: "示例友链占位：收集风景与光影",
-		siteurl: "https://example.com/gallery",
-		tags: ["示例", "图库"],
-	},
-	{
-		id: 3,
-		title: "示例工具站",
-		imgurl: "https://ui-avatars.com/api/?name=%E7%A4%BA%E4%BE%8B%E5%B7%A5%E5%85%B7%E7%AB%99&size=128&background=d9822b&color=fff",
-		desc: "示例友链占位：前端小工具集散地",
-		siteurl: "https://example.com/tools",
-		tags: ["示例", "工具"],
-	},
+	{ id: 1, title: "朝朝听雨 - 物物而不物于物，念念而不念于念", imgurl: "https://icon.horse/icon/rainzt.cn", desc: "rainzt.cn", siteurl: "https://rainzt.cn/", tags: ["博客"] },
+	{ id: 12, title: "「花语栈」 - CaCa de Blog", imgurl: "https://icon.horse/icon/cacablog.top", desc: "cacablog.top", siteurl: "https://www.cacablog.top/", tags: ["博客"] },
+	{ id: 9, title: "About-晓空blog", imgurl: "https://icon.horse/icon/about.moeworld.top", desc: "about.moeworld.top", siteurl: "https://blog.moeworld.tech/", tags: ["博客"] },
+	{ id: 5, title: "Vinking - 一个安静的地方", imgurl: "https://icon.horse/icon/vinking.top", desc: "vinking.top", siteurl: "https://vinking.top/", tags: ["博客"] },
+	{ id: 8, title: "律回彼境", imgurl: "https://icon.horse/icon/glowmem.com", desc: "glowmem.com", siteurl: "https://www.glowmem.com/", tags: ["博客"] },
+	{ id: 11, title: "雨线下的信号塔", imgurl: "https://icon.horse/icon/7thrainfall.top", desc: "7thrainfall.top", siteurl: "https://7thrainfall.top/", tags: ["博客"] },
+	{ id: 7, title: "迷途之旅", imgurl: "https://icon.horse/icon/blog.jitsu.top", desc: "blog.jitsu.top", siteurl: "https://blog.jitsu.top/", tags: ["博客"] },
+	{ id: 3, title: "保罗的小宇宙", imgurl: "https://icon.horse/icon/paugram.com", desc: "paugram.com", siteurl: "https://paugram.com/", tags: ["博客"] },
+	
 ];
 
 // 获取所有友情链接数据（稳定顺序，测试可复现）

@@ -229,7 +229,6 @@ const markerIcon = $derived(
 		margin-bottom: 1.5rem
 		padding: 1.25rem 1.5rem
 		box-sizing: border-box
-		border: 1px solid var(--outline-variant)
 		border-radius: var(--shape-corner-l)
 		box-shadow: var(--card-shadow)
 		background: var(--card-bg)
@@ -245,7 +244,6 @@ const markerIcon = $derived(
 			margin-bottom: 1rem
 
 	&:hover &__body
-		border-color: var(--outline)
 		box-shadow: var(--m3e-elevation-2)
 		background: unquote("color-mix(in oklab, var(--on-surface) 2%, var(--card-bg))")
 

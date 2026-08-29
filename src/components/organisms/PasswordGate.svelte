@@ -203,7 +203,6 @@ async function unlock() {
 	min-height: 22rem
 	margin: 0 auto
 	overflow: hidden
-	border: 1px solid var(--outline-variant)
 	border-radius: var(--shape-corner-l)
 	background: var(--surface-container-lowest)
 	color: var(--on-surface)

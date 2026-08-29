@@ -103,7 +103,7 @@ onMount(() => {
 					placeholder={i18n(I18nKey.search)}
 					label={i18n(I18nKey.search)}
 					hideLabel
-					variant="outlined"
+					variant="filled"
 					class="!rounded-(--shape-corner-l)"
 				>
 					<Icon slot="leading" icon="material-symbols:search-rounded" aria-hidden="true" />

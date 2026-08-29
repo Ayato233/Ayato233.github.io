@@ -61,14 +61,13 @@ const imageSource = album.cover;
 .album-card
 	min-width: 0
 	overflow: hidden
-	border: 1px solid var(--outline-variant)
 	border-radius: var(--shape-corner-l)
 	background: var(--card-bg)
-	transition: border-color var(--m3e-duration-medium) var(--m3e-easing-standard), box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
+	box-shadow: var(--card-shadow)
+	transition: box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
 
 	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-1)
+		box-shadow: var(--m3e-elevation-2)
 		transform: translateY(-0.125rem)
 
 	&__link

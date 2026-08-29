@@ -207,6 +207,11 @@ function handleRemove(item: ChipItem) {
 			color: var(--primary)
 
 	&--filter, &--input
+		/* 筛选/输入 chip：去 outline 描边，改浅色 pill + 全圆角（拟态玻璃观感） */
+		border: none
+		border-radius: var(--shape-corner-full)
+		background: unquote("color-mix(in oklab, var(--on-surface) 6%, transparent)")
+
 		&.m3-chip--selected
 			background: var(--secondary-container)
 			color: var(--on-secondary-container)

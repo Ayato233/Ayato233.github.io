@@ -1,17 +1,12 @@
 <script lang="ts">
-import Avatar from "@components/atoms/display/Avatar.svelte";
-import Icon from "@iconify/svelte";
+/**
+ * 友链卡片（分子）：拟态玻璃三要素——头像 + 站点名称 + 一段描述。
+ * - 整卡可点（外链）；hover 浮起 + 标题变主题色 + 头像微缩放；
+ * - 玻璃质感与全站卡片一致（无描边 / 半透明底色 / 柔和阴影 / 顶部微反光，触屏降级 blur）。
+ */
 import type { FriendItem } from "../../data/friends";
 
 let { friend }: { friend: FriendItem } = $props();
-
-const host = $derived.by(() => {
-	try {
-		return new URL(friend.siteurl).hostname.replace(/^www\./, "");
-	} catch {
-		return friend.siteurl;
-	}
-});
 </script>
 
 <a
@@ -21,51 +16,31 @@ const host = $derived.by(() => {
 	rel="noopener noreferrer"
 	aria-label={friend.title}
 >
-	<div class="friend-card__body">
-		<div class="friend-card__header">
-			<Avatar
-				src={friend.imgurl}
-				alt={friend.title}
-				size={40}
-				shape="circle"
-			/>
-
-			<div class="friend-card__info">
-				<span class="friend-card__title">
-					<span class="friend-card__title-text">{friend.title}</span>
-				</span>
-
-				<div class="friend-card__host">
-					<span>{host}</span>
-				</div>
-			</div>
-
-			<span class="friend-card__arrow" aria-hidden="true">
-				<Icon icon="material-symbols:chevron-right-rounded" />
-			</span>
+	<div class="friend-card__main">
+		<img
+			class="friend-card__avatar"
+			src={friend.imgurl}
+			alt={friend.title}
+			loading="lazy"
+			decoding="async"
+			onerror={(e) => {
+				e.currentTarget.onerror = null;
+				e.currentTarget.src = "/images/site/avatar.jpg";
+			}}
+		/>
+		<div class="friend-card__info">
+			<span class="friend-card__title">{friend.title}</span>
+			{#if friend.desc}
+				<p class="friend-card__desc">{friend.desc}</p>
+			{/if}
 		</div>
-
-		{#if friend.desc}
-			<p class="friend-card__desc">{friend.desc}</p>
-		{/if}
-
-		{#if friend.tags.length > 0}
-			<div class="friend-card__tags">
-				{#each friend.tags as tag (tag)}
-					<span class="friend-card__tag">#{tag}</span>
-				{/each}
-			</div>
-		{/if}
 	</div>
 </a>
 
 <style lang="stylus">
 .friend-card
 	position: relative
-	display: flex
-	flex-direction: column
-	box-sizing: border-box
-	width: 100%
+	display: block
 	overflow: hidden
 	border-radius: var(--shape-corner-l)
 	background: var(--card-bg)
@@ -73,91 +48,72 @@ const host = $derived.by(() => {
 	-webkit-backdrop-filter: blur(16px)
 
 	backdrop-filter: blur(16px)
-	color: var(--on-surface)
-	/* 拟态玻璃：去深色描边，换顶部微反光 + 柔和悬浮阴影（与动态/番剧卡一致） */
+	/* 拟态玻璃：无深色描边，顶部微反光 + 柔和悬浮阴影（hover 浮起） */
 	border: none
 	text-decoration: none
+	color: var(--on-surface)
 	box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.08)"), var(--card-shadow)
 	transition:
 		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
+		transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
+
 	&:hover
 		box-shadow: unquote("inset 0 1px 0 rgb(255 255 255 / 0.12)"), var(--m3e-elevation-2)
+		transform: translateY(-2px)
 		background: unquote("color-mix(in oklab, var(--on-surface) 3%, var(--card-bg))")
 
-	&__body
-		flex: 1
-		min-width: 0
-		padding: 1rem 1.25rem
-
-	&__header
+	&__main
 		display: flex
-		align-items: center
-		gap: 0.75rem
-		margin-bottom: 0.75rem
+		align-items: flex-start
+		gap: 0.875rem
+		padding: 1.125rem 1.25rem
+
+	&__avatar
+		flex: none
+		width: 3.5rem /* 56px */
+		height: 3.5rem
+		border-radius: 1.1rem
+		object-fit: cover
+		box-shadow:
+			0 0 0 2px unquote("color-mix(in oklab, var(--primary) 16%, transparent)"),
+			0 0 0 5px unquote("color-mix(in oklab, var(--surface-container-high) 45%, transparent)")
+		transition:
+			transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
+			box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
+
+		.friend-card:hover &
+			transform: scale(1.05) translateY(-1px)
+			box-shadow:
+				0 0 0 2px unquote("color-mix(in oklab, var(--primary) 26%, transparent)"),
+				0 0 0 5px unquote("color-mix(in oklab, var(--primary) 8%, transparent)")
 
 	&__info
 		min-width: 0
 		flex: 1
+		display: flex
+		flex-direction: column
+		gap: 0.375rem
+		padding-top: 0.125rem
 
 	&__title
-		display: flex
-		align-items: center
-		margin: 0
-		color: var(--on-surface)
 		font: var(--m3e-type-title-small)
-		font-weight: 600
-		line-height: 1.3
-		text-decoration: none
+		font-weight: 700
+		color: var(--on-surface)
 		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-		.friend-card:hover &
-			color: var(--primary)
-
-	&__title-text
-		min-width: 0
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-
-	&__host
-		margin-top: 0.125rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-
-	&__arrow
-		display: inline-flex
-		align-items: center
-		flex-shrink: 0
-		color: var(--on-surface-variant)
-		transition:
-			color var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
 
 		.friend-card:hover &
 			color: var(--primary)
-			transform: translateX(0.25rem)
 
 	&__desc
-		margin: 0 0 0.625rem
+		margin: 0
 		color: var(--on-surface-variant)
 		font: var(--m3e-type-body-small)
-		line-height: 1.5
+		line-height: 1.6
 		display: -webkit-box
 		-webkit-line-clamp: 2
 		-webkit-box-orient: vertical
 		overflow: hidden
-
-	&__tags
-		display: flex
-		flex-wrap: wrap
-		gap: 0.25rem
-
-	&__tag
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
 
 /* 触屏设备降低玻璃模糊（对齐 variables 的 --card-blur 降级策略） */
 @media (hover: none) and (pointer: coarse)

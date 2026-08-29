@@ -25,7 +25,10 @@ let {
 /** 图片 URL 加载失败 → 降级首字母块 */
 let imgFailed = $state(false);
 
-/** 图标形态判定（优先级：自定义图片 > Iconify 名 > icon 图片 URL > 首字母） */
+/** favicon 兜底加载失败 → 回退首字母块 */
+let faviconFailed = $state(false);
+
+/** 图标形态判定（优先级：自定义图片 > Iconify 名 > icon 图片 URL > favicon 兜底 > 首字母） */
 const iconKind = $derived(
 	entry.image
 		? "image"
@@ -38,6 +41,11 @@ const iconKind = $derived(
 
 /** 图片形态的 src：image 优先，回退 icon 的图片 URL */
 const imageSrc = $derived(entry.image || entry.icon || "");
+
+/** 缺省图标时用站点 favicon 服务兜底（外链；失败自动回退首字母块） */
+const faviconSrc = $derived(
+	host ? `https://icon.horse/icon/${encodeURIComponent(host)}` : "",
+);
 
 const letter = $derived((entry.label.charAt(0) || "?").toUpperCase());
 
@@ -68,6 +76,14 @@ const host = $derived.by(() => {
 				/>
 			{:else if iconKind === "iconify"}
 				<Icon icon={entry.icon!} />
+			{:else if faviconSrc && !faviconFailed}
+				<img
+					src={faviconSrc}
+					alt=""
+					loading="lazy"
+					referrerpolicy="no-referrer"
+					onerror={() => (faviconFailed = true)}
+				/>
 			{:else}
 				<span class="compass-tile__letter">{letter}</span>
 			{/if}
@@ -86,17 +102,14 @@ const host = $derived.by(() => {
 	-webkit-backdrop-filter: var(--card-blur)
 
 	backdrop-filter: var(--card-blur)
-	border: 1px solid var(--outline-variant)
 	border-radius: var(--shape-corner-l)
 	padding: 0.875rem
 	box-shadow: var(--card-shadow)
 	transition:
-		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
 		background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
 
 	&:hover
-		border-color: var(--outline)
 		box-shadow: var(--m3e-elevation-2)
 		background: unquote("color-mix(in oklab, var(--on-surface) 3%, var(--card-bg))")
 
