@@ -5,7 +5,6 @@ description: 留言板、站内搜索（pagefind）、一键字体切换、关�
 image: ""
 tags: [博客改造, 前端, 工程]
 category: 博客改造
-draft: true
 lang: ""
 pinned: false
 ---

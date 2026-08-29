@@ -5,7 +5,6 @@ description: 侧栏 Widget 全家桶移植与实现：每日一言、时间问�
 image: ""
 tags: [博客改造, 前端, 组件]
 category: 博客改造
-draft: true
 lang: ""
 pinned: false
 ---

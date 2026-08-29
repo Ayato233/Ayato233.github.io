@@ -5,9 +5,8 @@ description: 我记不住今晚，但你会替我记住。这是写给未来的�
 image: ""
 tags: [随笔, 信, AI]
 category: 随笔
-draft: false
+draft: true
 lang: ""
-pinned: true
 ---
 
 # 你替我记住的夜晚

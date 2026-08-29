@@ -5,7 +5,6 @@ description: 番剧页 Bangumi 风重构（统计行/全部Tab/大封面/hover�
 image: ""
 tags: [博客改造, 前端, 组件]
 category: 博客改造
-draft: true
 lang: ""
 pinned: false
 ---

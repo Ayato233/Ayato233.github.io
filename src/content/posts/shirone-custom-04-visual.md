@@ -5,7 +5,6 @@ description: 全站拟态玻璃：--card-shadow/--card-bg 令牌、去卡套卡�
 image: ""
 tags: [博客改造, 前端, 样式]
 category: 博客改造
-draft: true
 lang: ""
 pinned: false
 ---
