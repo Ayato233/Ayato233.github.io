@@ -113,6 +113,10 @@ const hasMonoFont =
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		{fontRoleStyle && <style is:inline set:html={fontRoleStyle}></style>}
+		<style is:inline>
+			/* 一键字体切换：html.font-misans 时正文中文覆盖为 MiSans（更利阅读；未加载回退原字体） */
+			html.font-misans { --font-cjk: "MiSans", "MiSans Normal", "Yozai Medium", system-ui, sans-serif; }
+		</style>
 		{textureEnabled && <style is:inline set:html={textureStyles}></style>}
 		{hasBodyFont && <Font cssVariable={resolvedFontOptions.roles.body.cssVariable as never} preload={resolvedFontOptions.roles.body.preload} />}
 		{hasCjkFont && <Font cssVariable={resolvedFontOptions.roles.cjk.cssVariable as never} preload={resolvedFontOptions.roles.cjk.preload} />}
@@ -146,6 +150,10 @@ const hasMonoFont =
 			}
 
 			document.documentElement.setAttribute('data-theme', isDark ? darkTheme : lightTheme);
+			const fontMode = localStorage.getItem('shirone:font');
+			if (fontMode === 'misans') {
+				document.documentElement.classList.add('font-misans');
+			}
 			const cardOpacity = localStorage.getItem('shirone:card-opacity');
 			if (cardOpacity !== null && Number.isFinite(Number(cardOpacity))) {
 				const v = Number(cardOpacity);
@@ -212,6 +220,45 @@ const hasMonoFont =
 		<slot />
 		<WelcomeToast />
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+		<script is:inline>
+			// 一键字体切换（顶栏 #font-switch）：html.font-misans ⇄ 默认字体；
+			// MiSans 字体 CSS 首次启用按需外链加载（unpkg misans 包，unicode-range 分段按需下载）
+			function __dshFontToggle() {
+				const enabled = document.documentElement.classList.toggle('font-misans');
+				try {
+					localStorage.setItem('shirone:font', enabled ? 'misans' : '');
+				} catch (e) {
+					void e;
+				}
+				if (enabled) {
+					if (!document.getElementById('misans-stylesheet')) {
+						const link = document.createElement('link');
+						link.id = 'misans-stylesheet';
+						link.rel = 'stylesheet';
+						link.href = 'https://unpkg.com/misans@4.1.0/lib/Normal/MiSans-Regular.min.css';
+						document.head.appendChild(link);
+					}
+				} else {
+					const link = document.getElementById('misans-stylesheet');
+					if (link) link.remove();
+				}
+			}
+			document.addEventListener('DOMContentLoaded', () => {
+				const btn = document.getElementById('font-switch');
+				if (btn) btn.addEventListener('click', __dshFontToggle);
+				// 首帧已开启（localStorage 记忆）时补齐字体样式链
+				if (
+					document.documentElement.classList.contains('font-misans') &&
+					!document.getElementById('misans-stylesheet')
+				) {
+					const link = document.createElement('link');
+					link.id = 'misans-stylesheet';
+					link.rel = 'stylesheet';
+					link.href = 'https://unpkg.com/misans@4.1.0/lib/Normal/MiSans-Regular.min.css';
+					document.head.appendChild(link);
+				}
+			});
+		</script>
 	</body>
 </html>
 
