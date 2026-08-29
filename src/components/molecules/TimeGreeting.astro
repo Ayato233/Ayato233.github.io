@@ -70,6 +70,7 @@ const serverDay = dayFmt.format(now);
 const imageIndex =
 	images.length > 0 ? Math.floor(Math.random() * images.length) : -1;
 const imageUrl = imageIndex >= 0 ? images[imageIndex] : null;
+const remote = timeGreetingConfig.remote ?? "";
 ---
 
 <WidgetLayout
@@ -157,7 +158,7 @@ const imageUrl = imageIndex >= 0 ? images[imageIndex] : null;
 		overflow: hidden
 </style>
 
-<script is:inline define:vars={{ greetings, images }}>
+<script is:inline define:vars={{ greetings, images, remote }}>
 	// 客户端补充时间感：对齐下一分钟刷新时钟、跨时段切换问候、跨日重随机图片。
 	// 侧栏是 Swup 容器外的长驻元素，脚本只在整页加载执行一次，定时任务独占管理。
 	const localeMap = {
@@ -205,6 +206,48 @@ const imageUrl = imageIndex >= 0 ? images[imageIndex] : null;
 
 	let lastDay = -1;
 
+	// 每日随机图片（远程 JSON 源）：当天最多请求一次（localStorage 按天缓存），
+	// 失败自动回退站内图片池，不破图。作者反感高频爬取 → 低频才是礼貌用法。
+	const remoteUrl = typeof remote === "string" ? remote : "";
+	const setBg = (url) => {
+		if (imgEl) imgEl.style.backgroundImage = 'url("' + url + '")';
+	};
+	const pickPoolUrl = () =>
+		images.length > 0
+			? images[Math.floor(Math.random() * images.length)]
+			: null;
+	const loadRemoteImage = () => {
+		if (!remoteUrl || !imgEl) return;
+		const key = "tg-remote-img-" + new Date().toDateString();
+		let cached = null;
+		try {
+			cached = localStorage.getItem(key);
+		} catch (e) {
+			/* storage 不可用时忽略缓存 */
+		}
+		if (cached) {
+			setBg(cached);
+			return;
+		}
+		fetch(remoteUrl, { credentials: "omit" })
+			.then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+			.then((d) => {
+				const pics = d && Array.isArray(d.pics) ? d.pics : [];
+				const url = pics[0];
+				if (!url) throw new Error("empty pic list");
+				try {
+					localStorage.setItem(key, url);
+				} catch (e) {
+					/* 忽略缓存写入失败 */
+				}
+				setBg(url);
+			})
+			.catch(() => {
+				const fallback = pickPoolUrl();
+				if (fallback) setBg(fallback);
+			});
+	};
+
 	function refresh() {
 		const now = new Date();
 		const day = now.getDate();
@@ -219,12 +262,13 @@ const imageUrl = imageIndex >= 0 ? images[imageIndex] : null;
 			"";
 		if (msgEl && msg !== msgEl.textContent) msgEl.textContent = msg;
 
-		// 跨日重随机图片
+		// 跨日换图：有远程源则按天拉一张（缓存命中即用），否则池内随机
 		if (day !== lastDay) {
 			lastDay = day;
-			if (imgEl && images.length > 0) {
-				const idx = pickImage();
-				imgEl.style.backgroundImage = `url("${images[idx]}")`;
+			if (remoteUrl && imgEl) {
+				loadRemoteImage();
+			} else if (imgEl && images.length > 0) {
+				setBg(images[pickImage()]);
 			}
 		}
 	}

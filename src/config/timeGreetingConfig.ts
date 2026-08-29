@@ -18,4 +18,6 @@ export const timeGreetingConfig: TimeGreetingConfig = {
 	// 底部图片区：只放站内 public 静态资源（原样拷贝零压缩）；
 	// 默认复用横幅静态图，后续往数组加图即参与轮换
 	images: ["/assets/banner/desktop/1.webp"],
+	// 每日随机图片源（JSON API）：组件按天拉取一张（低频、当天缓存），失败回退 images 池
+	remote: "https://moe.jitsu.top/img/?sort=pc&type=json&num=1",
 };

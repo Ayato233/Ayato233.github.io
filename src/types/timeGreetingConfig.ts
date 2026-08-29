@@ -17,4 +17,11 @@ export interface TimeGreetingConfig {
 	greetings: TimeGreetingEntry[];
 	/** 底部图片池（站内路径）。为空数组时不渲染图片区 */
 	images: string[];
+	/**
+	 * 可选：每日随机图片 JSON 源（外链 API）。
+	 * 组件**每天最多请求一次**（localStorage 按天缓存图 URL，当天重复访问不请求），
+	 * 响应格式：`{ pics: string[] }`，取 pics[0] 作背景图；
+	 * 请求失败自动回退 `images` 池随机图（不破图）。
+	 */
+	remote?: string;
 }
